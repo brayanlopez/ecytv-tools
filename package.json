@@ -1,0 +1,36 @@
+{
+  "name": "ecytv-tools",
+  "version": "1.0.0",
+  "description": "Proyecto para los estudiantes de la Escuela de Cine y TV de la Universidad Nacional (ECYTV). El objetivo es centralizar todas las herramientas que los estudiantes requieren durante su carrera.",
+  "homepage": "https://github.com/brayanlopez/ecytv-tools#readme",
+  "bugs": {
+    "url": "https://github.com/brayanlopez/ecytv-tools/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brayanlopez/ecytv-tools.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "python -m http.server",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint js/**/*.mjs",
+    "format": "prettier --write '**/*.{js,json,css,html}'"
+  },
+  "devDependencies": {
+    "@eslint/css": "1.2.0",
+    "@eslint/js": "10.0.1",
+    "@eslint/json": "1.2.0",
+    "@eslint/markdown": "8.0.1",
+    "@vitest/coverage-v8": "4.1.4",
+    "eslint": "10.3.0",
+    "globals": "17.6.0",
+    "jsdom": "^29.1.1",
+    "prettier": "3.8.3",
+    "vitest": "4.1.4"
+  }
+}
