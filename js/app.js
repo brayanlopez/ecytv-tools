@@ -1,5 +1,5 @@
 import router from "./router.js";
-import { toolsRendererInstance as toolsRenderer } from "./tools-renderer.js";
+import toolsRenderer from "./tools-renderer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   router.register("tools", "tools-section");

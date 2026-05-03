@@ -12,9 +12,9 @@ export default defineConfig({
       exclude: ["js/app.js"],
       reporter: ["text", "lcov"],
       thresholds: {
-        statements: 70,
-        branches: 70,
-        functions: 70,
+        statements: 75,
+        branches: 80,
+        functions: 80,
         lines: 70,
       },
     },
