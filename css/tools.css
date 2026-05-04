@@ -216,6 +216,27 @@
   margin-bottom: 1.5rem;
 }
 
+.search-bar {
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+}
+
 .filter-row {
   display: flex;
   gap: 1rem;
@@ -278,6 +299,15 @@
   background: var(--accent);
   color: white;
   border-color: var(--accent);
+}
+
+.tools-count {
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .no-results {

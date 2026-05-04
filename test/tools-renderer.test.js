@@ -20,6 +20,8 @@ describe("getAllValues", () => {
     expect(categories).toContain("Audio");
     expect(categories).toContain("Producción");
     expect(categories).toContain("Screenplay");
+    expect(categories).toContain("Videojuegos");
+    expect(categories).toContain("Encoders");
   });
 
   it("should return all unique levels including 'all'", () => {
@@ -77,26 +79,82 @@ describe("applyFilters", () => {
 
   it("should filter by category", () => {
     const tool = tools[0];
-    expect(applyFilters(tool, { category: "Edición", level: "all", platform: "all", pricing: "all" })).toBe(true);
-    expect(applyFilters(tool, { category: "Diseño", level: "all", platform: "all", pricing: "all" })).toBe(false);
+    expect(
+      applyFilters(tool, {
+        category: "Edición",
+        level: "all",
+        platform: "all",
+        pricing: "all",
+      }),
+    ).toBe(true);
+    expect(
+      applyFilters(tool, {
+        category: "Diseño",
+        level: "all",
+        platform: "all",
+        pricing: "all",
+      }),
+    ).toBe(false);
   });
 
   it("should filter by level", () => {
     const tool = tools[0];
-    expect(applyFilters(tool, { category: "all", level: "pro", platform: "all", pricing: "all" })).toBe(true);
-    expect(applyFilters(tool, { category: "all", level: "beginner", platform: "all", pricing: "all" })).toBe(false);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "pro",
+        platform: "all",
+        pricing: "all",
+      }),
+    ).toBe(true);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "beginner",
+        platform: "all",
+        pricing: "all",
+      }),
+    ).toBe(false);
   });
 
   it("should filter by platform", () => {
     const tool = tools[0];
-    expect(applyFilters(tool, { category: "all", level: "all", platform: "windows", pricing: "all" })).toBe(true);
-    expect(applyFilters(tool, { category: "all", level: "all", platform: "mobile", pricing: "all" })).toBe(false);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "all",
+        platform: "windows",
+        pricing: "all",
+      }),
+    ).toBe(true);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "all",
+        platform: "mobile",
+        pricing: "all",
+      }),
+    ).toBe(false);
   });
 
   it("should filter by pricing", () => {
     const tool = tools[0];
-    expect(applyFilters(tool, { category: "all", level: "all", platform: "all", pricing: "freemium" })).toBe(true);
-    expect(applyFilters(tool, { category: "all", level: "all", platform: "all", pricing: "free" })).toBe(false);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "all",
+        platform: "all",
+        pricing: "freemium",
+      }),
+    ).toBe(true);
+    expect(
+      applyFilters(tool, {
+        category: "all",
+        level: "all",
+        platform: "all",
+        pricing: "free",
+      }),
+    ).toBe(false);
   });
 
   it("should apply multiple filters at once", () => {
@@ -113,8 +171,22 @@ describe("applyFilters", () => {
 
   it("should handle tools with multiple platforms", () => {
     const capcut = tools.find((t) => t.id === "capcut");
-    expect(applyFilters(capcut, { category: "all", level: "all", platform: "mobile", pricing: "all" })).toBe(true);
-    expect(applyFilters(capcut, { category: "all", level: "all", platform: "linux", pricing: "all" })).toBe(false);
+    expect(
+      applyFilters(capcut, {
+        category: "all",
+        level: "all",
+        platform: "mobile",
+        pricing: "all",
+      }),
+    ).toBe(true);
+    expect(
+      applyFilters(capcut, {
+        category: "all",
+        level: "all",
+        platform: "linux",
+        pricing: "all",
+      }),
+    ).toBe(false);
   });
 });
 
@@ -123,6 +195,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
   let mockContainer;
   let mockFilterContainer;
   let mockClearButton;
+  let mockSearchInput;
   let localStorageGetItemSpy;
 
   beforeEach(async () => {
@@ -139,7 +212,11 @@ describe("ToolsRenderer class with DOM mocking", () => {
       innerHTML: "",
       querySelectorAll: vi.fn(() => ({
         forEach: vi.fn((fn) => {
-          fn({ dataset: { filter: "category" }, value: "all", addEventListener: vi.fn() });
+          fn({
+            dataset: { filter: "category" },
+            value: "all",
+            addEventListener: vi.fn(),
+          });
         }),
       })),
     };
@@ -148,14 +225,22 @@ describe("ToolsRenderer class with DOM mocking", () => {
       addEventListener: vi.fn(),
     };
 
+    mockSearchInput = {
+      addEventListener: vi.fn(),
+      value: "",
+    };
+
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
       if (id === "tools-grid") return mockContainer;
       if (id === "filter-bar") return mockFilterContainer;
       if (id === "clear-filters") return mockClearButton;
+      if (id === "search-input") return mockSearchInput;
       return null;
     });
 
-    localStorageGetItemSpy = vi.spyOn(localStorage, "getItem").mockReturnValue("[]");
+    localStorageGetItemSpy = vi
+      .spyOn(localStorage, "getItem")
+      .mockReturnValue("[]");
     vi.spyOn(localStorage, "setItem").mockImplementation(() => {});
 
     const module = await import("../js/tools-renderer.js");
@@ -237,6 +322,50 @@ describe("ToolsRenderer class with DOM mocking", () => {
     const renderer = new ToolsRenderer();
     renderer.renderFilters();
 
-    expect(mockClearButton.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
+    expect(mockClearButton.addEventListener).toHaveBeenCalledWith(
+      "click",
+      expect.any(Function),
+    );
+  });
+
+  it("should filter tools by search query", () => {
+    const renderer = new ToolsRenderer();
+    renderer.searchQuery = "photoshop";
+    renderer.render();
+
+    const filtered = tools.filter((t) =>
+      t.name.toLowerCase().includes("photoshop"),
+    );
+    expect(mockContainer.innerHTML).toContain("Adobe Photoshop");
+    if (filtered.length === 0) {
+      expect(mockContainer.innerHTML).toContain("no-results");
+    }
+  });
+
+  it("should show search input with correct value", () => {
+    const renderer = new ToolsRenderer();
+    renderer.searchQuery = "test search";
+    renderer.renderFilters();
+
+    expect(mockFilterContainer.innerHTML).toContain("search-input");
+  });
+
+  it("should display tools count when rendering", () => {
+    const renderer = new ToolsRenderer();
+    renderer.render();
+
+    const mockCountElement = { textContent: "" };
+    vi.spyOn(document, "getElementById").mockImplementation((id) => {
+      if (id === "tools-grid") return mockContainer;
+      if (id === "filter-bar") return mockFilterContainer;
+      if (id === "clear-filters") return mockClearButton;
+      if (id === "search-input") return mockSearchInput;
+      if (id === "tools-count") return mockCountElement;
+      return null;
+    });
+
+    renderer.render();
+
+    expect(mockCountElement.textContent).toContain("herramienta");
   });
 });

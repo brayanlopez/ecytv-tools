@@ -32,6 +32,7 @@ class ToolsRenderer {
       platform: "all",
       pricing: "all",
     };
+    this.searchQuery = "";
   }
 
   renderFilters() {
@@ -44,6 +45,9 @@ class ToolsRenderer {
     };
 
     this.filterContainer.innerHTML = `
+      <div class="search-bar">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar herramientas..." value="${this.searchQuery}">
+      </div>
       <div class="filter-row">
         <div class="filter-select-group">
           <label for="filter-category">Categoría</label>
@@ -70,8 +74,14 @@ class ToolsRenderer {
           </select>
         </div>
         <button class="clear-filters-btn" id="clear-filters">Limpiar</button>
+        <div class="tools-count" id="tools-count"></div>
       </div>
     `;
+
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      this.searchQuery = e.target.value.toLowerCase();
+      this.render();
+    });
 
     this.filterContainer
       .querySelectorAll(".filter-select")
@@ -90,6 +100,8 @@ class ToolsRenderer {
         platform: "all",
         pricing: "all",
       };
+      this.searchQuery = "";
+      document.getElementById("search-input").value = "";
       this.filterContainer
         .querySelectorAll(".filter-select")
         .forEach((select) => {
@@ -103,9 +115,24 @@ class ToolsRenderer {
     const favorites = JSON.parse(
       localStorage.getItem("ecytv_favorites") || "[]",
     );
-    const filtered = tools.filter((tool) =>
-      applyFilters(tool, this.activeFilters),
-    );
+    const filtered = tools.filter((tool) => {
+      if (!applyFilters(tool, this.activeFilters)) return false;
+      if (this.searchQuery) {
+        const query = this.searchQuery.toLowerCase();
+        return (
+          tool.name.toLowerCase().includes(query) ||
+          tool.description.toLowerCase().includes(query) ||
+          tool.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+          tool.category.toLowerCase().includes(query)
+        );
+      }
+      return true;
+    });
+
+    const countElement = document.getElementById("tools-count");
+    if (countElement) {
+      countElement.textContent = `${filtered.length} herramienta${filtered.length !== 1 ? "s" : ""}`;
+    }
 
     if (filtered.length === 0) {
       this.container.innerHTML = `<div class="no-results">No se encontraron herramientas con los filtros seleccionados</div>`;

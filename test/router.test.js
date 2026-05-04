@@ -141,4 +141,19 @@ describe("Router", () => {
 
     expect(handleRouteSpy).toHaveBeenCalledOnce();
   });
+
+  it("should use default route when hash is empty", () => {
+    router.register("tools", "tools-section");
+
+    Object.defineProperty(window, "location", {
+      value: { hash: "" },
+      writable: true,
+    });
+
+    const getElementByIdSpy = vi.spyOn(document, "getElementById");
+
+    router.handleRoute();
+
+    expect(getElementByIdSpy).toHaveBeenCalledWith("tools-section");
+  });
 });

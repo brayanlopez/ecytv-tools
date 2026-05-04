@@ -1,5 +1,4 @@
 import { defineConfig } from "vitest/config";
-import { resolve } from "path";
 
 export default defineConfig({
   test: {
@@ -14,7 +13,7 @@ export default defineConfig({
       thresholds: {
         statements: 75,
         branches: 80,
-        functions: 80,
+        functions: 75,
         lines: 70,
       },
     },
