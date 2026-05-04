@@ -160,6 +160,34 @@ nav .container {
   list-style: none;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all var(--transition);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform var(--transition);
+}
+
+[data-theme="dark"] .theme-icon {
+  transform: rotate(180deg);
 }
 
 .nav-links a {

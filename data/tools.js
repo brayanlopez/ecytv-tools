@@ -641,7 +641,7 @@ const tools = [
     alternatives: ["figma", "canva"],
     icon: "assets/icons/default.svg",
   },
-  {
+    {
     id: "adobe-bridge",
     name: "Adobe Bridge",
     url: "https://www.adobe.com/products/bridge.html",
@@ -652,6 +652,19 @@ const tools = [
     tags: ["asset-management", "organization", "creative"],
     level: "beginner",
     alternatives: ["figma"],
+    icon: "assets/icons/default.svg",
+  },
+  {
+    id: "affinity",
+    name: "Affinity",
+    url: "https://www.affinity.studio/es_es",
+    description: "Suite de diseño profesional: vector, foto y maquetación. Alternativa a Adobe.",
+    category: "Diseño",
+    pricing: "paid",
+    platform: ["windows", "mac", "ipad"],
+    tags: ["vector", "photo", "design", "illustration", "publishing"],
+    level: "intermediate",
+    alternatives: ["illustrator", "photoshop", "indesign", "canva"],
     icon: "assets/icons/default.svg",
   },
 

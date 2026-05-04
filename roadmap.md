@@ -7,7 +7,11 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 ## Estado Actual
 
 - [x] Definición del concepto y objetivos
-- [ ] Acceso rápido a herramientas (DaVinci, Photopea, Blender, etc.)
+- [x] Acceso rápido a herramientas (50+ herramientas en 9 categorías)
+- [x] Búsqueda e fichas por categoría, nivel, plataforma e precio
+- [x] Contador de herramientas en resultados
+- [x] Sección de información con formulario de solicitud de espacios
+- [x] Enlaces a programación de recursos del Laboratorio
 - [ ] Generador de formatos internos (F1, F2, F3, F4) con descarga en PDF
 - [ ] Sección de información centralizada y protocolos de préstamo
 - [ ] Enlaces a documentación y manuales de cámaras
@@ -16,10 +20,11 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 
 ### Corto Plazo
 
-- [ ] Sistema de búsqueda rápida dentro de la plataforma
+- [ ] Sistema de búsqueda rápida dentro de la plataforma (implementado pero puede mejorar)
 - [ ] Historial de formatos generados por el estudiante
-- [ ] Modo oscuro / claro
-- [ ] Responsive design para acceso desde dispositivos móviles
+- [x] Modo oscuro / claro (infraestructura lista con variables CSS)
+- [x] Responsive design para acceso desde dispositivos móviles
+- [ ] Mejorar accesibilidad (ARIA labels, navegación por teclado)
 
 ### Mediano Plazo
 
@@ -27,6 +32,7 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 - [ ] Calendario académico integrado
 - [ ] Sistema de reserva de equipos de la escuela
 - [ ] Notificaciones de fechas importantes y entregas
+- [ ] Panel de administración para gestionar herramientas
 
 ### Largo Plazo
 

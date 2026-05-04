@@ -4,14 +4,19 @@ Proyecto para los estudiantes de la Escuela de Cine y TV de la Universidad Nacio
 
 ## Características
 
-- **Acceso rápido a herramientas**: Vista con enlaces directos a las herramientas más comunes como DaVinci Resolve, Photopea, Blender, entre otros.
-- **Generador de formatos**: Generador de formatos internos usados en la escuela (F1, F2, F3, F4, etc.). El estudiante ingresa los datos y el generador permite descargar el formato en PDF.
-- **Información centralizada**: Espacio con protocolos de préstamo, información institucional y demás recursos.
-- **Documentación**: Enlaces a documentación relevante, manuales de cámaras y otros recursos técnicos.
+- **Acceso rápido a herramientas**: Catálogo de más de 50 herramientas organizadas por categorías (Edición, Diseño, Audio, 3D, VFX, Producción, Screenplay, Videojuegos, Encoders)
+- **Búsqueda y filtros**: Barra de búsqueda, filtros por categoría, nivel, plataforma y precio, con contador de resultados
+- **Información y protocolos**: Formulario de solicitud de espacios, horarios de estudios (TV, Animación, Cinematografía), programación de recursos
+- **Generador de formatos**: Próximamente - Generador de formatos internos (F1, F2, F3, F4) con descarga en PDF
+- **Documentación**: Próximamente - Manuales de cámaras, documentación técnica y guías de referencia
 
 ## Tecnologías
 
-_Por definir según el stack de desarrollo_
+- **Frontend**: HTML5, CSS3 (con variables CSS personalizadas)
+- **JavaScript**: Vanilla JS con módulos ES6+
+- **Testing**: Vitest con jsdom
+- **Calidad**: ESLint, Prettier
+- **Control de versiones**: Git
 
 ## Contribución
 
