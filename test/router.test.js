@@ -33,16 +33,20 @@ describe("Router", () => {
   });
 
   it("should register routes correctly", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
     router.register("formats", "formats-section");
+    router.register("docs", "docs-section");
 
+    expect(router.routes["info"]).toBe("info-section");
     expect(router.routes["tools"]).toBe("tools-section");
     expect(router.routes["formats"]).toBe("formats-section");
+    expect(router.routes["docs"]).toBe("docs-section");
   });
 
   it("should handle valid routes", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
-    router.register("formats", "formats-section");
 
     // Mock window.location.hash
     Object.defineProperty(window, "location", {
@@ -56,6 +60,7 @@ describe("Router", () => {
   });
 
   it("should fallback to default route for unknown hash", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
 
     Object.defineProperty(window, "location", {
@@ -65,34 +70,33 @@ describe("Router", () => {
 
     router.handleRoute();
 
-    // The router falls back to "tools" (the string), not "tools-section"
-    // Then it tries to getElementById("tools")
-    expect(document.getElementById).toHaveBeenCalledWith("tools");
+    // The router falls back to "info-section" (the default)
+    expect(document.getElementById).toHaveBeenCalledWith("info-section");
   });
 
   it("should toggle active class on sections", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
-    router.register("formats", "formats-section");
 
+    const infoSection = mockElements["info-section"];
     const toolsSection = mockElements["tools-section"];
-    const formatsSection = mockElements["formats-section"];
 
     // First navigation
+    Object.defineProperty(window, "location", {
+      value: { hash: "#info" },
+      writable: true,
+    });
+    router.handleRoute();
+    expect(infoSection.classList.add).toHaveBeenCalledWith("active");
+
+    // Second navigation - should remove from previous
     Object.defineProperty(window, "location", {
       value: { hash: "#tools" },
       writable: true,
     });
     router.handleRoute();
+    expect(infoSection.classList.remove).toHaveBeenCalledWith("active");
     expect(toolsSection.classList.add).toHaveBeenCalledWith("active");
-
-    // Second navigation - should remove from previous
-    Object.defineProperty(window, "location", {
-      value: { hash: "#formats" },
-      writable: true,
-    });
-    router.handleRoute();
-    expect(toolsSection.classList.remove).toHaveBeenCalledWith("active");
-    expect(formatsSection.classList.add).toHaveBeenCalledWith("active");
   });
 
   it("should handle missing section gracefully", () => {
@@ -110,11 +114,12 @@ describe("Router", () => {
   });
 
   it("should update nav-links active state", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
 
     const mockLinks = [
+      { getAttribute: vi.fn(() => "#info"), classList: { toggle: vi.fn() } },
       { getAttribute: vi.fn(() => "#tools"), classList: { toggle: vi.fn() } },
-      { getAttribute: vi.fn(() => "#formats"), classList: { toggle: vi.fn() } },
     ];
 
     Object.defineProperty(window, "location", {
@@ -128,12 +133,15 @@ describe("Router", () => {
 
     router.handleRoute();
 
-    expect(mockLinks[0].classList.toggle).toHaveBeenCalledWith("active", true);
-    expect(mockLinks[1].classList.toggle).toHaveBeenCalledWith("active", false);
+    expect(mockLinks[0].classList.toggle).toHaveBeenCalledWith("active", false);
+    expect(mockLinks[1].classList.toggle).toHaveBeenCalledWith("active", true);
   });
 
   it("should call handleRoute on init", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
+    router.register("formats", "formats-section");
+    router.register("docs", "docs-section");
 
     const handleRouteSpy = vi.spyOn(router, "handleRoute");
 
@@ -143,6 +151,7 @@ describe("Router", () => {
   });
 
   it("should use default route when hash is empty", () => {
+    router.register("info", "info-section");
     router.register("tools", "tools-section");
 
     Object.defineProperty(window, "location", {
@@ -154,6 +163,6 @@ describe("Router", () => {
 
     router.handleRoute();
 
-    expect(getElementByIdSpy).toHaveBeenCalledWith("tools-section");
+    expect(getElementByIdSpy).toHaveBeenCalledWith("info-section");
   });
 });

@@ -10,8 +10,8 @@ class Router {
   }
 
   handleRoute() {
-    const hash = window.location.hash.slice(1) || "tools";
-    const sectionId = this.routes[hash] || "tools";
+    const hash = window.location.hash.slice(1) || "info";
+    const sectionId = this.routes[hash] || "info-section";
 
     if (this.currentSection) {
       this.currentSection.classList.remove("active");
@@ -29,6 +29,10 @@ class Router {
   }
 
   init() {
+    this.register("info", "info-section");
+    this.register("tools", "tools-section");
+    this.register("formats", "formats-section");
+    this.register("docs", "docs-section");
     this.handleRoute();
   }
 }
