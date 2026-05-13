@@ -24,6 +24,17 @@
   },
   "rows": [
     {
+      "nombre": "EQUIPO  O ELEMENTO",
+      "elementos": "ELEMENTOS",
+      "condiciones": "CONDICIONES PREVIAS",
+      "descripcion": "DESCRIPCIÓN  FORMATO INVENTARIO",
+      "consecutivo": "CONSECUTIVO VIGENTE",
+      "placa": "PLACA NUEVA",
+      "estado": "ESTADO ACTUAL",
+      "observaciones": "OBSERVACIONES",
+      "categoria": "PROGRAMACIÓN DE RECURSOS LABIPROD"
+    },
+    {
       "nombre": "EQUIPO DE CÁMARA SONY NX5                                                       3",
       "elementos": "CÁMARA SONY HXR-NX5R Y ACCESORIOS",
       "condiciones": "BDCAMARAS  NX5 y NX3",
