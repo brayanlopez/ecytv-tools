@@ -38,7 +38,25 @@
 
         <div class="info-grid">
           <div class="info-card">
-            <h3>Formulario de Solicitud de Espacios</h3>
+            <div class="info-card-header">
+              <div class="info-card-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"
+                  />
+                  <rect x="9" y="3" width="6" height="4" rx="1" />
+                  <path d="M9 14l2 2 4-4" />
+                </svg>
+              </div>
+              <h3>Formulario de Solicitud de Espacios</h3>
+            </div>
             <p>
               Solicita acceso a los espacios especializados del Laboratorio de
               Instrumentos de Producción Audiovisual
@@ -102,35 +120,7 @@
             </a>
           </div>
 
-          <div class="info-card">
-            <h3>Programación de Recursos - Lab Postproducción</h3>
-            <p>
-              Consulta la programación y disponibilidad de recursos del
-              Laboratorio de Instrumentos de Postproducción Audiovisual ECYTV
-            </p>
-            <a
-              href="https://docs.google.com/spreadsheets/d/1u4cfFvPECXx5_JnI-pOgZQqinnuIjqmEvAp8oM7mUsM/edit?gid=1531050182#gid=1531050182"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              Ver Programación
-            </a>
-          </div>
-
-          <div class="info-card">
-            <h3>Programación de Recursos - Lab Instrumentos</h3>
-            <p>
-              Consulta la programación de recursos del Laboratorio de
-              Instrumentos de Producción Audiovisual ECYTV
-            </p>
-            <a
-              href="https://docs.google.com/spreadsheets/d/1nqyVg4sEEuFZ2nzEO8Z6SuVAmS7wdmWkl2mBurK_97U/edit?gid=1430987387#gid=1430987387"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              Ver Programación
-            </a>
-          </div>
+          <div id="info-card-list"></div>
         </div>
       </section>
 

@@ -1,7 +1,9 @@
 import router from "./router.js";
 import toolsRenderer from "./tools-renderer.js";
+import { renderInfoCards } from "./info-renderer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  renderInfoCards();
   toolsRenderer.init();
   router.init();
   initTheme();

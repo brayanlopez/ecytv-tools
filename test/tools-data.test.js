@@ -35,7 +35,7 @@ describe("Tools Data", () => {
   });
 
   it("should have valid platform values", () => {
-    const validPlatforms = ["windows", "mac", "linux", "web", "mobile"];
+    const validPlatforms = ["windows", "mac", "linux", "web", "mobile", "ipad"];
 
     tools.forEach((tool) => {
       expect(Array.isArray(tool.platform)).toBe(true);
