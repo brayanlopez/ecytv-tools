@@ -1,8 +1,10 @@
 import router from "./router.js";
 import toolsRenderer from "./tools-renderer.js";
+import docsRenderer from "./docs-renderer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   toolsRenderer.init();
+  docsRenderer.init();
   router.init();
   initTheme();
   initHamburger();

@@ -13,8 +13,8 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 - [x] Sección de información con formulario de solicitud de espacios
 - [x] Enlaces a programación de recursos del Laboratorio
 - [ ] Generador de formatos internos (F1, F2, F3, F4) con descarga en PDF
-- [ ] Sección de información centralizada y protocolos de préstamo
-- [ ] Enlaces a documentación y manuales de cámaras
+- [x] Sección de información centralizada y protocolos de préstamo
+- [x] Enlaces a documentación y manuales de cámaras
 
 ## Propuestas y Mejoras Futuras
 

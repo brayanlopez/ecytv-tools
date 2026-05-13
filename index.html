@@ -15,7 +15,7 @@
           <li><a href="#info" class="active">Información</a></li>
           <li><a href="#tools" class="">Herramientas</a></li>
           <li><a href="#formats" class="coming-soon">Formatos</a></li>
-          <li><a href="#docs" class="coming-soon">Documentación</a></li>
+          <li><a href="#docs">Documentación</a></li>
         </ul>
         <button
           id="theme-toggle"
@@ -38,7 +38,16 @@
 
         <div class="info-grid">
           <div class="info-card">
-            <h3>Formulario de Solicitud de Espacios</h3>
+            <div class="info-card-header">
+              <div class="info-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                  <rect x="9" y="3" width="6" height="4" rx="1"/>
+                  <path d="M9 14l2 2 4-4"/>
+                </svg>
+              </div>
+              <h3>Formulario de Solicitud de Espacios</h3>
+            </div>
             <p>
               Solicita acceso a los espacios especializados del Laboratorio de
               Instrumentos de Producción Audiovisual
@@ -103,7 +112,19 @@
           </div>
 
           <div class="info-card">
-            <h3>Programación de Recursos - Lab Postproducción</h3>
+            <div class="info-card-header">
+              <div class="info-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="M2 8h20"/>
+                  <path d="M6 4l-2 4"/>
+                  <path d="M10 4l-2 4"/>
+                  <path d="M14 4l-2 4"/>
+                  <path d="M18 4l-2 4"/>
+                </svg>
+              </div>
+              <h3>Programación de Recursos - Lab Postproducción</h3>
+            </div>
             <p>
               Consulta la programación y disponibilidad de recursos del
               Laboratorio de Instrumentos de Postproducción Audiovisual ECYTV
@@ -118,7 +139,15 @@
           </div>
 
           <div class="info-card">
-            <h3>Programación de Recursos - Lab Instrumentos</h3>
+            <div class="info-card-header">
+              <div class="info-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+              <h3>Programación de Recursos - Lab Instrumentos</h3>
+            </div>
             <p>
               Consulta la programación de recursos del Laboratorio de
               Instrumentos de Producción Audiovisual ECYTV
@@ -149,11 +178,13 @@
       </section>
 
       <section id="docs-section" class="section">
-        <h1>Documentación</h1>
+        <h1>Documentación y Manuales</h1>
         <p>
-          Próximamente: Manuales de cámaras, documentación técnica y guías de
-          referencia.
+          Manuales de equipos, guías de referencia y documentación técnica del
+          Laboratorio de Instrumentos de Producción Audiovisual ECYTV
         </p>
+        <div id="docs-filter-bar" class="filter-bar"></div>
+        <div id="docs-grid" class="docs-grid"></div>
       </section>
     </main>
 
