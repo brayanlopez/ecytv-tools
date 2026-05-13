@@ -1,0 +1,749 @@
+{
+  "meta": {
+    "fuente": "Formato Programacion Recursos - LABIPROD ECYTV",
+    "descripcion": "Inventario detallado con informacion especifica de la escuela: estados, placas, restricciones de prestamo, autorizaciones especiales.",
+    "fecha": "2026-05-12"
+  },
+  "items": [
+    {
+      "equipo_id": "eq-001",
+      "nombre": "ADAPTADOR ACTIVO XLR a TRS 1/8 EXTERNO INDIV",
+      "modelo": "PREAMP BEACHTEK (PHANTOM)",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "CANA GITZO G556 3 SECIONES",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-002",
+      "nombre": "ADAPTADOR LENTES CANON EF - MONTURA E",
+      "modelo": "METABONES SMART ADAPTER MARK V",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-003",
+      "nombre": "ADAPTADOR LENTES NIKON - MONTURA E",
+      "modelo": "NOVOFLEX ADAPTER FOR NIKON F LENS TO SONY E-MOUNT CAMERA",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-004",
+      "nombre": "AURICULARES ESPECIALES INDIV",
+      "modelo": "DIADEMA DE AURICULARES SENNHEISER 280 PRO",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Accesorios de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-005",
+      "nombre": "AURICULARES SONY MDR",
+      "modelo": "SONY",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-006",
+      "nombre": "CABLE DE RESTORNO,CANARE 2,SECCIONES",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "CANA GITZO G556 3 SECIONES",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-007",
+      "nombre": "CANA 5 SECCIONES INDV",
+      "modelo": "CANA GITZO G557 4 SECCIONES",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Canas de Microfono",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-008",
+      "nombre": "CANA 6 SECCIONES INDIV",
+      "modelo": "K-TEK 152",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Canas de Microfono",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-009",
+      "nombre": "CANA AURAY 5 SECCIONES",
+      "modelo": "16046-CANA TELESCOPICA 2368153 NA 1-ACTIVO,MODELO-58B OBSERVACIONES AURAY,ROPIEDAD DEL BIEN,OBSERVACION4,OBSERVACION1,OBSERVACION3,MARCA,CANTIDAD,DESCRIPCION CANA O POSTE DE PLUMA TELESCOPICA,",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-010",
+      "nombre": "CANA GITZO G556 3 SECIONES",
+      "modelo": "GITZO - GB530",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Audio Simple",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-011",
+      "nombre": "CANA GITZO G557 4 SECCIONES",
+      "modelo": "GITZO - G557",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-012",
+      "nombre": "CAPSULA COUNTRYMAN B3",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Microfonos Lavalier",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-013",
+      "nombre": "CAPSULA OMNI SENNHEISER ME",
+      "modelo": "SENNHEISER - ME66 K6.",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-014",
+      "nombre": "CAPSULA SENNHEISER ME",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sistemas Inalambricos",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-015",
+      "nombre": "CARTA DE COLOR PORTATIL INDIV",
+      "modelo": "X-RITE COLOR CHECKER PASSPORT VIDEO",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Equipos de Medicion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-016",
+      "nombre": "CHIMERA ARRI",
+      "modelo": "ACCESORIO ARRILITE 750 PLUS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grip y Soportes",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-017",
+      "nombre": "COLORIMETRO DIGITAL INDIV",
+      "modelo": "SEKONIC C500",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Equipos de Medicion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-018",
+      "nombre": "CORREA ENG CORTA",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "CANA GITZO G556 3 SECIONES",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-019",
+      "nombre": "DECAMETRO PROFESIONAL",
+      "modelo": "KOMELON 50M/165'",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Equipos de Medicion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-020",
+      "nombre": "DOLLY RUEDAS PLEGABLE INDIV",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Tripodes",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-021",
+      "nombre": "EQUIPO APUNTADOR",
+      "modelo": "SISTEMA INALAMBRICO SONY UTXB1",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Microfonos",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-022",
+      "nombre": "EQUIPO CABLE BREAKAWAY",
+      "modelo": "CABLE DE RESTORNO, CANARE, 2 SECCIONES",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "CANA GITZO G556 3 SECIONES",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-023",
+      "nombre": "EQUIPO CAMARA CINE ARRI",
+      "modelo": "CAMARA DE CINE ARRI",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Cine",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-024",
+      "nombre": "EQUIPO CAMARA CINE BOLEX",
+      "modelo": "CAMARA BOLEX",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Cine",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-025",
+      "nombre": "EQUIPO CAMARA CONSUMER",
+      "modelo": "CAMARA SONY CX 406 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-026",
+      "nombre": "EQUIPO CAMARA ESTEREOSCOPICA SONY HXR-NX3D1N",
+      "modelo": "CAMARA ESTEREOSCOPICA SONY HXR-NX3D1N Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-027",
+      "nombre": "EQUIPO CAPSULAS ESPECIALES",
+      "modelo": "CAPSULA COUNTRYMAN B6",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Microfonos Lavalier",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-028",
+      "nombre": "EQUIPO CLAQUETA TRADICIONAL INDIV",
+      "modelo": "CLAQUETA TRADICIONAL",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sincronizacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-029",
+      "nombre": "EQUIPO CODIGO DE TIEMPO",
+      "modelo": "CLAQUETA ELECTRONICA DENECKE TS-3",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sincronizacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-030",
+      "nombre": "EQUIPO DE AUDIO BASICO",
+      "modelo": "MICROFONO SENNHEISERK6 + ME-66 (Canon)",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Audio Simple",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-031",
+      "nombre": "EQUIPO DE AUDIO SISTEMA SIMPLE",
+      "modelo": "MEZCLADOR DE SONIDO SOUND DEVICES 302 con estuche PORTA BRACE",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "CANA GITZO G556 3 SECIONES",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-032",
+      "nombre": "EQUIPO DE CAMARA",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-033",
+      "nombre": "EQUIPO DE CAMARA 3D",
+      "modelo": "CAMCORDER SONY HXR-NX3DN, Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-034",
+      "nombre": "EQUIPO DE CAMARA DE VIDEO GOPRO",
+      "modelo": "CAMARA DE VIDEO GOPRO Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-035",
+      "nombre": "EQUIPO DE CAMARA DSRL CANON",
+      "modelo": "CAMARA DSRL CANON EOS T6 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras Fotograficas",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-036",
+      "nombre": "EQUIPO DE CAMARA DSRL SONY",
+      "modelo": "CAMARA DSRL SONY A700 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras Fotograficas",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-037",
+      "nombre": "EQUIPO DE CAMARA SONY F5",
+      "modelo": "CAMARA SONY PMW F5 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-038",
+      "nombre": "EQUIPO DE CAMARA SONY FS5",
+      "modelo": "CAMARA SONY PXW-FS5K",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-039",
+      "nombre": "EQUIPO DE CAMARA SONY FS7",
+      "modelo": "CAMARA SONY PXW-FS7 Y OPTICAS ROKINON",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-040",
+      "nombre": "EQUIPO DE CAMARA SONY NEX-EA50",
+      "modelo": "CAMARA SONY NEX-EA50H Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-041",
+      "nombre": "EQUIPO DE CAMARA SONY NX3",
+      "modelo": "CAMARA SONY HXR-NX3N Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-042",
+      "nombre": "EQUIPO DE CAMARA SONY NX5",
+      "modelo": "CAMARA SONY HXR-NX5R Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-043",
+      "nombre": "EQUIPO DE CAMARA SONY PXW-Z90",
+      "modelo": "CAMARA SONY PXW-Z90 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-044",
+      "nombre": "EQUIPO DE LUMINARIAS ARRI DE",
+      "modelo": "ARRI COMPACT 650W KIT 3 LUMINARIAS FRESNEL Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Iluminacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-045",
+      "nombre": "EQUIPO GENERADOR TC ADICIONAL",
+      "modelo": "GENERADOR TC DENECKE JB-1",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sincronizacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-046",
+      "nombre": "EQUIPO GRABADORA M/S",
+      "modelo": "GRABADORA ZOOM H2N Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras Portatiles",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-047",
+      "nombre": "EQUIPO LUMINARIAS OPEN FACE 1000W",
+      "modelo": "EQUIPO DE 3 LUMINARIAS ARRI",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Iluminacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-048",
+      "nombre": "EQUIPO LUMINARIAS OPEN FACE 650W",
+      "modelo": "EQUIPO DE 4 LUMINARIAS LOWEL DP",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Iluminacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-049",
+      "nombre": "EQUIPO REGISTRO DE AUDIO 2 CANALES",
+      "modelo": "GRABADORA TASCAM HD-P2 con estuche PORTA BRACE",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-050",
+      "nombre": "EQUIPO REGISTRO DE AUDIO 6 CANALES",
+      "modelo": "GRABADORA SOUND DEVICES 833 Y ACCESORIOS",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-051",
+      "nombre": "EQUIPO RF DIVERSITY",
+      "modelo": "SISTEMA DIVERSITY SENNHEISER EK 3041-U Y SK 1063-U 1",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sistemas Inalambricos",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-052",
+      "nombre": "EQUIPO SOCKET PARA BOMBILLAS TRADICIONALES",
+      "modelo": "LOWEL 4 SOCKET KTL",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Iluminacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-053",
+      "nombre": "EQUIPO TRIPODE",
+      "modelo": "TRIPODE Y CABEZA DE CAMARA MANFROTTO 501",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Tripodes",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-054",
+      "nombre": "EQUIPO TRIPODE 501 HDV",
+      "modelo": "TRIPODE Y CABEZA DE CAMARA MANFROTTO 501 HDV",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Tripodes",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-055",
+      "nombre": "ESTUCHE PARA EL TRIPOD BABY",
+      "modelo": "SACHETLER",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-056",
+      "nombre": "EXPOSIMETRO ANALOGICO INDIV",
+      "modelo": "SEKONIC L-398A STUDIO DELUXE III LIGHT METER",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Equipos de Medicion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-057",
+      "nombre": "EXPOSIMETRO DIGITAL INDIV",
+      "modelo": "SEKONIC l-758CINE",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Equipos de Medicion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-058",
+      "nombre": "GENERADOR TC DENECKE SB-3",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Sincronizacion",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-059",
+      "nombre": "JUEGO DE OPTICAS CAMARA BOLEX",
+      "modelo": "BDCAMARA BOLEX AUTORIZACION ESPECIAL",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Cine",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-060",
+      "nombre": "MEZCLADOR DE SONIDO SOUND DEVICES 302 con estuche CAMRADE",
+      "modelo": "SOUND - 302",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-061",
+      "nombre": "MICROFONO SENNHEISER MKH 416 P48",
+      "modelo": "SENNHEISER - MKH416",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-062",
+      "nombre": "MICROFONO SENNHEISERK6 + ME-66 (Canon)",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-063",
+      "nombre": "MICROFONO SM58 INDIV",
+      "modelo": "MICROFONO SHURE SM-58",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Microfonos",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-064",
+      "nombre": "MONITOR DE AUDIO INV",
+      "modelo": "UN ALTAVOZ AUTOAMPLIFICADO YAMAHA",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Microfonos",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-065",
+      "nombre": "SISTEMA INALAMBRICO SENNHEISER EW100- G3",
+      "modelo": "MARCA; SENHHEISER,CANTIDAD 1,OBSERVACION1:ONCLUYE CABLES; OBSERVACIONES3; RECEPTOR EK 100-SERIE 4456002331, OBSERVACION4; TRANSMISOR SK 100-SERI 4456003121, OBSERVACIONES : CAPSULA ME2-DESCRIPCION:SITEMA DE CMOCIROFNO,",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Audio Simple",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-066",
+      "nombre": "SISTEMA INALAMBRICO SENNHEISER EW100- G4",
+      "modelo": "SENNHEISER",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Audio Simple",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-067",
+      "nombre": "SOPORTE TRIPODE WEIFENG MODELO WT-3770",
+      "modelo": "BD PROTOCOLO GENERAL DE PRESTAMO",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras Fotograficas",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-068",
+      "nombre": "SUPERFICIE CONTROLADORA PLATFORM M+ Y ACCESORIOS",
+      "modelo": "PLATFORMM,OBSERVACIONES, INCLUYE:SOFTWARE FOR MIDI MAPPING,DESCRIPCION,MODULAR CONSTRUCTION FOR EXPANDABILITY 8 TOUUCH-SENSITIVE,",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-069",
+      "nombre": "SUSPENSION AUDIO TECHNICA AT8415 Y CABLE INTERMEDIARIO XLR 3 (RIGHT ANGLE) CODO",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Grabadoras de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-070",
+      "nombre": "TECLADO PARA GRABADORA HD-P2",
+      "modelo": "TECLADO HP/PS2",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Accesorios de Audio",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-071",
+      "nombre": "TRIPODE",
+      "modelo": "",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-072",
+      "nombre": "TRIPODE WEIFENG MODELO WT-3770",
+      "modelo": "BD PROTOCOLO GENERAL DE PRESTAMO",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-073",
+      "nombre": "TRIPODE Y CABEZA DE CAMARA MANFROTTO 509 HD",
+      "modelo": "545GB",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    },
+    {
+      "equipo_id": "eq-074",
+      "nombre": "TRIPODE Y CABEZA DE CAMARA MANFROTTO MVH500A",
+      "modelo": "MANFROTTO - MVT502AM",
+      "estado": "",
+      "consecutivo": "",
+      "placa_nueva": "",
+      "categoria_original": "Camaras de Video",
+      "restricciones_escuela": []
+    }
+  ]
+}
