@@ -209,6 +209,38 @@ nav .container {
   cursor: not-allowed;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  z-index: 101;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .section {
   display: none;
   padding: 2rem 0;
@@ -247,45 +279,55 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
   nav .container {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
     flex-direction: column;
     align-items: stretch;
+    padding: 0.75rem 0 0.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.75rem;
+    gap: 0.25rem;
   }
 
-  .logo {
-    text-align: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-links {
-    gap: 0.5rem;
-    justify-content: center;
-    padding: 0.25rem 0;
-  }
-
-  .nav-links a {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.6rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
+  .nav-links.active {
+    display: flex;
   }
 
   .nav-links a {
     width: 100%;
+    display: block;
     text-align: center;
-    padding: 0.6rem;
+    padding: 0.7rem;
+    font-size: 1rem;
     border-radius: var(--radius);
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  .nav-links .coming-soon:hover {
+    background: transparent;
+    color: var(--text-primary);
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
   }
 }
