@@ -317,13 +317,6 @@
   font-size: 1.1rem;
 }
 
-.no-results {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-}
-
 @media (max-width: 640px) {
   .tools-grid {
     grid-template-columns: 1fr;

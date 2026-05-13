@@ -133,7 +133,8 @@ const tools = [
     id: "avid-media-composer",
     name: "Avid Media Composer",
     url: "https://www.avid.com/media-composer",
-    description: "Editor de video profesional estándar de la industria cinematográfica",
+    description:
+      "Editor de video profesional estándar de la industria cinematográfica",
     category: "Edición",
     pricing: "paid",
     platform: ["windows", "mac"],
@@ -369,7 +370,8 @@ const tools = [
     id: "clickteam-fusion",
     name: "Clickteam Fusion 2.5",
     url: "https://www.clickteam.com/clickteam-fusion-2-5",
-    description: "Motor para principiantes, bueno para intermedios, limitado para proyectos grandes",
+    description:
+      "Motor para principiantes, bueno para intermedios, limitado para proyectos grandes",
     category: "Videojuegos",
     pricing: "paid",
     platform: ["windows"],
@@ -406,11 +408,11 @@ const tools = [
   },
 
   {
-
     id: "maya",
     name: "Maya",
     url: "https://www.autodesk.com/products/maya",
-    description: "Software profesional para modelado, animación y renderizado 3D",
+    description:
+      "Software profesional para modelado, animación y renderizado 3D",
     category: "3D",
     pricing: "paid",
     platform: ["windows", "mac", "linux"],
@@ -423,7 +425,8 @@ const tools = [
     id: "houdini",
     name: "Houdini",
     url: "https://www.sidefx.com/products/houdini/",
-    description: "Software avanzado para efectos visuales y animación 3D procedural",
+    description:
+      "Software avanzado para efectos visuales y animación 3D procedural",
     category: "3D",
     pricing: "freemium",
     platform: ["windows", "mac", "linux"],
@@ -641,7 +644,7 @@ const tools = [
     alternatives: ["figma", "canva"],
     icon: "assets/icons/default.svg",
   },
-    {
+  {
     id: "adobe-bridge",
     name: "Adobe Bridge",
     url: "https://www.adobe.com/products/bridge.html",
@@ -658,7 +661,8 @@ const tools = [
     id: "affinity",
     name: "Affinity",
     url: "https://www.affinity.studio/es_es",
-    description: "Suite de diseño profesional: vector, foto y maquetación. Alternativa a Adobe.",
+    description:
+      "Suite de diseño profesional: vector, foto y maquetación. Alternativa a Adobe.",
     category: "Diseño",
     pricing: "paid",
     platform: ["windows", "mac", "ipad"],
