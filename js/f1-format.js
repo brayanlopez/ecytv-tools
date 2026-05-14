@@ -8,11 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const ASIGNATURAS_SUGERIDAS = [
-    "Sonido I", "Sonido II",
-    "Taller de Realización y Producción I", "Taller de Realización y Producción II",
-    "Taller de Realización y Producción III", "Taller de Realización y Producción IV",
-    "Taller de realización y producción V", "Cinefotografía I ",
-    "Cinefotografía II", "Dirección de Arte", "Dirección de Actores I",
+    "Sonido I",
+    "Sonido II",
+    "Taller de Realización y Producción I",
+    "Taller de Realización y Producción II",
+    "Taller de Realización y Producción III",
+    "Taller de Realización y Producción IV",
+    "Taller de realización y producción V",
+    "Cinefotografía I ",
+    "Cinefotografía II",
+    "Dirección de Arte",
+    "Dirección de Actores I",
     "Dirección de Actores II",
   ];
   const datalist = document.getElementById("asignaturas-sugeridas");
@@ -90,7 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.borderColor = "";
       }
     });
-    if (!valid) alert("Por favor completa todos los campos obligatorios.");
+    if (!valid)
+      window.EcytvUI.showSnackbar(
+        "Por favor completa todos los campos obligatorios.",
+        "warning",
+      );
     return valid;
   }
 
@@ -122,7 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function saveToHistory() {
     const data = collectFormData();
     if (!data.proyecto.trim() && !data.responsable.trim()) {
-      alert("Completa al menos el nombre del proyecto y el responsable antes de guardar.");
+      window.EcytvUI.showSnackbar(
+        "Completa al menos el nombre del proyecto y el responsable antes de guardar.",
+        "warning",
+      );
       return;
     }
     const history = JSON.parse(localStorage.getItem("f1-history") || "[]");
@@ -135,7 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (history.length > 20) history.length = 20;
     localStorage.setItem("f1-history", JSON.stringify(history));
     renderHistory(history);
-    alert("Solicitud guardada en el historial.");
+    window.EcytvUI.showSnackbar(
+      "Solicitud guardada en el historial.",
+      "success",
+    );
   }
 
   function loadHistory() {
@@ -155,11 +171,16 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((entry) => {
         const d = new Date(entry.savedAt);
         const dateStr = d.toLocaleDateString("es-CO", {
-          year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
         });
         const title = entry.data.proyecto || "(sin proyecto)";
         const subtitle = entry.data.responsable
-          ? entry.data.responsable + (entry.data.asignatura ? " — " + entry.data.asignatura : "")
+          ? entry.data.responsable +
+            (entry.data.asignatura ? " — " + entry.data.asignatura : "")
           : "";
         return `<div class="history-entry">
           <div class="history-entry-info">
@@ -227,9 +248,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const equipos = d.equipos || [];
     equipos.forEach((eq, idx) => {
       if (idx === 0 && firstRow) {
-        firstRow.querySelector('input[name="equipo-item"]').value = eq.item || "";
-        firstRow.querySelector('input[name="equipo-nombre"]').value = eq.nombre || "";
-        firstRow.querySelector('input[name="equipo-consecutivo"]').value = eq.consecutivo || "";
+        firstRow.querySelector('input[name="equipo-item"]').value =
+          eq.item || "";
+        firstRow.querySelector('input[name="equipo-nombre"]').value =
+          eq.nombre || "";
+        firstRow.querySelector('input[name="equipo-consecutivo"]').value =
+          eq.consecutivo || "";
       } else {
         const row = document.createElement("tr");
         row.className = "equip-row";
@@ -260,7 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(tbody.querySelectorAll(".equip-row")).map((row) => ({
       item: row.querySelector('input[name="equipo-item"]').value || "",
       nombre: row.querySelector('input[name="equipo-nombre"]').value || "",
-      consecutivo: row.querySelector('input[name="equipo-consecutivo"]').value || "",
+      consecutivo:
+        row.querySelector('input[name="equipo-consecutivo"]').value || "",
     }));
   }
 
@@ -269,7 +294,10 @@ document.addEventListener("DOMContentLoaded", () => {
     saveToHistory();
 
     if (!window.jspdf || !window.jspdf.jsPDF) {
-      alert("Error al cargar la librería PDF. Verifica tu conexión a internet.");
+      window.EcytvUI.showSnackbar(
+        "Error al cargar la librería PDF. Verifica tu conexión a internet.",
+        "error",
+      );
       return;
     }
     const { jsPDF } = window.jspdf;
@@ -307,7 +335,9 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#ffffff");
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text("Solicitud de Reserva y Prestamo de Equipos", 105, 12, { align: "center" });
+    doc.text("Solicitud de Reserva y Prestamo de Equipos", 105, 12, {
+      align: "center",
+    });
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.text("Formato F1", 105, 20, { align: "center" });
@@ -315,22 +345,54 @@ document.addEventListener("DOMContentLoaded", () => {
     let yPos = 36;
 
     yPos = sectionHeader("1. INFORMACION DEL PROYECTO", yPos);
-    yPos = fieldRow("Nombre del proyecto", document.getElementById("proyecto").value, yPos);
-    yPos = fieldRow("Asignatura", document.getElementById("asignatura").value, yPos);
-    yPos = fieldRow("Docente que autoriza", document.getElementById("docente").value, yPos);
+    yPos = fieldRow(
+      "Nombre del proyecto",
+      document.getElementById("proyecto").value,
+      yPos,
+    );
+    yPos = fieldRow(
+      "Asignatura",
+      document.getElementById("asignatura").value,
+      yPos,
+    );
+    yPos = fieldRow(
+      "Docente que autoriza",
+      document.getElementById("docente").value,
+      yPos,
+    );
     yPos += 4;
 
     yPos = sectionHeader("2. DATOS DEL RESPONSABLE", yPos);
-    yPos = fieldRow("Nombre del responsable", document.getElementById("responsable").value, yPos);
+    yPos = fieldRow(
+      "Nombre del responsable",
+      document.getElementById("responsable").value,
+      yPos,
+    );
     yPos = fieldRow("Celular", document.getElementById("celular").value, yPos);
     yPos = fieldRow("TIUN", document.getElementById("tiun").value, yPos);
     yPos += 4;
 
     yPos = sectionHeader("3. INFORMACION DEL PRESTAMO", yPos);
-    yPos = fieldRow("Lugar de grabacion", document.getElementById("lugar").value, yPos);
-    yPos = fieldRow("Tipo de prestamo", document.getElementById("tipo-prestamo").value, yPos);
-    yPos = fieldRow("Fecha y hora de retiro", document.getElementById("fecha-retiro").value.replace("T", " "), yPos);
-    yPos = fieldRow("Fecha y hora de entrega", document.getElementById("fecha-entrega").value.replace("T", " "), yPos);
+    yPos = fieldRow(
+      "Lugar de grabacion",
+      document.getElementById("lugar").value,
+      yPos,
+    );
+    yPos = fieldRow(
+      "Tipo de prestamo",
+      document.getElementById("tipo-prestamo").value,
+      yPos,
+    );
+    yPos = fieldRow(
+      "Fecha y hora de retiro",
+      document.getElementById("fecha-retiro").value.replace("T", " "),
+      yPos,
+    );
+    yPos = fieldRow(
+      "Fecha y hora de entrega",
+      document.getElementById("fecha-entrega").value.replace("T", " "),
+      yPos,
+    );
     yPos += 4;
 
     yPos = sectionHeader("4. EQUIPOS A SOLICITAR", yPos);
@@ -358,14 +420,19 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#222222");
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    const obs = document.getElementById("observaciones").value || "(sin observaciones)";
+    const obs =
+      document.getElementById("observaciones").value || "(sin observaciones)";
     const lines = doc.splitTextToSize(obs, 178);
     doc.text(lines, 16, yPos + 3);
     yPos = yPos + 3 + lines.length * 4 + 6;
 
     const now = new Date();
     const dateStr = now.toLocaleDateString("es-CO", {
-      year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
     doc.setFontSize(7);
     doc.setTextColor("#999999");
@@ -393,7 +460,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const TEXT_NS = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
 
       const tables = xmlDoc.getElementsByTagNameNS(TABLE_NS, "table");
-      if (!tables.length) throw new Error("No se encontró la tabla en la plantilla");
+      if (!tables.length)
+        throw new Error("No se encontró la tabla en la plantilla");
       const table = tables[0];
       const rows = table.getElementsByTagNameNS(TABLE_NS, "table-row");
 
@@ -430,11 +498,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 1. Proyecto info (row 6)
-      setCellOnRow(rowRefs.proyecto, 2, document.getElementById("proyecto").value);
-      setCellOnRow(rowRefs.proyecto, 4, document.getElementById("asignatura").value);
+      setCellOnRow(
+        rowRefs.proyecto,
+        2,
+        document.getElementById("proyecto").value,
+      );
+      setCellOnRow(
+        rowRefs.proyecto,
+        4,
+        document.getElementById("asignatura").value,
+      );
 
       // 2. Responsable (row 7)
-      setCellOnRow(rowRefs.responsable, 2, document.getElementById("responsable").value);
+      setCellOnRow(
+        rowRefs.responsable,
+        2,
+        document.getElementById("responsable").value,
+      );
       const tiun = document.getElementById("tiun").value;
       setCellOnRow(rowRefs.responsable, 4, tiun);
 
@@ -493,14 +573,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 7. Observaciones (row 30) — before extra row inserts to avoid index shift
-      setCellOnRow(rowRefs.observaciones, 2, document.getElementById("observaciones").value);
+      setCellOnRow(
+        rowRefs.observaciones,
+        2,
+        document.getElementById("observaciones").value,
+      );
 
       // 8. Docente que autoriza (row 31)
-      setCellOnRow(rowRefs.docente, 2, document.getElementById("docente").value);
+      setCellOnRow(
+        rowRefs.docente,
+        2,
+        document.getElementById("docente").value,
+      );
       setCellOnRow(rowRefs.docente, 4, "_________________________");
 
       // 9. NOMBRE y C.C. (rows 35-36)
-      setCellOnRow(rowRefs.nombre, 2, "NOMBRE: " + document.getElementById("responsable").value);
+      setCellOnRow(
+        rowRefs.nombre,
+        2,
+        "NOMBRE: " + document.getElementById("responsable").value,
+      );
       setCellOnRow(rowRefs.cc, 1, "C.C.: " + tiun);
 
       // 10. Extra equipment rows if > 14 items
@@ -510,7 +602,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let i = 14; i < equipData.length; i++) {
           const newRow = xmlDoc.importNode(templateRow, true);
-          const newCells = newRow.getElementsByTagNameNS(TABLE_NS, "table-cell");
+          const newCells = newRow.getElementsByTagNameNS(
+            TABLE_NS,
+            "table-cell",
+          );
           for (let ci = 0; ci < newCells.length; ci++) {
             const ps = newCells[ci].getElementsByTagNameNS(TEXT_NS, "p");
             for (let pi = 0; pi < ps.length; pi++) ps[pi].textContent = "";
@@ -534,7 +629,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Serialize XML (use documentElement to avoid extra XML declaration)
       const serializer = new XMLSerializer();
-      const newContentXml = serializer.serializeToString(xmlDoc.documentElement);
+      const newContentXml = serializer.serializeToString(
+        xmlDoc.documentElement,
+      );
 
       // Update zip
       zip.file("content.xml", newContentXml);
@@ -550,7 +647,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (err) {
-      alert("Error al generar el archivo ODS: " + err.message);
+      window.EcytvUI.showSnackbar(
+        "Error al generar el archivo ODS: " + err.message,
+        "error",
+      );
     }
   }
 
@@ -652,7 +752,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const out = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      const blob = new Blob([out], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const blob = new Blob([out], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -662,7 +764,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (err) {
-      alert("Error al generar el archivo XLSX: " + err.message);
+      window.EcytvUI.showSnackbar(
+        "Error al generar el archivo XLSX: " + err.message,
+        "error",
+      );
     }
   }
 });

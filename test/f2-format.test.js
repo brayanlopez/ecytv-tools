@@ -11,13 +11,13 @@ describe("F2 Format", () => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(
       (key) => localStorageMock[key] ?? null,
     );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation(
-      (key, value) => { localStorageMock[key] = value; },
-    );
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation(
-      (key) => { delete localStorageMock[key]; },
-    );
-    vi.spyOn(window, "alert").mockReturnValue();
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
+      localStorageMock[key] = value;
+    });
+    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
+      delete localStorageMock[key];
+    });
+    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
     Element.prototype.scrollIntoView = vi.fn();
 
     Object.defineProperty(window, "location", {
@@ -25,11 +25,13 @@ describe("F2 Format", () => {
       writable: true,
     });
 
-    vi.spyOn(document, "addEventListener").mockImplementation((event, handler) => {
-      if (event === "DOMContentLoaded") {
-        domReadyHandler = handler;
-      }
-    });
+    vi.spyOn(document, "addEventListener").mockImplementation(
+      (event, handler) => {
+        if (event === "DOMContentLoaded") {
+          domReadyHandler = handler;
+        }
+      },
+    );
 
     document.body.innerHTML = `
       <nav>
@@ -133,8 +135,9 @@ describe("F2 Format", () => {
   describe("validate()", () => {
     it("should return false when required fields are empty", () => {
       document.getElementById("btn-pdf").click();
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
         "Por favor completa todos los campos obligatorios.",
+        "warning",
       );
     });
 
@@ -158,9 +161,10 @@ describe("F2 Format", () => {
       document.getElementById("fecha-constancia").value = "2026-01-15";
 
       document.getElementById("btn-pdf").click();
-      const lastCallArgs = window.alert.mock.calls;
+      const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
-        (args) => args[0] === "Por favor completa todos los campos obligatorios.",
+        (args) =>
+          args[0] === "Por favor completa todos los campos obligatorios.",
       );
       expect(hasValidationError).toBe(false);
     });
@@ -179,13 +183,17 @@ describe("F2 Format", () => {
       document.getElementById("observaciones").value = "Test obs";
 
       document.getElementById("btn-save").click();
-      expect(window.alert).toHaveBeenCalledWith("Acta guardada en el historial.");
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
+        "Acta guardada en el historial.",
+        "success",
+      );
     });
 
     it("should skip save if nombre is empty", () => {
       document.getElementById("btn-save").click();
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
         "Completa al menos el nombre antes de guardar.",
+        "warning",
       );
     });
   });
@@ -213,7 +221,9 @@ describe("F2 Format", () => {
 
       expect(document.getElementById("nombre").value).toBe("Juan Pérez");
       expect(document.getElementById("tipo-documento").value).toBe("CC");
-      expect(document.getElementById("numero-documento").value).toBe("123456789");
+      expect(document.getElementById("numero-documento").value).toBe(
+        "123456789",
+      );
     });
 
     it("should delete history entries", () => {
@@ -225,7 +235,9 @@ describe("F2 Format", () => {
       deleteBtns[0].click();
 
       expect(JSON.parse(localStorageMock["f2-history"])).toHaveLength(0);
-      expect(document.getElementById("history-card").style.display).toBe("none");
+      expect(document.getElementById("history-card").style.display).toBe(
+        "none",
+      );
     });
 
     it("should limit history to 20 entries", () => {
@@ -301,18 +313,36 @@ describe("F2 Format", () => {
 
   function mockJspdfEnv() {
     const doc = {
-      setFillColor: vi.fn(function () { return doc; }),
-      rect: vi.fn(function () { return doc; }),
-      setTextColor: vi.fn(function () { return doc; }),
-      setFontSize: vi.fn(function () { return doc; }),
-      setFont: vi.fn(function () { return doc; }),
-      text: vi.fn(function () { return doc; }),
-      line: vi.fn(function () { return doc; }),
-      splitTextToSize: vi.fn(function (t) { return [t]; }),
+      setFillColor: vi.fn(function () {
+        return doc;
+      }),
+      rect: vi.fn(function () {
+        return doc;
+      }),
+      setTextColor: vi.fn(function () {
+        return doc;
+      }),
+      setFontSize: vi.fn(function () {
+        return doc;
+      }),
+      setFont: vi.fn(function () {
+        return doc;
+      }),
+      text: vi.fn(function () {
+        return doc;
+      }),
+      line: vi.fn(function () {
+        return doc;
+      }),
+      splitTextToSize: vi.fn(function (t) {
+        return [t];
+      }),
       save: vi.fn(),
     };
     window.jspdf = {
-      jsPDF: vi.fn(function () { return doc; }),
+      jsPDF: vi.fn(function () {
+        return doc;
+      }),
     };
     return doc;
   }
@@ -334,8 +364,9 @@ describe("F2 Format", () => {
 
       document.getElementById("btn-pdf").click();
 
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
         "Error al cargar la librería PDF. Verifica tu conexión a internet.",
+        "error",
       );
     });
 

@@ -17,7 +17,7 @@ describe("F1 Format", () => {
     vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
       delete localStorageMock[key];
     });
-    vi.spyOn(window, "alert").mockReturnValue();
+    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
     Element.prototype.scrollIntoView = vi.fn();
 
     Object.defineProperty(window, "location", {
@@ -177,8 +177,9 @@ describe("F1 Format", () => {
     it("should return false when required fields are empty", () => {
       const btnPdf = document.getElementById("btn-pdf");
       btnPdf.click();
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
         "Por favor completa todos los campos obligatorios.",
+        "warning",
       );
     });
 
@@ -197,7 +198,7 @@ describe("F1 Format", () => {
 
       const btnPdf = document.getElementById("btn-pdf");
       btnPdf.click();
-      const lastCallArgs = window.alert.mock.calls;
+      const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
         (args) =>
           args[0] === "Por favor completa todos los campos obligatorios.",
@@ -226,15 +227,17 @@ describe("F1 Format", () => {
       const btnSave = document.getElementById("btn-save");
       btnSave.click();
 
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
         "Solicitud guardada en el historial.",
+        "success",
       );
     });
 
     it("should skip save if proyecto and responsable are empty", () => {
       document.getElementById("btn-save").click();
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
         "Completa al menos el nombre del proyecto y el responsable antes de guardar.",
+        "warning",
       );
     });
   });
@@ -454,8 +457,9 @@ describe("F1 Format", () => {
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      expect(window.alert).toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
         "Error al cargar la librería PDF. Verifica tu conexión a internet.",
+        "error",
       );
     });
 
@@ -505,8 +509,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-ods").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo ODS"),
+          "error",
         );
       });
     });
@@ -519,8 +524,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-ods").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo ODS"),
+          "error",
         );
       });
     });
@@ -533,8 +539,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-ods").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo ODS"),
+          "error",
         );
       });
     });
@@ -581,7 +588,7 @@ describe("F1 Format", () => {
       await vi.waitFor(() => {
         expect(window.JSZip.loadAsync).toHaveBeenCalled();
       });
-      expect(window.alert).not.toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).not.toHaveBeenCalledWith(
         expect.stringContaining("Error al generar el archivo ODS"),
       );
     });
@@ -599,8 +606,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-xlsx").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo XLSX"),
+          "error",
         );
       });
     });
@@ -613,8 +621,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-xlsx").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo XLSX"),
+          "error",
         );
       });
     });
@@ -627,8 +636,9 @@ describe("F1 Format", () => {
       document.getElementById("btn-xlsx").click();
 
       await vi.waitFor(() => {
-        expect(window.alert).toHaveBeenCalledWith(
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
           expect.stringContaining("Error al generar el archivo XLSX"),
+          "error",
         );
       });
     });
@@ -655,7 +665,7 @@ describe("F1 Format", () => {
       await vi.waitFor(() => {
         expect(window.XLSX.read).toHaveBeenCalled();
       });
-      expect(window.alert).not.toHaveBeenCalledWith(
+      expect(window.EcytvUI.showSnackbar).not.toHaveBeenCalledWith(
         expect.stringContaining("Error al generar el archivo XLSX"),
       );
     });
@@ -752,8 +762,10 @@ describe("F1 Format", () => {
         document.getElementById("add-equip-btn").click();
         const rows = document.querySelectorAll(".equip-row");
         const lastRow = rows[rows.length - 1];
-        lastRow.querySelector('input[name="equipo-nombre"]').value = `Equipo ${i}`;
-        lastRow.querySelector('input[name="equipo-consecutivo"]').value = `CON-${i}`;
+        lastRow.querySelector('input[name="equipo-nombre"]').value =
+          `Equipo ${i}`;
+        lastRow.querySelector('input[name="equipo-consecutivo"]').value =
+          `CON-${i}`;
         lastRow.querySelector('input[name="equipo-item"]').value = `${i + 1}`;
       }
 
@@ -809,8 +821,10 @@ describe("F1 Format", () => {
         document.getElementById("add-equip-btn").click();
         const rows = document.querySelectorAll(".equip-row");
         const lastRow = rows[rows.length - 1];
-        lastRow.querySelector('input[name="equipo-nombre"]').value = `Equipo ${i}`;
-        lastRow.querySelector('input[name="equipo-consecutivo"]').value = `CON-${i}`;
+        lastRow.querySelector('input[name="equipo-nombre"]').value =
+          `Equipo ${i}`;
+        lastRow.querySelector('input[name="equipo-consecutivo"]').value =
+          `CON-${i}`;
         lastRow.querySelector('input[name="equipo-item"]').value = `${i + 1}`;
       }
 

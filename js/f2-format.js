@@ -29,7 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.borderColor = "";
       }
     });
-    if (!valid) alert("Por favor completa todos los campos obligatorios.");
+    if (!valid)
+      window.EcytvUI.showSnackbar(
+        "Por favor completa todos los campos obligatorios.",
+        "warning",
+      );
     return valid;
   }
 
@@ -55,7 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function saveToHistory() {
     const data = collectFormData();
     if (!data.nombre.trim()) {
-      alert("Completa al menos el nombre antes de guardar.");
+      window.EcytvUI.showSnackbar(
+        "Completa al menos el nombre antes de guardar.",
+        "warning",
+      );
       return;
     }
     const history = JSON.parse(localStorage.getItem("f2-history") || "[]");
@@ -68,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (history.length > 20) history.length = 20;
     localStorage.setItem("f2-history", JSON.stringify(history));
     renderHistory(history);
-    alert("Acta guardada en el historial.");
+    window.EcytvUI.showSnackbar("Acta guardada en el historial.", "success");
   }
 
   function loadHistory() {
@@ -88,7 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((entry) => {
         const d = new Date(entry.savedAt);
         const dateStr = d.toLocaleDateString("es-CO", {
-          year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
         });
         const title = entry.data.nombre || "(sin nombre)";
         return `<div class="history-entry">
@@ -126,12 +137,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const d = entry.data;
     document.getElementById("nombre").value = d.nombre || "";
     document.getElementById("tipo-documento").value = d["tipo-documento"] || "";
-    document.getElementById("numero-documento").value = d["numero-documento"] || "";
+    document.getElementById("numero-documento").value =
+      d["numero-documento"] || "";
     document.getElementById("contacto").value = d.contacto || "";
-    document.getElementById("periodo-inicial").value = d["periodo-inicial"] || "";
+    document.getElementById("periodo-inicial").value =
+      d["periodo-inicial"] || "";
     document.getElementById("periodo-final").value = d["periodo-final"] || "";
-    document.getElementById("fecha-constancia").value = d["fecha-constancia"] || "";
-    document.getElementById("firma-nombre").checked = d["firma-nombre"] || false;
+    document.getElementById("fecha-constancia").value =
+      d["fecha-constancia"] || "";
+    document.getElementById("firma-nombre").checked =
+      d["firma-nombre"] || false;
     document.getElementById("observaciones").value = d.observaciones || "";
 
     form.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -159,7 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
     saveToHistory();
 
     if (!window.jspdf || !window.jspdf.jsPDF) {
-      alert("Error al cargar la librería PDF. Verifica tu conexión a internet.");
+      window.EcytvUI.showSnackbar(
+        "Error al cargar la librería PDF. Verifica tu conexión a internet.",
+        "error",
+      );
       return;
     }
     const { jsPDF } = window.jspdf;
@@ -215,7 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFont("helvetica", "bold");
     doc.text("Fecha de constancia:", 16, yPos);
     doc.setFont("helvetica", "normal");
-    doc.text(`Se hace constancia el dia ${formatDate(fechaConstancia)}.`, 16, yPos + 7);
+    doc.text(
+      `Se hace constancia el dia ${formatDate(fechaConstancia)}.`,
+      16,
+      yPos + 7,
+    );
     yPos += 16;
 
     // Firma
@@ -251,7 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
     yPos = Math.max(yPos, 260);
     const now = new Date();
     const dateStr = now.toLocaleDateString("es-CO", {
-      year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
     doc.setFontSize(7);
     doc.setTextColor("#999999");
