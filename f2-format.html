@@ -1,25 +1,171 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formato F2</title>
+    <title>F2 - Acta de Compromiso</title>
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/f1-format.css" />
+    <link rel="stylesheet" href="css/f2-format.css" />
   </head>
   <body>
-    <div>
-      <!-- F2 format and unal logo -->
-    </div>
-    <h1>ACTA DE COMPROMISO</h1>
-    <p>
-      Yo, identificado (a) con me hago responsable de los equipos que retiro del
-      Laboratorio de Instrumentos de Producción Audiovisual de la Escuela de
-      Cine y Televisión. Así mismo, me hago responsable de cualquier daño
-      físico, técnico o pérdida que pueda suceder durante la manipulación de los
-      equipos.
-    </p>
-    <p>El periodo de préstamo inicia y finaliza.</p>
-    <p>Se hace constancia el día</p>
-    <p>Firma del directo responsable</p>
-    <p>Número de contacto</p>
+    <nav>
+      <div class="container">
+        <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
+      </div>
+    </nav>
+
+    <main class="form-page">
+      <h1>F2 - Acta de Compromiso</h1>
+      <p>
+        Diligencia todos los campos obligatorios para generar el acta de
+        compromiso por el préstamo de equipos del laboratorio.
+      </p>
+
+      <form id="f2-form" onsubmit="return false;">
+        <!-- Datos del responsable -->
+        <div class="form-card">
+          <h2>Datos del Responsable</h2>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required
+                placeholder="Nombre completo"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo-documento">Tipo de documento</label>
+              <select id="tipo-documento" name="tipo-documento" required>
+                <option value="">Seleccionar...</option>
+                <option value="CC">Cédula de Ciudadanía (CC)</option>
+                <option value="CE">Cédula de Extranjería (CE)</option>
+                <option value="TI">Tarjeta de Identidad (TI)</option>
+                <option value="PA">Pasaporte</option>
+                <option value="NIT">NIT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="numero-documento">Número de documento</label>
+              <input
+                type="text"
+                id="numero-documento"
+                name="numero-documento"
+                required
+                placeholder="Número de documento"
+              />
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="contacto">Número de contacto</label>
+              <input
+                type="tel"
+                id="contacto"
+                name="contacto"
+                required
+                placeholder="Número de contacto"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Período del préstamo -->
+        <div class="form-card">
+          <h2>Período del Préstamo</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="periodo-inicial">Periodo inicial</label>
+              <input
+                type="date"
+                id="periodo-inicial"
+                name="periodo-inicial"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="periodo-final">Periodo final</label>
+              <input
+                type="date"
+                id="periodo-final"
+                name="periodo-final"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Fecha de constancia -->
+        <div class="form-card">
+          <h2>Fecha de Constancia</h2>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="fecha-constancia">Fecha de constancia</label>
+              <input
+                type="date"
+                id="fecha-constancia"
+                name="fecha-constancia"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="firma-nombre" name="firma-nombre" />
+              <label for="firma-nombre"
+                >Poner nombre como firma del directo responsable</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="form-card">
+          <h2>Observaciones</h2>
+          <div class="form-row full">
+            <div class="form-group">
+              <textarea
+                id="observaciones"
+                name="observaciones"
+                placeholder="Observaciones adicionales..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historial -->
+        <div class="form-card" id="history-card" style="display:none">
+          <h2>Historial de Actas</h2>
+          <p class="history-desc">
+            Las actas se guardan automáticamente al descargar. Haz clic en
+            "Restaurar" para cargar los datos guardados.
+          </p>
+          <p class="history-privacy">Los datos solo se almacenan en tu dispositivo (localStorage).</p>
+          <div id="history-list"></div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="form-actions">
+          <button type="reset" class="btn-secondary">Limpiar</button>
+          <button type="button" class="btn-secondary" id="btn-save">Guardar</button>
+          <button type="button" class="btn-submit" id="btn-pdf">Descargar PDF</button>
+        </div>
+      </form>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/f2-format.js"></script>
   </body>
 </html>
