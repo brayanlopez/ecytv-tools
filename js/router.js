@@ -33,6 +33,9 @@ class Router {
     this.register("tools", "tools-section");
     this.register("formats", "formats-section");
     this.register("docs", "docs-section");
+    this.register("qa", "qa-section");
+    const active = document.querySelector(".section.active");
+    if (active) this.currentSection = active;
     this.handleRoute();
   }
 }

@@ -2,11 +2,13 @@ import router from "./router.js";
 import toolsRenderer from "./tools-renderer.js";
 import { renderInfoCards } from "./info-renderer.js";
 import docsRenderer from "./docs-renderer.js";
+import qaRenderer from "./qa-renderer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   renderInfoCards();
   toolsRenderer.init();
   docsRenderer.init();
+  qaRenderer.init();
   router.init();
   initTheme();
   initHamburger();
