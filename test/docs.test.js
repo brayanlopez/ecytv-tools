@@ -209,6 +209,23 @@ describe("DocsRenderer", () => {
     );
   });
 
+  it("should filter by category when select changes", () => {
+    const renderer = new DocsRenderer();
+    const renderSpy = vi.spyOn(renderer, "render");
+
+    let changeHandler;
+    mockSelect.addEventListener = vi.fn((event, handler) => {
+      if (event === "change") changeHandler = handler;
+    });
+    renderer.renderFilters();
+
+    expect(changeHandler).toBeDefined();
+    changeHandler({ target: { value: "Equipos de iluminación" } });
+
+    expect(renderer.activeCategory).toBe("Equipos de iluminación");
+    expect(renderSpy).toHaveBeenCalled();
+  });
+
   it("should call renderFilters and render on init", () => {
     const renderer = new DocsRenderer();
     const renderFiltersSpy = vi.spyOn(renderer, "renderFilters");

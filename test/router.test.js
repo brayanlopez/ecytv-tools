@@ -165,4 +165,16 @@ describe("Router", () => {
 
     expect(getElementByIdSpy).toHaveBeenCalledWith("info-section");
   });
+
+  it("should set currentSection from active section on init", () => {
+    const mockActiveSection = {
+      classList: { add: vi.fn(), remove: vi.fn() },
+    };
+    vi.spyOn(document, "querySelector").mockReturnValue(mockActiveSection);
+    vi.spyOn(document, "getElementById").mockReturnValue(null);
+
+    router.init();
+
+    expect(router.currentSection).toBe(mockActiveSection);
+  });
 });
