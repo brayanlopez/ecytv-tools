@@ -3,12 +3,14 @@ import toolsRenderer from "./tools-renderer.js";
 import { renderInfoCards } from "./info-renderer.js";
 import docsRenderer from "./docs-renderer.js";
 import qaRenderer from "./qa-renderer.js";
+import { renderFormats } from "./formats-renderer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   renderInfoCards();
   toolsRenderer.init();
   docsRenderer.init();
   qaRenderer.init();
+  renderFormats();
   router.init();
   initTheme();
   initHamburger();
