@@ -115,23 +115,7 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tipo-documento">Tipo de documento</label>
-              <select id="tipo-documento" name="tipo-documento" required>
-                <option value="">Seleccionar...</option>
-                <option value="Cédula de Ciudadanía">
-                  Cédula de Ciudadanía
-                </option>
-                <option value="Cédula de Extranjería">
-                  Cédula de Extranjería
-                </option>
-                <option value="Tarjeta de Identidad">
-                  Tarjeta de Identidad
-                </option>
-                <option value="Pasaporte">Pasaporte</option>
-              </select>
-            </div>
+          <div class="form-row full">
             <div class="form-group">
               <label for="tiun">TIUN</label>
               <input
@@ -273,16 +257,32 @@
           </div>
         </div>
 
+        <!-- Historial -->
+        <div class="form-card" id="history-card" style="display:none">
+          <h2>Historial de Solicitudes</h2>
+          <p class="history-desc">
+            Las solicitudes se guardan automáticamente al descargar. Haz clic en
+            "Restaurar" para cargar los datos guardados.
+          </p>
+          <p class="history-privacy">Los datos solo se almacenan en tu dispositivo (localStorage).</p>
+          <div id="history-list"></div>
+        </div>
+
         <!-- Acciones -->
         <div class="form-actions">
           <button type="reset" class="btn-secondary">Limpiar</button>
-          <button type="submit" class="btn-submit">Descargar PDF</button>
+          <button type="button" class="btn-secondary" id="btn-save">Guardar</button>
+          <button type="button" class="btn-submit" id="btn-pdf">Descargar PDF</button>
+          <button type="button" class="btn-submit" id="btn-ods">Descargar ODS</button>
+          <button type="button" class="btn-submit" id="btn-xlsx">Descargar XLSX</button>
         </div>
       </form>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="js/f1-format.js"></script>
   </body>
 </html>

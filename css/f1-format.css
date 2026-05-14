@@ -263,6 +263,102 @@
   background: var(--accent-hover);
 }
 
+/* History */
+.history-privacy {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.history-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.history-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+  background: var(--bg-primary);
+  gap: 1rem;
+}
+
+.history-entry:last-child {
+  margin-bottom: 0;
+}
+
+.history-entry-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-entry-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-entry-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.history-entry-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.btn-history-restore {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.btn-history-restore:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-history-delete {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid #e63946;
+  background: transparent;
+  color: #e63946;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.btn-history-delete:hover {
+  background: #e63946;
+  color: #fff;
+}
+
+.history-empty {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
 @media (max-width: 640px) {
   .form-page {
     padding: 1rem 0.75rem;
@@ -275,5 +371,16 @@
   .equip-table th:nth-child(4),
   .equip-table td:nth-child(4) {
     display: none;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-actions .btn-secondary,
+  .form-actions .btn-submit {
+    width: 100%;
+    text-align: center;
   }
 }
