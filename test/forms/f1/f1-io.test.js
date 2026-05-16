@@ -50,7 +50,7 @@ describe("F1 IO handlers", () => {
 
   describe("handleExportJSON", () => {
     it("should call showSnackbar with success message", async () => {
-      const module = await import("../js/forms/f1/f1-io.js");
+      const module = await import("../../../js/forms/f1/f1-io.js");
       handleExportJSON = module.handleExportJSON;
 
       const tbody = document.getElementById("equip-tbody");
@@ -65,7 +65,7 @@ describe("F1 IO handlers", () => {
 
   describe("handleExportYAML", () => {
     it("should call showSnackbar with success message", async () => {
-      const module = await import("../js/forms/f1/f1-io.js");
+      const module = await import("../../../js/forms/f1/f1-io.js");
       handleExportYAML = module.handleExportYAML;
 
       const tbody = document.getElementById("equip-tbody");
@@ -87,7 +87,7 @@ describe("F1 IO handlers", () => {
       });
       vi.spyOn(document, "createElement").mockReturnValue(mockInput);
 
-      const module = await import("../js/forms/f1/f1-io.js");
+      const module = await import("../../../js/forms/f1/f1-io.js");
       handleImport = module.handleImport;
 
       const tbody = document.getElementById("equip-tbody");
@@ -150,7 +150,7 @@ describe("restoreFormData (F1)", () => {
         </tbody></table>
       </form>
     `;
-    const module = await import("../js/forms/f1/f1-data.js");
+    const module = await import("../../../js/forms/f1/f1-data.js");
     restoreFormData = module.restoreFormData;
   });
 

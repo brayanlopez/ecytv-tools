@@ -40,7 +40,7 @@ describe("F2 IO handlers", () => {
 
   describe("handleExportJSON", () => {
     it("should call showSnackbar with success message", async () => {
-      const module = await import("../js/forms/f2/f2-io.js");
+      const module = await import("../../../js/forms/f2/f2-io.js");
       handleExportJSON = module.handleExportJSON;
       await handleExportJSON();
       expect(snackbarSpy).toHaveBeenCalledWith(
@@ -52,7 +52,7 @@ describe("F2 IO handlers", () => {
 
   describe("handleExportYAML", () => {
     it("should call showSnackbar with success message", async () => {
-      const module = await import("../js/forms/f2/f2-io.js");
+      const module = await import("../../../js/forms/f2/f2-io.js");
       handleExportYAML = module.handleExportYAML;
       await handleExportYAML();
       expect(snackbarSpy).toHaveBeenCalledWith(
@@ -86,7 +86,7 @@ describe("restoreFormData (F2)", () => {
         <textarea id="observaciones"></textarea>
       </form>
     `;
-    const module = await import("../js/forms/f2/f2-data.js");
+    const module = await import("../../../js/forms/f2/f2-data.js");
     restoreFormData = module.restoreFormData;
   });
 
