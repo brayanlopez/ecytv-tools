@@ -6,6 +6,17 @@
     <title>
       F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte
     </title>
+    <meta
+      name="theme-color"
+      content="#f5f5f5"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1a1a1a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/f1-format.css" />
@@ -220,7 +231,7 @@
               </thead>
               <tbody id="equip-tbody">
                 <tr class="equip-row">
-                  <td>
+                  <td data-label="Item">
                     <input
                       type="text"
                       class="item-num"
@@ -229,7 +240,7 @@
                       aria-label="Número de item"
                     />
                   </td>
-                  <td>
+                  <td data-label="Tipo">
                     <input
                       type="text"
                       name="equipo-tipo"
@@ -238,7 +249,7 @@
                       aria-label="Tipo"
                     />
                   </td>
-                  <td>
+                  <td data-label="Cantidad">
                     <input
                       type="number"
                       name="equipo-cantidad"
@@ -248,7 +259,7 @@
                       min="1"
                     />
                   </td>
-                  <td>
+                  <td data-label="Código">
                     <input
                       type="text"
                       name="equipo-codigo"
@@ -257,7 +268,7 @@
                       aria-label="Código"
                     />
                   </td>
-                  <td>
+                  <td data-label="Elemento">
                     <input
                       type="text"
                       name="equipo-elemento"
@@ -266,7 +277,7 @@
                       aria-label="Elemento"
                     />
                   </td>
-                  <td>
+                  <td data-label="">
                     <button
                       type="button"
                       class="btn-remove-equip"

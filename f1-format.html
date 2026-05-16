@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F1 - Solicitud de Reserva y Préstamo de Equipos</title>
+    <meta
+      name="theme-color"
+      content="#f5f5f5"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1a1a1a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/f1-format.css" />
@@ -202,7 +213,7 @@
               </thead>
               <tbody id="equip-tbody">
                 <tr class="equip-row">
-                  <td>
+                  <td data-label="Item">
                     <input
                       type="text"
                       class="item-num"
@@ -211,7 +222,7 @@
                       aria-label="Número de item"
                     />
                   </td>
-                  <td>
+                  <td data-label="Equipo">
                     <input
                       type="text"
                       name="equipo-nombre"
@@ -220,7 +231,7 @@
                       aria-label="Nombre del equipo"
                     />
                   </td>
-                  <td>
+                  <td data-label="Consecutivo">
                     <input
                       type="text"
                       name="equipo-consecutivo"
@@ -229,7 +240,7 @@
                       aria-label="Consecutivo vigente"
                     />
                   </td>
-                  <td>
+                  <td data-label="">
                     <button
                       type="button"
                       class="btn-remove-equip"

@@ -75,10 +75,10 @@ export function restoreFormData(data, tbody, form) {
       const row = document.createElement("tr");
       row.className = "equip-row";
       row.innerHTML = `
-        <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${eq.item || ""}"></td>
-        <td><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required value="${eq.nombre || ""}"></td>
-        <td><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required value="${eq.consecutivo || ""}"></td>
-        <td><button type="button" class="btn-remove-equip" title="Eliminar equipo">✕</button></td>
+        <td data-label="Item"><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${eq.item || ""}"></td>
+        <td data-label="Equipo"><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required value="${eq.nombre || ""}"></td>
+        <td data-label="Consecutivo"><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required value="${eq.consecutivo || ""}"></td>
+        <td data-label=""><button type="button" class="btn-remove-equip" title="Eliminar equipo">✕</button></td>
       `;
       row.querySelector(".btn-remove-equip").addEventListener("click", () => {
         if (tbody.children.length > 1) row.remove();

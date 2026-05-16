@@ -119,11 +119,11 @@ function restoreFromHistory(id, tbody, form) {
       const row = document.createElement("tr");
       row.className = "sala-row";
       row.innerHTML = `
-        <td><input type="text" name="sala-nombre" placeholder="Sala" list="salas-sugeridas" value="${escHtml(sala.nombre || "")}" aria-label="Sala adjudicada"></td>
-        <td><input type="date" name="sala-fecha" required value="${escHtml(sala.fecha || "")}" aria-label="Fecha"></td>
-        <td><input type="time" name="sala-hora-inicio" required value="${escHtml(sala["hora-inicio"] || "")}" aria-label="Hora de inicio"></td>
-        <td><input type="time" name="sala-hora-fin" required value="${escHtml(sala["hora-fin"] || "")}" aria-label="Hora de finalización"></td>
-        <td><button type="button" class="btn-remove-equip" title="Eliminar sala">✕</button></td>
+        <td data-label="Sala"><input type="text" name="sala-nombre" placeholder="Sala" list="salas-sugeridas" value="${escHtml(sala.nombre || "")}" aria-label="Sala adjudicada"></td>
+        <td data-label="Fecha"><input type="date" name="sala-fecha" required value="${escHtml(sala.fecha || "")}" aria-label="Fecha"></td>
+        <td data-label="Inicio"><input type="time" name="sala-hora-inicio" required value="${escHtml(sala["hora-inicio"] || "")}" aria-label="Hora de inicio"></td>
+        <td data-label="Finalización"><input type="time" name="sala-hora-fin" required value="${escHtml(sala["hora-fin"] || "")}" aria-label="Hora de finalización"></td>
+        <td data-label=""><button type="button" class="btn-remove-equip" title="Eliminar sala">✕</button></td>
       `;
       row.querySelector(".btn-remove-equip").addEventListener("click", () => {
         if (tbody.children.length > 1) row.remove();

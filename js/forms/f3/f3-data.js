@@ -80,12 +80,12 @@ export function restoreFormData(data, tbody, form) {
       const row = document.createElement("tr");
       row.className = "equip-row";
       row.innerHTML = `
-        <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${eq.item || ""}" aria-label="Número de item"></td>
-        <td><input type="text" name="equipo-tipo" placeholder="Tipo" required value="${eq.tipo || ""}" aria-label="Tipo"></td>
-        <td><input type="number" name="equipo-cantidad" placeholder="Cantidad" required value="${eq.cantidad || ""}" aria-label="Cantidad" min="1"></td>
-        <td><input type="text" name="equipo-codigo" placeholder="Código" required value="${eq.codigo || ""}" aria-label="Código"></td>
-        <td><input type="text" name="equipo-elemento" placeholder="Elemento" required value="${eq.elemento || ""}" aria-label="Elemento"></td>
-        <td><button type="button" class="btn-remove-equip" title="Eliminar elemento">✕</button></td>
+        <td data-label="Item"><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${eq.item || ""}" aria-label="Número de item"></td>
+        <td data-label="Tipo"><input type="text" name="equipo-tipo" placeholder="Tipo" required value="${eq.tipo || ""}" aria-label="Tipo"></td>
+        <td data-label="Cantidad"><input type="number" name="equipo-cantidad" placeholder="Cantidad" required value="${eq.cantidad || ""}" aria-label="Cantidad" min="1"></td>
+        <td data-label="Código"><input type="text" name="equipo-codigo" placeholder="Código" required value="${eq.codigo || ""}" aria-label="Código"></td>
+        <td data-label="Elemento"><input type="text" name="equipo-elemento" placeholder="Elemento" required value="${eq.elemento || ""}" aria-label="Elemento"></td>
+        <td data-label=""><button type="button" class="btn-remove-equip" title="Eliminar elemento">✕</button></td>
       `;
       row.querySelector(".btn-remove-equip").addEventListener("click", () => {
         if (tbody.children.length > 1) row.remove();

@@ -3,6 +3,9 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem;
+  padding-right: calc(1rem + env(safe-area-inset-right, 0px));
+  padding-left: calc(1rem + env(safe-area-inset-left, 0px));
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
 }
 
 .form-page h1 {
@@ -459,13 +462,13 @@
 }
 
 .btn-history-restore {
-  padding: 0.35rem 0.75rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--radius);
   border: 1px solid var(--accent);
   background: transparent;
   color: var(--accent);
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-family: inherit;
   transition: all var(--transition);
 }
@@ -476,13 +479,13 @@
 }
 
 .btn-history-delete {
-  padding: 0.35rem 0.75rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--radius);
   border: 1px solid #e63946;
   background: transparent;
   color: #e63946;
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-family: inherit;
   transition: all var(--transition);
 }
@@ -507,9 +510,58 @@
     grid-template-columns: 1fr;
   }
 
-  .equip-table th:nth-child(4),
-  .equip-table td:nth-child(4) {
+  .equip-table thead {
     display: none;
+  }
+
+  .equip-table,
+  .equip-table tbody,
+  .equip-table tr {
+    display: block;
+  }
+
+  .equip-table tr {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    background: var(--bg-card);
+  }
+
+  .equip-table td {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    border: none;
+    flex-wrap: wrap;
+  }
+
+  .equip-table td[data-label]:not([data-label=""])::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .equip-table td:last-child {
+    justify-content: center;
+    padding-top: 0.5rem;
+    margin-top: 0.4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .equip-table td input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .equip-table td .item-num {
+    flex: 1;
   }
 
   .form-actions {

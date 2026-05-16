@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F4 - Solicitud de Reserva y Préstamo Salas de Edición</title>
+    <meta
+      name="theme-color"
+      content="#f5f5f5"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1a1a1a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/f1-format.css" />
@@ -162,7 +173,7 @@
               </thead>
               <tbody id="sala-tbody">
                 <tr class="sala-row">
-                  <td>
+                  <td data-label="Sala">
                     <input
                       type="text"
                       name="sala-nombre"
@@ -171,7 +182,7 @@
                       aria-label="Sala adjudicada"
                     />
                   </td>
-                  <td>
+                  <td data-label="Fecha">
                     <input
                       type="date"
                       name="sala-fecha"
@@ -179,7 +190,7 @@
                       aria-label="Fecha"
                     />
                   </td>
-                  <td>
+                  <td data-label="Inicio">
                     <input
                       type="time"
                       name="sala-hora-inicio"
@@ -187,7 +198,7 @@
                       aria-label="Hora de inicio"
                     />
                   </td>
-                  <td>
+                  <td data-label="Finalización">
                     <input
                       type="time"
                       name="sala-hora-fin"
@@ -195,7 +206,7 @@
                       aria-label="Hora de finalización"
                     />
                   </td>
-                  <td>
+                  <td data-label="">
                     <button
                       type="button"
                       class="btn-remove-equip"
