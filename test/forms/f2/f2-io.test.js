@@ -209,7 +209,7 @@ describe("restoreFormData (F2)", () => {
   });
 
   it("should set checkbox to false when data has false", () => {
-    const data = { "firma-nombre": false };
+    const data = { nombre: "Test", "firma-nombre": false };
     const form = document.getElementById("f2-form");
     restoreFormData(data, form);
     expect(document.getElementById("firma-nombre").checked).toBe(false);
@@ -221,7 +221,7 @@ describe("restoreFormData (F2)", () => {
   });
 
   it("should handle missing element IDs gracefully", () => {
-    const data = { "non-existent-id": "value" };
+    const data = { nombre: "Test", "non-existent-id": "value" };
     expect(() => restoreFormData(data, null)).not.toThrow();
   });
 

@@ -1,3 +1,5 @@
+import { validateImportData } from "../common/io-config.js";
+
 export function collectFormData() {
   return {
     nombre: document.getElementById("nombre").value,
@@ -13,7 +15,7 @@ export function collectFormData() {
 }
 
 export function restoreFormData(data, form) {
-  if (!data) return;
+  if (!validateImportData(data, ["nombre"], "acta F2")) return;
 
   const setVal = (id, val) => {
     const el = document.getElementById(id);

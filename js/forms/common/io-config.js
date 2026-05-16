@@ -23,6 +23,15 @@ export function downloadYAML(data, filename) {
   downloadBlob(blob, filename + ".yaml");
 }
 
+export function validateImportData(data, requiredKeys, formLabel) {
+  if (!data) return false;
+  const hasKey = requiredKeys.some((key) => key in data);
+  if (!hasKey) {
+    throw new Error(`El archivo no contiene datos válidos de ${formLabel}.`);
+  }
+  return true;
+}
+
 export function importFromFile() {
   return new Promise((resolve, reject) => {
     const input = document.createElement("input");

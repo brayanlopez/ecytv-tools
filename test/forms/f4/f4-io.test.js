@@ -238,6 +238,7 @@ describe("restoreFormData (F4)", () => {
 
   it("should restore sala rows", () => {
     const data = {
+      proyecto: "Test",
       salas: [
         {
           nombre: "Sala NL1",
@@ -279,7 +280,7 @@ describe("restoreFormData (F4)", () => {
   });
 
   it("should handle missing element IDs gracefully", () => {
-    const data = { "non-existent-id": "value" };
+    const data = { proyecto: "Test", "non-existent-id": "value" };
     const tbody = document.getElementById("sala-tbody");
     expect(() => restoreFormData(data, tbody)).not.toThrow();
   });
@@ -307,6 +308,7 @@ describe("restoreFormData (F4)", () => {
     expect(tbody.querySelectorAll(".sala-row")).toHaveLength(2);
 
     const data = {
+      proyecto: "Test",
       salas: [
         {
           nombre: "New Sala",
@@ -328,6 +330,7 @@ describe("restoreFormData (F4)", () => {
   it("should restore salas with empty field values", () => {
     const tbody = document.getElementById("sala-tbody");
     const data = {
+      proyecto: "Test",
       salas: [{ nombre: "", fecha: "", "hora-inicio": "", "hora-fin": "" }],
     };
     restoreFormData(data, tbody);
@@ -339,6 +342,7 @@ describe("restoreFormData (F4)", () => {
 
   it("should support removing dynamically created rows after restore", () => {
     const data = {
+      proyecto: "Test",
       salas: [
         {
           nombre: "Sala NL1",

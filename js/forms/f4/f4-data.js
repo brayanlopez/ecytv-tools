@@ -1,3 +1,5 @@
+import { validateImportData } from "../common/io-config.js";
+
 export function getSalasData(tbody) {
   return Array.from(tbody.querySelectorAll(".sala-row")).map((row) => ({
     nombre: row.querySelector('input[name="sala-nombre"]').value || "",
@@ -23,7 +25,7 @@ export function collectFormData(tbody) {
 }
 
 export function restoreFormData(data, tbody, form) {
-  if (!data) return;
+  if (!validateImportData(data, ["proyecto", "directo-responsable"], "solicitud F4")) return;
 
   const setVal = (id, val) => {
     const el = document.getElementById(id);

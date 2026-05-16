@@ -176,7 +176,7 @@ describe("restoreFormData (F1)", () => {
   });
 
   it("should restore checkbox estado", () => {
-    const data = { "mismo-dia": true, "fecha-retiro": "2026-05-01T10:00" };
+    const data = { proyecto: "Test", "mismo-dia": true, "fecha-retiro": "2026-05-01T10:00" };
 
     const tbody = document.getElementById("equip-tbody");
     restoreFormData(data, tbody);
@@ -186,6 +186,7 @@ describe("restoreFormData (F1)", () => {
 
   it("should restore equipment rows", () => {
     const data = {
+      proyecto: "Test",
       equipos: [
         { item: "1", nombre: "Cámara Sony", consecutivo: "CON-001" },
         { item: "2", nombre: "Trípode", consecutivo: "CON-002" },

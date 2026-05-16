@@ -1,3 +1,5 @@
+import { validateImportData } from "../common/io-config.js";
+
 export function getEquipData(tbody) {
   return Array.from(tbody.querySelectorAll(".equip-row")).map((row) => ({
     item: row.querySelector('input[name="equipo-item"]').value || "",
@@ -28,7 +30,7 @@ export function collectFormData(tbody) {
 }
 
 export function restoreFormData(data, tbody, form) {
-  if (!data) return;
+  if (!validateImportData(data, ["proyecto", "autorizado"], "solicitud F3")) return;
 
   const setVal = (id, val) => {
     const el = document.getElementById(id);

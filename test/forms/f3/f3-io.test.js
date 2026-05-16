@@ -245,7 +245,7 @@ describe("restoreFormData (F3)", () => {
   });
 
   it("should restore checkbox estado", () => {
-    const data = { "mismo-dia": true, "fecha-retiro": "2026-05-01T10:00" };
+    const data = { proyecto: "Test", "mismo-dia": true, "fecha-retiro": "2026-05-01T10:00" };
 
     const tbody = document.getElementById("equip-tbody");
     restoreFormData(data, tbody);
@@ -255,6 +255,7 @@ describe("restoreFormData (F3)", () => {
 
   it("should restore equipment rows", () => {
     const data = {
+      proyecto: "Test",
       equipos: [
         { item: "1", tipo: "Iluminación", cantidad: "2", codigo: "COD-001", elemento: "Reflector" },
         { item: "2", tipo: "Sonido", cantidad: "1", codigo: "COD-002", elemento: "Micrófono" },
@@ -287,7 +288,7 @@ describe("restoreFormData (F3)", () => {
   });
 
   it("should handle missing element IDs gracefully", () => {
-    const data = { "non-existent-id": "value" };
+    const data = { proyecto: "Test", "non-existent-id": "value" };
     const tbody = document.getElementById("equip-tbody");
     expect(() => restoreFormData(data, tbody)).not.toThrow();
   });
@@ -307,6 +308,7 @@ describe("restoreFormData (F3)", () => {
 
   it("should remove an added equipment row via its remove button", () => {
     const data = {
+      proyecto: "Test",
       equipos: [
         { item: "1", tipo: "Iluminación", cantidad: "2", codigo: "COD-001", elemento: "Reflector" },
         { item: "2", tipo: "Sonido", cantidad: "1", codigo: "COD-002", elemento: "Micrófono" },
@@ -340,6 +342,7 @@ describe("restoreFormData (F3)", () => {
     tbody.innerHTML = "";
 
     const data = {
+      proyecto: "Test",
       equipos: [
         { item: "1", tipo: "Iluminación", cantidad: "2", codigo: "COD-001", elemento: "Reflector" },
       ],
@@ -355,7 +358,7 @@ describe("restoreFormData (F3)", () => {
     const mismoDia = document.getElementById("mismo-dia");
     mismoDia.remove();
 
-    const data = { "mismo-dia": true };
+    const data = { proyecto: "Test", "mismo-dia": true };
     const tbody = document.getElementById("equip-tbody");
     expect(() => restoreFormData(data, tbody)).not.toThrow();
   });

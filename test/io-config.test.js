@@ -152,6 +152,64 @@ describe("parseYAML", () => {
   });
 });
 
+describe("validateImportData", () => {
+  let validateImportData;
+
+  beforeEach(async () => {
+    vi.resetModules();
+    const module = await import("../js/forms/common/io-config.js");
+    validateImportData = module.validateImportData;
+  });
+
+  it("should return false when data is null", () => {
+    expect(validateImportData(null, ["proyecto"], "test")).toBe(false);
+  });
+
+  it("should return false when data is undefined", () => {
+    expect(validateImportData(undefined, ["proyecto"], "test")).toBe(false);
+  });
+
+  it("should return true when required key exists with value", () => {
+    expect(validateImportData({ proyecto: "Test" }, ["proyecto"], "test")).toBe(
+      true,
+    );
+  });
+
+  it("should return true when required key exists with undefined value", () => {
+    expect(validateImportData({ proyecto: undefined }, ["proyecto"], "test")).toBe(
+      true,
+    );
+  });
+
+  it("should return true when at least one of multiple required keys exists", () => {
+    expect(
+      validateImportData(
+        { responsable: "Juan" },
+        ["proyecto", "responsable"],
+        "test",
+      ),
+    ).toBe(true);
+  });
+
+  it("should throw when no required keys exist in data", () => {
+    expect(() =>
+      validateImportData({ foo: "bar" }, ["proyecto"], "solicitud F1"),
+    ).toThrow("El archivo no contiene datos válidos de solicitud F1.");
+  });
+
+  it("should throw when data is empty object", () => {
+    expect(() =>
+      validateImportData({}, ["nombre"], "acta F2"),
+    ).toThrow("El archivo no contiene datos válidos de acta F2.");
+  });
+
+  it("should use the provided formLabel in the error message", () => {
+    expect(() =>
+      validateImportData({ x: 1 }, ["proyecto", "directo-responsable"], "solicitud F4"),
+    ).toThrow("El archivo no contiene datos válidos de solicitud F4.");
+  });
+});
+
 describe("downloadJSON", () => {
   let downloadJSON;
   let createObjectURLSpy;
