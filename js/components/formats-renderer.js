@@ -1,4 +1,4 @@
-import formats from "../data/formats.js";
+import formats from "../../data/formats.js";
 
 export function renderFormats() {
   const container = document.getElementById("formats-grid");

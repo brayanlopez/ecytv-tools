@@ -6,7 +6,7 @@ describe("getAllValues", () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    const module = await import("../js/tools-renderer.js");
+    const module = await import("../js/components/tools/tools-filters.js");
     getAllValues = module.getAllValues;
   });
 
@@ -62,7 +62,7 @@ describe("applyFilters", () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    const module = await import("../js/tools-renderer.js");
+    const module = await import("../js/components/tools/tools-filters.js");
     applyFilters = module.applyFilters;
   });
 
@@ -286,7 +286,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
       .mockImplementation(() => localStorageData);
     vi.spyOn(localStorage, "setItem").mockImplementation(() => {});
 
-    const module = await import("../js/tools-renderer.js");
+    const module = await import("../js/components/tools/tools-renderer.js");
     ToolsRenderer = module.ToolsRenderer;
   });
 

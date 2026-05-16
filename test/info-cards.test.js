@@ -49,7 +49,7 @@ describe("renderInfoCards", () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    const module = await import("../js/info-renderer.js");
+    const module = await import("../js/components/info-renderer.js");
     renderInfoCards = module.renderInfoCards;
   });
 

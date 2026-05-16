@@ -1,4 +1,4 @@
-import infoCards from "../data/info-cards.js";
+import infoCards from "../../data/info-cards.js";
 
 export function renderInfoCards() {
   const container = document.getElementById("info-card-list");

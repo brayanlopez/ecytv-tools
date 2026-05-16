@@ -25,14 +25,6 @@ describe("F2 Format", () => {
       writable: true,
     });
 
-    vi.spyOn(document, "addEventListener").mockImplementation(
-      (event, handler) => {
-        if (event === "DOMContentLoaded") {
-          domReadyHandler = handler;
-        }
-      },
-    );
-
     document.body.innerHTML = `
       <nav>
         <div class="container">
@@ -113,8 +105,7 @@ describe("F2 Format", () => {
       </main>
     `;
 
-    await import("../js/f2-format.js");
-    domReadyHandler();
+    await import("../js/forms/f2/f2-form.js");
   });
 
   afterEach(() => {

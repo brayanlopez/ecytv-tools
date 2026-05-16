@@ -76,7 +76,7 @@ describe("QaRenderer", () => {
       return null;
     });
 
-    const module = await import("../js/qa-renderer.js");
+    const module = await import("../js/components/qa/qa-renderer.js");
     QaRenderer = module.QaRenderer;
   });
 

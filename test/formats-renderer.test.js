@@ -6,7 +6,7 @@ describe("renderFormats", () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    const module = await import("../js/formats-renderer.js");
+    const module = await import("../js/components/formats-renderer.js");
     renderFormats = module.renderFormats;
   });
 

@@ -25,14 +25,6 @@ describe("F1 Format", () => {
       writable: true,
     });
 
-    vi.spyOn(document, "addEventListener").mockImplementation(
-      (event, handler) => {
-        if (event === "DOMContentLoaded") {
-          domReadyHandler = handler;
-        }
-      },
-    );
-
     document.body.innerHTML = `
       <nav>
         <div class="container">
@@ -132,8 +124,7 @@ describe("F1 Format", () => {
       </main>
     `;
 
-    await import("../js/f1-format.js");
-    domReadyHandler();
+    await import("../js/forms/f1/f1-form.js");
   });
 
   afterEach(() => {

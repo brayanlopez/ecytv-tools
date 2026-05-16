@@ -91,7 +91,7 @@ describe("DocsRenderer", () => {
       return null;
     });
 
-    const module = await import("../js/docs-renderer.js");
+    const module = await import("../js/components/docs/docs-renderer.js");
     DocsRenderer = module.DocsRenderer;
   });
 
