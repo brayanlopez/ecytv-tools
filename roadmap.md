@@ -33,7 +33,7 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 - [ ] F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte
 - [ ] F4 - Solicitud de Reserva y Préstamo Salas de Edición
 - [ ] Vista de equipos con datos del inventario (esqueleto creado, no funcional)
-- [ ] Mejorar accesibilidad (ARIA labels, navegación por teclado)
+- [x] Mejorar accesibilidad (ARIA labels, navegación por teclado)
 
 ## Propuestas y Mejoras Futuras
 

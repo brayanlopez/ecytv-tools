@@ -65,7 +65,7 @@ describe("renderInfoCards", () => {
     });
   });
 
-  it("should render SVG icons", () => {
+  it("should render SVG icons with aria-hidden", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
       if (id === "info-card-list") return container;
@@ -75,7 +75,8 @@ describe("renderInfoCards", () => {
     renderInfoCards();
 
     infoCards.forEach((card) => {
-      expect(container.innerHTML).toContain(card.icon);
+      expect(container.innerHTML).toContain('aria-hidden="true"');
     });
+    expect(container.innerHTML).toContain("info-card-icon");
   });
 });

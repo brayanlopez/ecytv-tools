@@ -125,9 +125,9 @@ function restoreFromHistory(id, tbody, form) {
       const row = document.createElement("tr");
       row.className = "equip-row";
       row.innerHTML = `
-        <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${escHtml(eq.item || "")}"></td>
-        <td><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required value="${escHtml(eq.nombre || "")}"></td>
-        <td><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required value="${escHtml(eq.consecutivo || "")}"></td>
+        <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" value="${escHtml(eq.item || "")}" aria-label="Número de item"></td>
+        <td><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required value="${escHtml(eq.nombre || "")}" aria-label="Nombre del equipo"></td>
+        <td><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required value="${escHtml(eq.consecutivo || "")}" aria-label="Consecutivo vigente"></td>
         <td><button type="button" class="btn-remove-equip" title="Eliminar equipo">✕</button></td>
       `;
       row.querySelector(".btn-remove-equip").addEventListener("click", () => {

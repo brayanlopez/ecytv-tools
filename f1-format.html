@@ -31,6 +31,7 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
         >
           <path
             d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
@@ -207,6 +208,7 @@
                       class="item-num"
                       name="equipo-item"
                       placeholder="Item"
+                      aria-label="Número de item"
                     />
                   </td>
                   <td>
@@ -215,6 +217,7 @@
                       name="equipo-nombre"
                       placeholder="Nombre del equipo"
                       required
+                      aria-label="Nombre del equipo"
                     />
                   </td>
                   <td>
@@ -223,6 +226,7 @@
                       name="equipo-consecutivo"
                       placeholder="Consecutivo"
                       required
+                      aria-label="Consecutivo vigente"
                     />
                   </td>
                   <td>
@@ -267,7 +271,7 @@
           <p class="history-privacy">
             Los datos solo se almacenan en tu dispositivo (localStorage).
           </p>
-          <div id="history-list"></div>
+          <div id="history-list" aria-live="polite"></div>
         </div>
 
         <!-- Acciones -->
@@ -281,6 +285,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path
                   d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
@@ -298,6 +303,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <polyline points="3 6 5 6 21 6" />
                 <path
@@ -308,7 +314,13 @@
             </button>
           </div>
           <div class="dropdown">
-            <button type="button" class="btn-submit" id="btn-download">
+            <button
+              type="button"
+              class="btn-submit"
+              id="btn-download"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -316,6 +328,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -330,12 +343,18 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
-            <div class="dropdown-menu" id="download-menu">
-              <button type="button" class="dropdown-item" id="btn-pdf">
+            <div class="dropdown-menu" id="download-menu" role="menu">
+              <button
+                type="button"
+                class="dropdown-item"
+                id="btn-pdf"
+                role="menuitem"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -343,6 +362,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <path
                     d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
@@ -353,7 +373,12 @@
                 </svg>
                 PDF
               </button>
-              <button type="button" class="dropdown-item" id="btn-ods">
+              <button
+                type="button"
+                class="dropdown-item"
+                id="btn-ods"
+                role="menuitem"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -361,6 +386,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                   <line x1="3" y1="9" x2="21" y2="9" />
@@ -370,7 +396,12 @@
                 </svg>
                 ODS
               </button>
-              <button type="button" class="dropdown-item" id="btn-xlsx">
+              <button
+                type="button"
+                class="dropdown-item"
+                id="btn-xlsx"
+                role="menuitem"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -378,6 +409,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                   <line x1="3" y1="9" x2="21" y2="9" />
@@ -401,6 +433,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
@@ -416,6 +449,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -431,6 +465,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -441,7 +476,7 @@
           </div>
           <p class="form-actions-hint">
             Guarda los datos del formulario en un archivo (JSON o YAML) para
-            volver a cargarlos despu&eacute;s con el bot&oacute;n Importar.
+            volver a cargarlos después con el botón Importar.
           </p>
         </div>
       </form>

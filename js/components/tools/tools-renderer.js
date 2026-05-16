@@ -72,7 +72,7 @@ class ToolsRenderer {
     }
 
     if (filtered.length === 0) {
-      this.container.innerHTML = `<div class="no-results">No se encontraron herramientas con los filtros seleccionados</div>`;
+      this.container.innerHTML = `<div class="no-results" role="status">No se encontraron herramientas con los filtros seleccionados</div>`;
       return;
     }
 

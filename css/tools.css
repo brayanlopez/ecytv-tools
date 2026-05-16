@@ -234,7 +234,7 @@
 .search-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+  box-shadow: var(--focus-ring);
 }
 
 .filter-row {
@@ -280,7 +280,7 @@
 .filter-select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+  box-shadow: var(--focus-ring);
 }
 
 .clear-filters-btn {

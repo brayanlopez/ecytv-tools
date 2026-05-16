@@ -33,6 +33,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
                 dataset: { id: t.id },
                 classList: { add: vi.fn(), remove: vi.fn() },
                 textContent: "☆",
+                setAttribute: vi.fn(),
                 addEventListener: vi.fn((event, handler) => {
                   if (event === "click") favoriteClickHandlers.push(handler);
                 }),
@@ -97,7 +98,8 @@ describe("ToolsRenderer class with DOM mocking", () => {
       .mockImplementation(() => localStorageData);
     vi.spyOn(localStorage, "setItem").mockImplementation(() => {});
 
-    const module = await import("../../../js/components/tools/tools-renderer.js");
+    const module =
+      await import("../../../js/components/tools/tools-renderer.js");
     ToolsRenderer = module.ToolsRenderer;
   });
 

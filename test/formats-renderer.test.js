@@ -62,7 +62,7 @@ describe("renderFormats", () => {
     });
   });
 
-  it("should render SVG icons", () => {
+  it("should render SVG icons with aria-hidden", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
       if (id === "formats-grid") return container;
@@ -72,7 +72,8 @@ describe("renderFormats", () => {
     renderFormats();
 
     formats.forEach((f) => {
-      expect(container.innerHTML).toContain(f.icon);
+      expect(container.innerHTML).toContain('aria-hidden="true"');
     });
+    expect(container.innerHTML).toContain("format-card-icon");
   });
 });

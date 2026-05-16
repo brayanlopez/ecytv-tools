@@ -12,35 +12,35 @@ export function renderFilterBar(container, state, callbacks) {
 
   container.innerHTML = `
     <div class="search-bar">
-      <input type="text" id="search-input" class="search-input" placeholder="Buscar herramientas..." value="${state.searchQuery}">
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar herramientas..." value="${state.searchQuery}" aria-label="Buscar herramientas">
     </div>
     <div class="filter-row">
       <div class="filter-select-group">
         <label for="filter-category">Categoría</label>
-        <select id="filter-category" class="filter-select" data-filter="category">
+        <select id="filter-category" class="filter-select" data-filter="category" aria-label="Filtrar por categoría">
           ${categories.map((cat) => `<option value="${cat}" ${state.activeFilters.category === cat ? "selected" : ""}>${cat === "all" ? "Todas" : cat}</option>`).join("")}
         </select>
       </div>
       <div class="filter-select-group">
         <label for="filter-level">Nivel</label>
-        <select id="filter-level" class="filter-select" data-filter="level">
+        <select id="filter-level" class="filter-select" data-filter="level" aria-label="Filtrar por nivel">
           ${levels.map((lvl) => `<option value="${lvl}" ${state.activeFilters.level === lvl ? "selected" : ""}>${lvl === "all" ? "Todos" : lvl}</option>`).join("")}
         </select>
       </div>
       <div class="filter-select-group">
         <label for="filter-platform">Plataforma</label>
-        <select id="filter-platform" class="filter-select" data-filter="platform">
+        <select id="filter-platform" class="filter-select" data-filter="platform" aria-label="Filtrar por plataforma">
           ${platforms.map((p) => `<option value="${p}" ${state.activeFilters.platform === p ? "selected" : ""}>${p === "all" ? "Todas" : p}</option>`).join("")}
         </select>
       </div>
       <div class="filter-select-group">
         <label for="filter-pricing">Precio</label>
-        <select id="filter-pricing" class="filter-select" data-filter="pricing">
+        <select id="filter-pricing" class="filter-select" data-filter="pricing" aria-label="Filtrar por precio">
           ${pricings.map((p) => `<option value="${p}" ${state.activeFilters.pricing === p ? "selected" : ""}>${PRICING_LABELS[p]}</option>`).join("")}
         </select>
       </div>
       <button class="clear-filters-btn" id="clear-filters">Limpiar</button>
-      <div class="tools-count" id="tools-count"></div>
+      <div class="tools-count" id="tools-count" aria-live="polite" aria-atomic="true"></div>
     </div>
   `;
 

@@ -9,10 +9,7 @@ describe("initHamburger", () => {
   beforeEach(async () => {
     vi.resetModules();
 
-    linkEls = [
-      { addEventListener: vi.fn() },
-      { addEventListener: vi.fn() },
-    ];
+    linkEls = [{ addEventListener: vi.fn() }, { addEventListener: vi.fn() }];
 
     navLinksEl = {
       classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() },
@@ -22,6 +19,7 @@ describe("initHamburger", () => {
     hamburgerEl = {
       classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() },
       addEventListener: vi.fn(),
+      setAttribute: vi.fn(),
     };
 
     vi.spyOn(document, "querySelector").mockImplementation((selector) => {

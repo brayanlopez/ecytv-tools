@@ -10,7 +10,7 @@ export function buildToolCard(tool, isFavorited) {
         .map((altId) => {
           const alt = tools.find((t) => t.id === altId);
           return alt
-            ? `<a href="${alt.url}" target="_blank" class="alt-link">${alt.name}</a>`
+            ? `<a href="${alt.url}" target="_blank" class="alt-link" aria-label="Ver alternativa: ${alt.name}">${alt.name}</a>`
             : "";
         })
         .join("")}
@@ -40,7 +40,7 @@ export function buildToolCard(tool, isFavorited) {
       ${alternativesHtml}
       <div class="tool-footer">
         <a href="${tool.url}" target="_blank" rel="noopener" class="btn btn-primary">Abrir</a>
-        <button class="btn btn-favorite ${isFavorited ? "active" : ""}" data-id="${tool.id}">
+        <button class="btn btn-favorite ${isFavorited ? "active" : ""}" data-id="${tool.id}" aria-label="${isFavorited ? "Quitar de favoritos" : "Añadir a favoritos"}" aria-pressed="${isFavorited}">
           ${isFavorited ? "★" : "☆"}
         </button>
       </div>
@@ -51,9 +51,13 @@ export function buildToolCard(tool, isFavorited) {
 export function updateFavoriteButton(btn, isFavorited) {
   if (isFavorited) {
     btn.classList.add("active");
+    btn.setAttribute("aria-label", "Quitar de favoritos");
+    btn.setAttribute("aria-pressed", "true");
     btn.textContent = "★";
   } else {
     btn.classList.remove("active");
+    btn.setAttribute("aria-label", "Añadir a favoritos");
+    btn.setAttribute("aria-pressed", "false");
     btn.textContent = "☆";
   }
 }

@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 body {
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
@@ -70,7 +75,7 @@ body {
   height: 24px;
 }
 
-.info-card-header h3 {
+.info-card-header h2 {
   margin-bottom: 0;
 }
 
@@ -79,7 +84,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.info-card h3 {
+.info-card h2 {
   margin-bottom: 0;
   color: var(--accent);
   font-size: 1.1rem;

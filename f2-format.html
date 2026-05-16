@@ -156,7 +156,7 @@
           <p class="history-privacy">
             Los datos solo se almacenan en tu dispositivo (localStorage).
           </p>
-          <div id="history-list"></div>
+          <div id="history-list" aria-live="polite"></div>
         </div>
 
         <!-- Acciones -->
@@ -170,6 +170,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path
                   d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
@@ -187,6 +188,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <polyline points="3 6 5 6 21 6" />
                 <path
@@ -197,7 +199,13 @@
             </button>
           </div>
           <div class="dropdown">
-            <button type="button" class="btn-submit" id="btn-download">
+            <button
+              type="button"
+              class="btn-submit"
+              id="btn-download"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -205,6 +213,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -219,12 +228,18 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
-            <div class="dropdown-menu" id="download-menu">
-              <button type="button" class="dropdown-item" id="btn-pdf">
+            <div class="dropdown-menu" id="download-menu" role="menu">
+              <button
+                type="button"
+                class="dropdown-item"
+                id="btn-pdf"
+                role="menuitem"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -232,6 +247,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <path
                     d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
@@ -256,6 +272,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
@@ -271,6 +288,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -286,6 +304,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
@@ -294,7 +313,10 @@
               YAML
             </button>
           </div>
-          <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos despu&eacute;s con el bot&oacute;n Importar.</p>
+          <p class="form-actions-hint">
+            Guarda los datos del formulario en un archivo (JSON o YAML) para
+            volver a cargarlos después con el botón Importar.
+          </p>
         </div>
       </form>
     </main>

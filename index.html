@@ -12,7 +12,7 @@
     <nav>
       <div class="container">
         <a href="#info" class="logo">ECYTV Tools</a>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
           <li><a href="#info" class="active">Información</a></li>
           <li><a href="#formats">Formatos</a></li>
           <li><a href="#docs">Documentación</a></li>
@@ -26,7 +26,7 @@
         >
           <span class="theme-icon">🌙</span>
         </button>
-        <button class="hamburger" aria-label="Menú">
+        <button class="hamburger" aria-label="Menú" aria-controls="nav-links">
           <span></span>
           <span></span>
           <span></span>
@@ -35,8 +35,12 @@
     </nav>
 
     <main class="container">
-      <section id="info-section" class="section active">
-        <h1>Información y Protocolos</h1>
+      <section
+        id="info-section"
+        class="section active"
+        aria-labelledby="info-heading"
+      >
+        <h1 id="info-heading">Información y Protocolos</h1>
 
         <div class="info-grid">
           <div class="info-card">
@@ -49,6 +53,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <path
                     d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"
@@ -57,7 +62,7 @@
                   <path d="M9 14l2 2 4-4" />
                 </svg>
               </div>
-              <h3>Formulario de Solicitud de Espacios</h3>
+              <h2>Formulario de Solicitud de Espacios</h2>
             </div>
             <p>
               Solicita acceso a los espacios especializados del Laboratorio de
@@ -126,14 +131,22 @@
         </div>
       </section>
 
-      <section id="tools-section" class="section">
-        <h1>Acceso Rápido a Herramientas</h1>
+      <section
+        id="tools-section"
+        class="section"
+        aria-labelledby="tools-heading"
+      >
+        <h1 id="tools-heading">Acceso Rápido a Herramientas</h1>
         <div id="filter-bar" class="filter-bar"></div>
         <div id="tools-grid" class="tools-grid"></div>
       </section>
 
-      <section id="formats-section" class="section">
-        <h1>Generador de Formatos</h1>
+      <section
+        id="formats-section"
+        class="section"
+        aria-labelledby="formats-heading"
+      >
+        <h1 id="formats-heading">Generador de Formatos</h1>
         <p>
           Formatos internos del Laboratorio de Instrumentos de Producción
           Audiovisual ECYTV. Haz clic en cada formato para abrirlo.
@@ -141,8 +154,8 @@
         <div id="formats-grid" class="formats-grid"></div>
       </section>
 
-      <section id="docs-section" class="section">
-        <h1>Documentación y Manuales</h1>
+      <section id="docs-section" class="section" aria-labelledby="docs-heading">
+        <h1 id="docs-heading">Documentación y Manuales</h1>
         <p>
           Manuales de equipos, guías de referencia y documentación técnica del
           Laboratorio de Instrumentos de Producción Audiovisual ECYTV
@@ -151,8 +164,8 @@
         <div id="docs-grid" class="docs-grid"></div>
       </section>
 
-      <section id="qa-section" class="section">
-        <h1>Preguntas y Respuestas</h1>
+      <section id="qa-section" class="section" aria-labelledby="qa-heading">
+        <h1 id="qa-heading">Preguntas y Respuestas</h1>
         <p>
           Preguntas frecuentes y respuestas sobre el uso de los equipos y
           espacios del Laboratorio de Instrumentos de Producción Audiovisual

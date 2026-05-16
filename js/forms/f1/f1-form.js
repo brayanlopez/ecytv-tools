@@ -61,22 +61,30 @@ addBtn.addEventListener("click", () => {
   const row = document.createElement("tr");
   row.className = "equip-row";
   row.innerHTML = `
-    <td><input type="text" class="item-num" name="equipo-item" placeholder="Item"></td>
-    <td><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required></td>
-    <td><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required></td>
+    <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" aria-label="Número de item"></td>
+    <td><input type="text" name="equipo-nombre" placeholder="Nombre del equipo" required aria-label="Nombre del equipo"></td>
+    <td><input type="text" name="equipo-consecutivo" placeholder="Consecutivo" required aria-label="Consecutivo vigente"></td>
     <td><button type="button" class="btn-remove-equip" title="Eliminar equipo">✕</button></td>
   `;
   row.querySelector(".btn-remove-equip").addEventListener("click", () => {
-    if (tbody.children.length > 1) row.remove();
+    if (tbody.children.length > 1) {
+      row.remove();
+      addBtn.focus();
+    }
   });
   tbody.appendChild(row);
+  const firstInput = row.querySelector("input");
+  if (firstInput) firstInput.focus();
 });
 
 tbody.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-remove-equip");
   if (btn) {
     const row = btn.closest(".equip-row");
-    if (tbody.children.length > 1) row.remove();
+    if (tbody.children.length > 1) {
+      row.remove();
+      addBtn.focus();
+    }
   }
 });
 
@@ -139,20 +147,67 @@ document
 const btnDownload = document.getElementById("btn-download");
 const downloadMenu = document.getElementById("download-menu");
 
+function closeDropdown() {
+  downloadMenu.classList.remove("show");
+  btnDownload.classList.remove("active");
+  btnDownload.setAttribute("aria-expanded", "false");
+}
+
 btnDownload.addEventListener("click", (e) => {
   e.stopPropagation();
+  const isOpen = downloadMenu.classList.contains("show");
   downloadMenu.classList.toggle("show");
   btnDownload.classList.toggle("active");
+  btnDownload.setAttribute("aria-expanded", !isOpen);
+});
+
+btnDownload.addEventListener("keydown", (e) => {
+  if (
+    e.key === "ArrowDown" ||
+    e.key === "ArrowUp" ||
+    e.key === "Enter" ||
+    e.key === " "
+  ) {
+    e.preventDefault();
+    if (!downloadMenu.classList.contains("show")) {
+      downloadMenu.classList.add("show");
+      btnDownload.classList.add("active");
+      btnDownload.setAttribute("aria-expanded", "true");
+    }
+    const items = downloadMenu.querySelectorAll(".dropdown-item");
+    if (items.length > 0) items[0].focus();
+  }
+});
+
+downloadMenu.addEventListener("keydown", (e) => {
+  const items = Array.from(downloadMenu.querySelectorAll(".dropdown-item"));
+  const currentIndex = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    const next = (currentIndex + 1) % items.length;
+    items[next].focus();
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    const prev = (currentIndex - 1 + items.length) % items.length;
+    items[prev].focus();
+  } else if (e.key === "Escape") {
+    e.preventDefault();
+    closeDropdown();
+    btnDownload.focus();
+  } else if (e.key === "Enter" || e.key === " ") {
+    if (document.activeElement && items.includes(document.activeElement)) {
+      e.preventDefault();
+      document.activeElement.click();
+    }
+  }
 });
 
 document.addEventListener("click", () => {
-  downloadMenu.classList.remove("show");
-  btnDownload.classList.remove("active");
+  closeDropdown();
 });
 
 downloadMenu.addEventListener("click", () => {
-  downloadMenu.classList.remove("show");
-  btnDownload.classList.remove("active");
+  closeDropdown();
 });
 
 loadHistory(tbody, form);

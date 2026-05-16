@@ -9,7 +9,7 @@ export function renderInfoCards() {
       (card) => `
     <div class="info-card">
       <div class="info-card-header">
-        <div class="info-card-icon">${card.icon}</div>
+        <div class="info-card-icon">${card.icon.replace("<svg", '<svg aria-hidden="true"')}</div>
         <h3>${card.title}</h3>
       </div>
       <p>${card.description}</p>

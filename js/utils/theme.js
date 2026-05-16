@@ -5,6 +5,7 @@ export function initTheme() {
   const savedTheme = localStorage.getItem("theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
   icon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+  icon.setAttribute("aria-hidden", "true");
 
   toggle.addEventListener("click", () => {
     const current = document.documentElement.getAttribute("data-theme");
