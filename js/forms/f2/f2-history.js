@@ -38,10 +38,14 @@ export function renderHistory(history, listEl, cardEl, form) {
     .join("");
 
   listEl.querySelectorAll(".btn-history-restore").forEach((btn) => {
-    btn.addEventListener("click", () => restoreFromHistory(btn.dataset.id, form));
+    btn.addEventListener("click", () =>
+      restoreFromHistory(btn.dataset.id, form),
+    );
   });
   listEl.querySelectorAll(".btn-history-delete").forEach((btn) => {
-    btn.addEventListener("click", () => deleteFromHistory(btn.dataset.id, listEl, cardEl, form));
+    btn.addEventListener("click", () =>
+      deleteFromHistory(btn.dataset.id, listEl, cardEl, form),
+    );
   });
 }
 
@@ -77,11 +81,13 @@ function restoreFromHistory(id, form) {
   const d = entry.data;
   document.getElementById("nombre").value = d.nombre || "";
   document.getElementById("tipo-documento").value = d["tipo-documento"] || "";
-  document.getElementById("numero-documento").value = d["numero-documento"] || "";
+  document.getElementById("numero-documento").value =
+    d["numero-documento"] || "";
   document.getElementById("contacto").value = d.contacto || "";
   document.getElementById("periodo-inicial").value = d["periodo-inicial"] || "";
   document.getElementById("periodo-final").value = d["periodo-final"] || "";
-  document.getElementById("fecha-constancia").value = d["fecha-constancia"] || "";
+  document.getElementById("fecha-constancia").value =
+    d["fecha-constancia"] || "";
   document.getElementById("firma-nombre").checked = d["firma-nombre"] || false;
   document.getElementById("observaciones").value = d.observaciones || "";
 

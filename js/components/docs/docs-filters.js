@@ -27,7 +27,9 @@ export function renderDocsFilterBar(container, activeCategory, callbacks) {
     </div>
   `;
 
-  document.getElementById("docs-filter-category").addEventListener("change", (e) => {
-    callbacks.onCategoryChange(e.target.value);
-  });
+  document
+    .getElementById("docs-filter-category")
+    .addEventListener("change", (e) => {
+      callbacks.onCategoryChange(e.target.value);
+    });
 }

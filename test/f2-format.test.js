@@ -97,9 +97,25 @@ describe("F2 Format", () => {
             <div id="history-list"></div>
           </div>
           <div class="form-actions">
-            <button type="reset" class="btn-secondary">Limpiar</button>
-            <button type="button" class="btn-secondary" id="btn-save">Guardar</button>
-            <button type="button" class="btn-submit" id="btn-pdf">Descargar PDF</button>
+            <div class="btn-group">
+              <button type="button" class="btn-secondary" id="btn-save">Guardar</button>
+              <button type="reset" class="btn-secondary">Limpiar</button>
+            </div>
+            <div class="dropdown">
+              <button type="button" class="btn-submit" id="btn-download">Descargar</button>
+              <div class="dropdown-menu" id="download-menu">
+                <button type="button" class="dropdown-item" id="btn-pdf">PDF</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <span class="form-actions-label">Archivo:</span>
+            <div class="btn-group">
+              <button type="button" class="btn-secondary" id="btn-import">Importar</button>
+              <button type="button" class="btn-secondary" id="btn-export-json">JSON</button>
+              <button type="button" class="btn-secondary" id="btn-export-yaml">YAML</button>
+            </div>
+            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos despu&eacute;s con el bot&oacute;n Importar.</p>
           </div>
         </form>
       </main>

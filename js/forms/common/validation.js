@@ -9,7 +9,6 @@ export function validateForm(form, errorMessage) {
       el.style.borderColor = "";
     }
   });
-  if (!valid)
-    window.EcytvUI.showSnackbar(errorMessage, "warning");
+  if (!valid) window.EcytvUI.showSnackbar(errorMessage, "warning");
   return valid;
 }

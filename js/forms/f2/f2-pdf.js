@@ -64,7 +64,11 @@ export function generateF2PDF() {
   doc.setFont("helvetica", "bold");
   doc.text("Fecha de constancia:", 16, yPos);
   doc.setFont("helvetica", "normal");
-  doc.text(`Se hace constancia el dia ${formatDate(fechaConstancia)}.`, 16, yPos + 7);
+  doc.text(
+    `Se hace constancia el dia ${formatDate(fechaConstancia)}.`,
+    16,
+    yPos + 7,
+  );
   yPos += 16;
 
   doc.setFont("helvetica", "bold");

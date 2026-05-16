@@ -5,6 +5,7 @@ import { saveFormToHistory, loadHistory } from "./f1-history.js";
 import { generateF1PDF } from "./f1-pdf.js";
 import { generateF1ODS } from "./f1-ods.js";
 import { generateF1XLSX } from "./f1-xlsx.js";
+import { handleExportJSON, handleExportYAML, handleImport } from "./f1-io.js";
 
 restoreTheme();
 
@@ -125,5 +126,33 @@ document
   .getElementById("btn-xlsx")
   .addEventListener("click", handleGenerateXLSX);
 document.getElementById("btn-save").addEventListener("click", handleSave);
+document
+  .getElementById("btn-export-json")
+  .addEventListener("click", () => handleExportJSON(tbody));
+document
+  .getElementById("btn-export-yaml")
+  .addEventListener("click", () => handleExportYAML(tbody));
+document
+  .getElementById("btn-import")
+  .addEventListener("click", () => handleImport(tbody, form));
+
+const btnDownload = document.getElementById("btn-download");
+const downloadMenu = document.getElementById("download-menu");
+
+btnDownload.addEventListener("click", (e) => {
+  e.stopPropagation();
+  downloadMenu.classList.toggle("show");
+  btnDownload.classList.toggle("active");
+});
+
+document.addEventListener("click", () => {
+  downloadMenu.classList.remove("show");
+  btnDownload.classList.remove("active");
+});
+
+downloadMenu.addEventListener("click", () => {
+  downloadMenu.classList.remove("show");
+  btnDownload.classList.remove("active");
+});
 
 loadHistory(tbody, form);
