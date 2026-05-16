@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte
+    </title>
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/f1-format.css" />
+    <link rel="stylesheet" href="css/f3-format.css" />
+    <link rel="stylesheet" href="css/ui.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="container">
+        <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
+      </div>
+    </nav>
+
+    <main class="form-page">
+      <h1>F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte</h1>
+      <p>
+        Diligencia todos los campos obligatorios para solicitar el préstamo de
+        elementos de la bodega de arte.
+      </p>
+
+      <div class="form-notice">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+          />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>
+          Antes de diligenciar, revisa la disponibilidad de los elementos en la
+          bodega de arte.
+        </span>
+      </div>
+
+      <form id="f3-form" onsubmit="return false;">
+        <!-- Información del proyecto -->
+        <div class="form-card">
+          <h2>Información del Proyecto</h2>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="proyecto">Nombre del proyecto</label>
+              <input
+                type="text"
+                id="proyecto"
+                name="proyecto"
+                required
+                placeholder="Nombre del proyecto"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="asignatura">Asignatura</label>
+              <input
+                type="text"
+                id="asignatura"
+                name="asignatura"
+                list="asignaturas-sugeridas"
+                required
+                placeholder="Ej: Dirección de Arte"
+              />
+              <datalist id="asignaturas-sugeridas"></datalist>
+            </div>
+            <div class="form-group">
+              <label for="docente">Docente que autoriza</label>
+              <input
+                type="text"
+                id="docente"
+                name="docente"
+                required
+                placeholder="Nombre del docente"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Datos del autorizado -->
+        <div class="form-card">
+          <h2>Datos del Autorizado</h2>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="autorizado">Autorizado (directo responsable)</label>
+              <input
+                type="text"
+                id="autorizado"
+                name="autorizado"
+                required
+                placeholder="Nombre completo"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo-documento">Tipo de documento</label>
+              <select id="tipo-documento" name="tipo-documento" required>
+                <option value="">Seleccionar...</option>
+                <option value="CC">Cédula de Ciudadanía (CC)</option>
+                <option value="CE">Cédula de Extranjería (CE)</option>
+                <option value="TI">Tarjeta de Identidad (TI)</option>
+                <option value="PA">Pasaporte</option>
+                <option value="NIT">NIT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="numero-documento">Número de documento</label>
+              <input
+                type="text"
+                id="numero-documento"
+                name="numero-documento"
+                required
+                placeholder="Número de documento"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tiun">TIUN</label>
+              <input
+                type="text"
+                id="tiun"
+                name="tiun"
+                required
+                placeholder="TIUN"
+              />
+            </div>
+            <div class="form-group">
+              <label for="celular">Celular</label>
+              <input
+                type="tel"
+                id="celular"
+                name="celular"
+                required
+                placeholder="Número de celular"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del préstamo -->
+        <div class="form-card">
+          <h2>Información del Préstamo</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lugar">Lugar de grabación</label>
+              <input
+                type="text"
+                id="lugar"
+                name="lugar"
+                required
+                placeholder="Ej: Estudio de TV, exterior, locación..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="fecha-retiro">Fecha y hora de retiro</label>
+              <input
+                type="datetime-local"
+                id="fecha-retiro"
+                name="fecha-retiro"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fecha-entrega">Fecha y hora de entrega</label>
+              <input
+                type="datetime-local"
+                id="fecha-entrega"
+                name="fecha-entrega"
+                required
+              />
+            </div>
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="mismo-dia" name="mismo-dia" />
+              <label for="mismo-dia"
+                >Se entrega el mismo día (copiar fecha de retiro)</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de elementos -->
+        <div class="form-card">
+          <h2>Elementos a Solicitar</h2>
+
+          <div class="equip-section">
+            <table class="equip-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Tipo</th>
+                  <th>Cantidad</th>
+                  <th>Código</th>
+                  <th>Elemento</th>
+                  <th style="width: 50px"></th>
+                </tr>
+              </thead>
+              <tbody id="equip-tbody">
+                <tr class="equip-row">
+                  <td>
+                    <input
+                      type="text"
+                      class="item-num"
+                      name="equipo-item"
+                      placeholder="Item"
+                      aria-label="Número de item"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="equipo-tipo"
+                      placeholder="Tipo"
+                      required
+                      aria-label="Tipo"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="equipo-cantidad"
+                      placeholder="Cantidad"
+                      required
+                      aria-label="Cantidad"
+                      min="1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="equipo-codigo"
+                      placeholder="Código"
+                      required
+                      aria-label="Código"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="equipo-elemento"
+                      placeholder="Elemento"
+                      required
+                      aria-label="Elemento"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn-remove-equip"
+                      title="Eliminar elemento"
+                    >
+                      ✕
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add-equip" id="add-equip-btn">
+              + Agregar elemento
+            </button>
+          </div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="form-card">
+          <h2>Observaciones</h2>
+          <div class="form-row full">
+            <div class="form-group">
+              <textarea
+                id="observaciones"
+                name="observaciones"
+                placeholder="Observaciones adicionales..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historial -->
+        <div class="form-card" id="history-card" style="display: none">
+          <h2>Historial de Solicitudes</h2>
+          <p class="history-desc">
+            Las solicitudes se guardan automáticamente al descargar. Haz clic en
+            "Restaurar" para cargar los datos guardados.
+          </p>
+          <p class="history-privacy">
+            Los datos solo se almacenan en tu dispositivo (localStorage).
+          </p>
+          <div id="history-list" aria-live="polite"></div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="form-actions">
+          <div class="btn-group">
+            <button type="button" class="btn-secondary" id="btn-save">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+                />
+                <polyline points="17 21 17 13 7 13 7 21" />
+                <polyline points="7 3 7 8 15 8" />
+              </svg>
+              Guardar
+            </button>
+            <button type="reset" class="btn-secondary">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="3 6 5 6 21 6" />
+                <path
+                  d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                />
+              </svg>
+              Limpiar
+            </button>
+          </div>
+          <div class="dropdown">
+            <button
+              type="button"
+              class="btn-submit"
+              id="btn-download"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar
+              <svg
+                class="chevron"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="dropdown-menu" id="download-menu" role="menu">
+              <button
+                type="button"
+                class="dropdown-item"
+                id="btn-pdf"
+                role="menuitem"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                PDF
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <span class="form-actions-label">Archivo:</span>
+          <div class="btn-group">
+            <button type="button" class="btn-secondary" id="btn-import">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              Importar
+            </button>
+            <button type="button" class="btn-secondary" id="btn-export-json">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              JSON
+            </button>
+            <button type="button" class="btn-secondary" id="btn-export-yaml">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              YAML
+            </button>
+          </div>
+          <p class="form-actions-hint">
+            Guarda los datos del formulario en un archivo (JSON o YAML) para
+            volver a cargarlos después con el botón Importar.
+          </p>
+        </div>
+      </form>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script type="module" src="js/forms/f3/f3-form.js"></script>
+  </body>
+</html>

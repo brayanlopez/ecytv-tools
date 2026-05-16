@@ -29,9 +29,9 @@ const formats = [
     name: "F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte",
     description:
       "Formato para solicitar la reserva y préstamo de elementos de la bodega de arte",
-    url: "#",
-    label: "Próximamente",
-    available: false,
+    url: "f3-format.html",
+    label: "Abrir F3",
+    available: true,
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
       <line x1="12" y1="8" x2="12" y2="16"/>

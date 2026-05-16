@@ -1,0 +1,192 @@
+import { restoreTheme } from "../../utils/theme.js";
+import { validateForm } from "../common/validation.js";
+import { collectFormData, getEquipData } from "./f3-data.js";
+import { saveFormToHistory, loadHistory } from "./f3-history.js";
+import { generateF3PDF } from "./f3-pdf.js";
+import { handleExportJSON, handleExportYAML, handleImport } from "./f3-io.js";
+
+restoreTheme();
+
+document.getElementById("back-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.href = "./#formats";
+});
+
+const ASIGNATURAS_SUGERIDAS = [
+  "Sonido I",
+  "Sonido II",
+  "Taller de Realización y Producción I",
+  "Taller de Realización y Producción II",
+  "Taller de Realización y Producción III",
+  "Taller de Realización y Producción IV",
+  "Taller de realización y producción V",
+  "Cinefotografía I ",
+  "Cinefotografía II",
+  "Dirección de Arte",
+  "Dirección de Actores I",
+  "Dirección de Actores II",
+];
+const datalist = document.getElementById("asignaturas-sugeridas");
+ASIGNATURAS_SUGERIDAS.forEach((a) => {
+  const opt = document.createElement("option");
+  opt.value = a;
+  datalist.appendChild(opt);
+});
+
+const form = document.getElementById("f3-form");
+const tbody = document.getElementById("equip-tbody");
+const addBtn = document.getElementById("add-equip-btn");
+const mismoDia = document.getElementById("mismo-dia");
+const fechaRetiro = document.getElementById("fecha-retiro");
+const fechaEntrega = document.getElementById("fecha-entrega");
+
+mismoDia.addEventListener("change", () => {
+  if (mismoDia.checked && fechaRetiro.value) {
+    fechaEntrega.value = fechaRetiro.value;
+    fechaEntrega.disabled = true;
+  } else {
+    fechaEntrega.disabled = false;
+  }
+});
+
+fechaRetiro.addEventListener("input", () => {
+  if (mismoDia.checked && fechaRetiro.value) {
+    fechaEntrega.value = fechaRetiro.value;
+  }
+});
+
+addBtn.addEventListener("click", () => {
+  const row = document.createElement("tr");
+  row.className = "equip-row";
+  row.innerHTML = `
+    <td><input type="text" class="item-num" name="equipo-item" placeholder="Item" aria-label="Número de item"></td>
+    <td><input type="text" name="equipo-tipo" placeholder="Tipo" required aria-label="Tipo"></td>
+    <td><input type="number" name="equipo-cantidad" placeholder="Cantidad" required aria-label="Cantidad" min="1"></td>
+    <td><input type="text" name="equipo-codigo" placeholder="Código" required aria-label="Código"></td>
+    <td><input type="text" name="equipo-elemento" placeholder="Elemento" required aria-label="Elemento"></td>
+    <td><button type="button" class="btn-remove-equip" title="Eliminar elemento">✕</button></td>
+  `;
+  row.querySelector(".btn-remove-equip").addEventListener("click", () => {
+    if (tbody.children.length > 1) {
+      row.remove();
+      addBtn.focus();
+    }
+  });
+  tbody.appendChild(row);
+  const firstInput = row.querySelector("input");
+  if (firstInput) firstInput.focus();
+});
+
+tbody.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-remove-equip");
+  if (btn) {
+    const row = btn.closest(".equip-row");
+    if (tbody.children.length > 1) {
+      row.remove();
+      addBtn.focus();
+    }
+  }
+});
+
+form.addEventListener("reset", () => {
+  setTimeout(() => {
+    const rows = tbody.querySelectorAll(".equip-row");
+    for (let i = rows.length - 1; i > 0; i--) rows[i].remove();
+    const firstRow = tbody.querySelector(".equip-row");
+    if (firstRow) {
+      firstRow.querySelectorAll("input").forEach((inp) => (inp.value = ""));
+    }
+    fechaEntrega.disabled = false;
+  }, 0);
+});
+
+function handleGeneratePDF() {
+  if (!validateForm(form, "Por favor completa todos los campos obligatorios."))
+    return;
+  saveFormToHistory(collectFormData, tbody);
+  generateF3PDF(() => getEquipData(tbody));
+}
+
+function handleSave() {
+  saveFormToHistory(collectFormData, tbody);
+}
+
+document.getElementById("btn-pdf").addEventListener("click", handleGeneratePDF);
+document.getElementById("btn-save").addEventListener("click", handleSave);
+document
+  .getElementById("btn-export-json")
+  .addEventListener("click", () => handleExportJSON(tbody));
+document
+  .getElementById("btn-export-yaml")
+  .addEventListener("click", () => handleExportYAML(tbody));
+document
+  .getElementById("btn-import")
+  .addEventListener("click", () => handleImport(tbody, form));
+
+const btnDownload = document.getElementById("btn-download");
+const downloadMenu = document.getElementById("download-menu");
+
+function closeDropdown() {
+  downloadMenu.classList.remove("show");
+  btnDownload.classList.remove("active");
+  btnDownload.setAttribute("aria-expanded", "false");
+}
+
+btnDownload.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isOpen = downloadMenu.classList.contains("show");
+  downloadMenu.classList.toggle("show");
+  btnDownload.classList.toggle("active");
+  btnDownload.setAttribute("aria-expanded", !isOpen);
+});
+
+btnDownload.addEventListener("keydown", (e) => {
+  if (
+    e.key === "ArrowDown" ||
+    e.key === "ArrowUp" ||
+    e.key === "Enter" ||
+    e.key === " "
+  ) {
+    e.preventDefault();
+    if (!downloadMenu.classList.contains("show")) {
+      downloadMenu.classList.add("show");
+      btnDownload.classList.add("active");
+      btnDownload.setAttribute("aria-expanded", "true");
+    }
+    const items = downloadMenu.querySelectorAll(".dropdown-item");
+    if (items.length > 0) items[0].focus();
+  }
+});
+
+downloadMenu.addEventListener("keydown", (e) => {
+  const items = Array.from(downloadMenu.querySelectorAll(".dropdown-item"));
+  const currentIndex = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    const next = (currentIndex + 1) % items.length;
+    items[next].focus();
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    const prev = (currentIndex - 1 + items.length) % items.length;
+    items[prev].focus();
+  } else if (e.key === "Escape") {
+    e.preventDefault();
+    closeDropdown();
+    btnDownload.focus();
+  } else if (e.key === "Enter" || e.key === " ") {
+    if (document.activeElement && items.includes(document.activeElement)) {
+      e.preventDefault();
+      document.activeElement.click();
+    }
+  }
+});
+
+document.addEventListener("click", () => {
+  closeDropdown();
+});
+
+downloadMenu.addEventListener("click", () => {
+  closeDropdown();
+});
+
+loadHistory(tbody, form);
