@@ -30,10 +30,8 @@ describe("Formats Data", () => {
     });
   });
 
-  it("should have both available and coming-soon formats", () => {
+  it("should have at least one available format", () => {
     const available = formats.filter((f) => f.available);
-    const comingSoon = formats.filter((f) => !f.available);
     expect(available.length).toBeGreaterThan(0);
-    expect(comingSoon.length).toBeGreaterThan(0);
   });
 });

@@ -12,3 +12,19 @@ export const ASIGNATURAS_SUGERIDAS = [
   "Dirección de Actores I",
   "Dirección de Actores II",
 ];
+
+export const SALAS_SUGERIDAS = [
+  "Sala de edición NL1",
+  "Sala de edición NL2",
+  "Sala de edición NL3",
+  "Sala de edición NL4",
+  "Sala Film Mixing",
+  "Cabina de grabación",
+  "Sala de edición de sonido 1",
+  "Sala de edición de sonido 2",
+  "Sala de finalización FL1",
+  "Sala de finalización FL2",
+  "Sala de finalización FL3",
+  "Sala de ingesta",
+  "Sala podcast",
+];

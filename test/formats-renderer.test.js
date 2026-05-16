@@ -45,7 +45,7 @@ describe("renderFormats", () => {
     expect(container.innerHTML).toContain("btn-primary");
   });
 
-  it("should add coming-soon class for unavailable formats", () => {
+  it("should render available formats without coming-soon class", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
       if (id === "formats-grid") return container;
@@ -54,12 +54,11 @@ describe("renderFormats", () => {
 
     renderFormats();
 
-    expect(container.innerHTML).toContain("coming-soon");
-    const unavailable = formats.filter((f) => !f.available);
-    unavailable.forEach((f) => {
-      expect(container.innerHTML).toContain("btn-disabled");
-      expect(container.innerHTML).toContain(f.label);
+    const available = formats.filter((f) => f.available);
+    available.forEach((f) => {
+      expect(container.innerHTML).toContain(f.name);
     });
+    expect(container.innerHTML).not.toContain("coming-soon");
   });
 
   it("should render SVG icons with aria-hidden", () => {

@@ -43,9 +43,9 @@ const formats = [
     name: "F4 - Solicitud de Reserva y Préstamo Salas de Edición",
     description:
       "Formato para solicitar la reserva y préstamo de las salas de edición",
-    url: "#",
-    label: "Próximamente",
-    available: false,
+    url: "f4-format.html",
+    label: "Abrir F4",
+    available: true,
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
       <line x1="8" y1="21" x2="16" y2="21"/>
