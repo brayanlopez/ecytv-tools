@@ -226,12 +226,161 @@ describe("F2 Form", () => {
   });
 
   describe("Back link", () => {
-    it("should navigate to /#formats on click", () => {
+    it("should navigate to ./#formats on click", () => {
       const backLink = document.getElementById("back-link");
       const event = new Event("click");
       vi.spyOn(event, "preventDefault");
       backLink.dispatchEvent(event);
       expect(event.preventDefault).toHaveBeenCalled();
+    });
+  });
+
+  describe("Dropdown button click", () => {
+    it("should toggle dropdown menu on click", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.click();
+      expect(menu.classList.contains("show")).toBe(true);
+      expect(btn.classList.contains("active")).toBe(true);
+      expect(btn.getAttribute("aria-expanded")).toBe("true");
+
+      btn.click();
+      expect(menu.classList.contains("show")).toBe(false);
+      expect(btn.classList.contains("active")).toBe(false);
+      expect(btn.getAttribute("aria-expanded")).toBe("false");
+    });
+
+    it("should close dropdown when clicking outside", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.click();
+      expect(menu.classList.contains("show")).toBe(true);
+
+      document.dispatchEvent(new Event("click"));
+      expect(menu.classList.contains("show")).toBe(false);
+    });
+
+    it("should close dropdown when clicking on menu", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.click();
+      expect(menu.classList.contains("show")).toBe(true);
+
+      menu.click();
+      expect(menu.classList.contains("show")).toBe(false);
+    });
+  });
+
+  describe("Dropdown keyboard navigation", () => {
+    it("should open menu with ArrowDown when menu is closed", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      expect(menu.classList.contains("show")).toBe(true);
+    });
+
+    it("should open menu with Enter when menu is closed", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+      expect(menu.classList.contains("show")).toBe(true);
+    });
+
+    it("should open menu with Space when menu is closed", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
+      expect(menu.classList.contains("show")).toBe(true);
+    });
+
+    it("should open menu with ArrowUp when menu is closed", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+      expect(menu.classList.contains("show")).toBe(true);
+    });
+
+    it("should not open menu on non-navigation key", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }));
+      expect(menu.classList.contains("show")).toBe(false);
+    });
+
+    it("should navigate down in dropdown menu", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+      const items = menu.querySelectorAll(".dropdown-item");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      expect(menu.classList.contains("show")).toBe(true);
+
+      menu.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      expect(document.activeElement).toBe(items[0]);
+    });
+
+    it("should close dropdown with Escape and focus button", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+      const items = menu.querySelectorAll(".dropdown-item");
+
+      btn.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      expect(menu.classList.contains("show")).toBe(true);
+
+      menu.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+      expect(menu.classList.contains("show")).toBe(false);
+      expect(document.activeElement).toBe(btn);
+    });
+
+    it("should click active item on Enter in dropdown menu", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+      const pdfBtn = document.getElementById("btn-pdf");
+      const clickSpy = vi.fn();
+      pdfBtn.addEventListener("click", clickSpy);
+
+      btn.click();
+      expect(menu.classList.contains("show")).toBe(true);
+
+      const items = menu.querySelectorAll(".dropdown-item");
+      items[0].focus();
+
+      menu.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+      expect(clickSpy).toHaveBeenCalled();
+    });
+
+    it("should click active item on Space in dropdown menu", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+      const pdfBtn = document.getElementById("btn-pdf");
+      const clickSpy = vi.fn();
+      pdfBtn.addEventListener("click", clickSpy);
+
+      const items = menu.querySelectorAll(".dropdown-item");
+      items[0].focus();
+
+      menu.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
+      expect(clickSpy).toHaveBeenCalled();
+    });
+
+    it("should wrap navigation to top on ArrowUp from first item", () => {
+      const btn = document.getElementById("btn-download");
+      const menu = document.getElementById("download-menu");
+
+      btn.click();
+      const items = menu.querySelectorAll(".dropdown-item");
+      items[0].focus();
+
+      menu.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+      expect(document.activeElement).toBe(items[items.length - 1]);
     });
   });
 });

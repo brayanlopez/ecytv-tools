@@ -1,5 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
+vi.mock("../../../js/forms/common/io-config.js", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    importFromFile: vi.fn(),
+  };
+});
+
 describe("F2 IO handlers", () => {
   let handleExportJSON;
   let handleExportYAML;
@@ -63,6 +71,80 @@ describe("F2 IO handlers", () => {
   });
 });
 
+describe("handleImport (F2)", () => {
+  let handleImport;
+  let snackbarSpy;
+
+  beforeEach(async () => {
+    vi.resetModules();
+
+    vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:mock");
+    vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
+
+    snackbarSpy = vi.fn();
+    window.EcytvUI = { showSnackbar: snackbarSpy };
+    Element.prototype.scrollIntoView = vi.fn();
+
+    document.body.innerHTML = `
+      <form id="f2-form">
+        <input type="text" id="nombre" />
+        <select id="tipo-documento">
+          <option value="">Seleccionar...</option>
+          <option value="CC">CC</option>
+        </select>
+        <input type="text" id="numero-documento" />
+        <input type="tel" id="contacto" />
+        <input type="date" id="periodo-inicial" />
+        <input type="date" id="periodo-final" />
+        <input type="date" id="fecha-constancia" />
+        <input type="checkbox" id="firma-nombre" />
+        <textarea id="observaciones"></textarea>
+      </form>
+    `;
+
+    const mod = await import("../../../js/forms/f2/f2-io.js");
+    handleImport = mod.handleImport;
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    document.body.innerHTML = "";
+  });
+
+  it("should show error snackbar when import fails", async () => {
+    const ioConfig = await import("../../../js/forms/common/io-config.js");
+    ioConfig.importFromFile.mockRejectedValue(
+      new Error("Formato de archivo no válido. Usa JSON o YAML."),
+    );
+
+    const form = document.getElementById("f2-form");
+    await handleImport(form);
+
+    expect(snackbarSpy).toHaveBeenCalledWith(
+      "Formato de archivo no válido. Usa JSON o YAML.",
+      "error",
+    );
+  });
+
+  it("should show success snackbar when import succeeds", async () => {
+    const ioConfig = await import("../../../js/forms/common/io-config.js");
+    ioConfig.importFromFile.mockResolvedValue({
+      nombre: "Juan Pérez",
+      "tipo-documento": "CC",
+    });
+
+    const form = document.getElementById("f2-form");
+    await handleImport(form);
+
+    expect(document.getElementById("nombre").value).toBe("Juan Pérez");
+    expect(document.getElementById("tipo-documento").value).toBe("CC");
+    expect(snackbarSpy).toHaveBeenCalledWith(
+      "Datos importados correctamente.",
+      "success",
+    );
+  });
+});
+
 describe("restoreFormData (F2)", () => {
   let restoreFormData;
 
@@ -117,9 +199,13 @@ describe("restoreFormData (F2)", () => {
     expect(document.getElementById("contacto").value).toBe("3019876543");
     expect(document.getElementById("periodo-inicial").value).toBe("2026-03-01");
     expect(document.getElementById("periodo-final").value).toBe("2026-03-15");
-    expect(document.getElementById("fecha-constancia").value).toBe("2026-03-10");
+    expect(document.getElementById("fecha-constancia").value).toBe(
+      "2026-03-10",
+    );
     expect(document.getElementById("firma-nombre").checked).toBe(true);
-    expect(document.getElementById("observaciones").value).toBe("Acta de prueba");
+    expect(document.getElementById("observaciones").value).toBe(
+      "Acta de prueba",
+    );
   });
 
   it("should set checkbox to false when data has false", () => {
@@ -132,5 +218,22 @@ describe("restoreFormData (F2)", () => {
   it("should do nothing when data is null", () => {
     const form = document.getElementById("f2-form");
     expect(() => restoreFormData(null, form)).not.toThrow();
+  });
+
+  it("should handle missing element IDs gracefully", () => {
+    const data = { "non-existent-id": "value" };
+    expect(() => restoreFormData(data, null)).not.toThrow();
+  });
+
+  it("should not throw when form is not provided", () => {
+    const data = { nombre: "Test" };
+    expect(() => restoreFormData(data)).not.toThrow();
+  });
+
+  it("should handle undefined values", () => {
+    const data = { nombre: undefined };
+    const form = document.getElementById("f2-form");
+    restoreFormData(data, form);
+    expect(document.getElementById("nombre").value).toBe("");
   });
 });

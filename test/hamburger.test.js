@@ -12,7 +12,7 @@ describe("initHamburger", () => {
     linkEls = [{ addEventListener: vi.fn() }, { addEventListener: vi.fn() }];
 
     navLinksEl = {
-      classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() },
+      classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn(), contains: vi.fn() },
       querySelectorAll: vi.fn().mockReturnValue(linkEls),
     };
 
@@ -95,5 +95,43 @@ describe("initHamburger", () => {
     linkClickHandlers[1]();
     expect(navLinksEl.classList.remove).toHaveBeenCalledWith("active");
     expect(hamburgerEl.classList.remove).toHaveBeenCalledWith("active");
+  });
+
+  describe("Escape key", () => {
+    it("should close nav and focus hamburger when Escape is pressed and nav is active", () => {
+      navLinksEl.classList.contains = vi.fn().mockReturnValue(true);
+      hamburgerEl.focus = vi.fn();
+
+      initHamburger();
+
+      const escEvent = new KeyboardEvent("keydown", { key: "Escape" });
+      document.dispatchEvent(escEvent);
+
+      expect(navLinksEl.classList.remove).toHaveBeenCalledWith("active");
+      expect(hamburgerEl.classList.remove).toHaveBeenCalledWith("active");
+      expect(hamburgerEl.focus).toHaveBeenCalled();
+    });
+
+    it("should do nothing when Escape is pressed and nav is not active", () => {
+      navLinksEl.classList.contains = vi.fn().mockReturnValue(false);
+
+      initHamburger();
+
+      const escEvent = new KeyboardEvent("keydown", { key: "Escape" });
+      document.dispatchEvent(escEvent);
+
+      expect(navLinksEl.classList.remove).not.toHaveBeenCalled();
+    });
+
+    it("should do nothing on non-Escape key", () => {
+      navLinksEl.classList.contains = vi.fn().mockReturnValue(true);
+
+      initHamburger();
+
+      const enterEvent = new KeyboardEvent("keydown", { key: "Enter" });
+      document.dispatchEvent(enterEvent);
+
+      expect(navLinksEl.classList.remove).not.toHaveBeenCalled();
+    });
   });
 });

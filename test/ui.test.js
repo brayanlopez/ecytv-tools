@@ -209,5 +209,52 @@ describe("UI Components", () => {
         document.querySelector(".modal-overlay").classList.contains("show"),
       ).toBe(false);
     });
+
+    it("should trap Tab key and wrap to last element when Shift+Tab from first", () => {
+      window.EcytvUI.showModal({ title: "Test", message: "Test" });
+      const modal = document.querySelector(".modal-overlay").querySelector(".modal");
+      const focusable = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      const focusSpy = vi.spyOn(focusable[focusable.length - 1], "focus");
+
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab", shiftKey: true }));
+      expect(focusSpy).toHaveBeenCalled();
+    });
+
+    it("should wrap Tab to first element when Tab from last", () => {
+      window.EcytvUI.showModal({ title: "Test", message: "Test" });
+      const modal = document.querySelector(".modal-overlay").querySelector(".modal");
+      const focusable = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      const focusSpy = vi.spyOn(focusable[0], "focus");
+
+      const restoreActiveElement = vi.spyOn(document, "activeElement", "get").mockReturnValue(focusable[focusable.length - 1]);
+
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }));
+      expect(focusSpy).toHaveBeenCalled();
+    });
+
+    it("should not throw when Tab is pressed and no focusable elements exist", () => {
+      window.EcytvUI.showModal({ title: "Test", message: "Test" });
+      const modal = document.querySelector(".modal-overlay").querySelector(".modal");
+
+      modal.querySelectorAll("button").forEach((btn) => btn.remove());
+
+      expect(() => {
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }));
+      }).not.toThrow();
+    });
+
+    it("should ignore non-Tab and non-Escape keys in modal", () => {
+      window.EcytvUI.showModal({ title: "Test", message: "Test" });
+      const overlay = document.querySelector(".modal-overlay");
+
+      overlay.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "ArrowDown" }),
+      );
+      expect(overlay.classList.contains("show")).toBe(true);
+    });
   });
 });

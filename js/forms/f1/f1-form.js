@@ -11,7 +11,7 @@ restoreTheme();
 
 document.getElementById("back-link").addEventListener("click", (e) => {
   e.preventDefault();
-  window.location.href = "/#formats";
+  window.location.href = "./#formats";
 });
 
 const ASIGNATURAS_SUGERIDAS = [
