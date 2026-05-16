@@ -6,6 +6,7 @@ import { generateF1PDF } from "./f1-pdf.js";
 import { generateF1ODS } from "./f1-ods.js";
 import { generateF1XLSX } from "./f1-xlsx.js";
 import { handleExportJSON, handleExportYAML, handleImport } from "./f1-io.js";
+import { ASIGNATURAS_SUGERIDAS } from "../../utils/constants.js";
 
 restoreTheme();
 
@@ -14,20 +15,6 @@ document.getElementById("back-link").addEventListener("click", (e) => {
   window.location.href = "./#formats";
 });
 
-const ASIGNATURAS_SUGERIDAS = [
-  "Sonido I",
-  "Sonido II",
-  "Taller de Realización y Producción I",
-  "Taller de Realización y Producción II",
-  "Taller de Realización y Producción III",
-  "Taller de Realización y Producción IV",
-  "Taller de realización y producción V",
-  "Cinefotografía I ",
-  "Cinefotografía II",
-  "Dirección de Arte",
-  "Dirección de Actores I",
-  "Dirección de Actores II",
-];
 const datalist = document.getElementById("asignaturas-sugeridas");
 ASIGNATURAS_SUGERIDAS.forEach((a) => {
   const opt = document.createElement("option");

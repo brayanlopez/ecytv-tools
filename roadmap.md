@@ -30,8 +30,8 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 
 ### Pendiente / En Progreso
 
-- [ ] F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte
-- [ ] F4 - Solicitud de Reserva y Préstamo Salas de Edición
+- [x] F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte
+- [x] F4 - Solicitud de Reserva y Préstamo Salas de Edición
 - [ ] Vista de equipos con datos del inventario (esqueleto creado, no funcional)
 - [x] Mejorar accesibilidad (ARIA labels, navegación por teclado)
 
@@ -40,7 +40,7 @@ Plataforma para los estudiantes de la Escuela de Cine y TV de la Universidad Nac
 ### Corto Plazo
 
 - [ ] Mejoras en la búsqueda rápida de herramientas (actualmente filtrado básico por nombre, descripción, tags y categoría)
-- [ ] Finalizar generadores F3 y F4 con descarga en PDF
+- [x] Finalizar generadores F3 y F4 con descarga en PDF
 - [ ] Vista funcional del inventario de equipos con búsqueda y filtros
 - [ ] Mejorar accesibilidad (ARIA labels, navegación por teclado, contraste)
 - [ ] Optimización de iconos SVG (actualmente varios usan default.svg)
