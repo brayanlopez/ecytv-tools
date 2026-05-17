@@ -8,7 +8,7 @@ function formatDate(dateStr) {
   });
 }
 
-export function generateF2PDF() {
+export function generateF2PDF(data) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     window.EcytvUI.showSnackbar(
       "Error al cargar la librería PDF. Verifica tu conexión a internet.",
@@ -18,6 +18,18 @@ export function generateF2PDF() {
   }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
+  const {
+    nombre,
+    "tipo-documento": tipoDoc,
+    "numero-documento": numDoc,
+    "periodo-inicial": periodoInicial,
+    "periodo-final": periodoFinal,
+    "fecha-constancia": fechaConstancia,
+    "firma-nombre": firma,
+    contacto,
+    observaciones,
+  } = data;
 
   const primary = "#019587";
 
@@ -32,16 +44,6 @@ export function generateF2PDF() {
   doc.text("Formato F2", 105, 20, { align: "center" });
 
   let yPos = 40;
-
-  const nombre = document.getElementById("nombre").value;
-  const tipoDoc = document.getElementById("tipo-documento").value;
-  const numDoc = document.getElementById("numero-documento").value;
-  const periodoInicial = document.getElementById("periodo-inicial").value;
-  const periodoFinal = document.getElementById("periodo-final").value;
-  const fechaConstancia = document.getElementById("fecha-constancia").value;
-  const firma = document.getElementById("firma-nombre").checked;
-  const contacto = document.getElementById("contacto").value;
-  const observaciones = document.getElementById("observaciones").value;
 
   doc.setTextColor("#222222");
   doc.setFontSize(11);

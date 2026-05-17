@@ -141,6 +141,21 @@ describe("F4 PDF Generation", () => {
     document.querySelector('input[name="sala-hora-fin"]').value = "10:00";
   }
 
+  function getFormData() {
+    return {
+      proyecto: document.getElementById("proyecto").value,
+      asignatura: document.getElementById("asignatura").value,
+      docente: document.getElementById("docente").value,
+      "directo-responsable": document.getElementById("directo-responsable")
+        .value,
+      "tipo-documento": document.getElementById("tipo-documento").value,
+      "numero-documento": document.getElementById("numero-documento").value,
+      tiun: document.getElementById("tiun").value,
+      observaciones: document.getElementById("observaciones").value,
+      salas: [],
+    };
+  }
+
   function mockJspdfEnv() {
     const doc = {
       setFillColor: vi.fn(function () {
@@ -287,7 +302,7 @@ describe("F4 PDF Generation", () => {
       document.getElementById("numero-documento").value = "";
       document.getElementById("tiun").value = "";
 
-      generateF4PDF(() => []);
+      generateF4PDF(getFormData());
 
       const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
       expect(allText).toContain("(sin especificar)");
@@ -304,7 +319,7 @@ describe("F4 PDF Generation", () => {
       document.getElementById("numero-documento").value = "123456789";
       document.getElementById("tiun").value = "TIUN123";
 
-      generateF4PDF(() => []);
+      generateF4PDF(getFormData());
 
       const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
       expect(allText).toContain("(ninguna)");

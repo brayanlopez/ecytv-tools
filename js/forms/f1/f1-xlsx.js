@@ -1,4 +1,4 @@
-export async function generateF1XLSX(getEquipData) {
+export async function generateF1XLSX(data) {
   try {
     const resp = await fetch("data/f1-template.xlsx");
     if (!resp.ok) throw new Error("No se pudo cargar la plantilla XLSX");
@@ -7,23 +7,30 @@ export async function generateF1XLSX(getEquipData) {
     const wb = XLSX.read(buf, { type: "array", cellStyles: true });
     const ws = wb.Sheets[wb.SheetNames[0]];
 
+    const {
+      proyecto,
+      asignatura,
+      responsable,
+      tiun,
+      lugar,
+      celular,
+      "tipo-prestamo": tipoPrestamo,
+      "fecha-retiro": fechaRetiro = "",
+      "fecha-entrega": fechaEntrega = "",
+      observaciones,
+      docente,
+      equipos: equipData,
+    } = data;
+
     function setCell(addr, val) {
       const existing = ws[addr];
-      ws[addr] = { v: val, t: "s" };
-      if (existing && existing.s != null) ws[addr].s = existing.s;
+      if (existing) {
+        existing.v = val;
+        existing.t = "s";
+      } else {
+        ws[addr] = { v: val, t: "s" };
+      }
     }
-
-    const proyecto = document.getElementById("proyecto").value;
-    const asignatura = document.getElementById("asignatura").value;
-    const responsable = document.getElementById("responsable").value;
-    const tiun = document.getElementById("tiun").value;
-    const lugar = document.getElementById("lugar").value;
-    const celular = document.getElementById("celular").value;
-    const prestamo = document.getElementById("tipo-prestamo").value;
-    const fechaRetiro = document.getElementById("fecha-retiro").value;
-    const fechaEntrega = document.getElementById("fecha-entrega").value;
-    const observaciones = document.getElementById("observaciones").value;
-    const docente = document.getElementById("docente").value;
 
     setCell("C7", proyecto);
     setCell("G7", asignatura);
@@ -32,7 +39,7 @@ export async function generateF1XLSX(getEquipData) {
     setCell("C9", lugar);
     setCell("G9", celular);
 
-    if (prestamo === "Interno") {
+    if (tipoPrestamo === "Interno") {
       setCell("D10", "X");
       setCell("G10", "");
     } else {
@@ -47,7 +54,6 @@ export async function generateF1XLSX(getEquipData) {
     if (entrega[0]) setCell("G12", entrega[0]);
     if (entrega[1]) setCell("G13", entrega[1]);
 
-    const equipData = getEquipData();
     for (let i = 0; i < Math.min(14, equipData.length); i++) {
       const r = 17 + i;
       setCell("B" + r, equipData[i].item);

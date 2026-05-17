@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
-vi.mock("../../../js/forms/f4/f4-io.js", () => ({
-  handleExportJSON: vi.fn(),
-  handleExportYAML: vi.fn(),
-  handleImport: vi.fn(),
-}));
+vi.mock("../../../js/forms/common/io-config.js", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    importFromFile: vi.fn().mockRejectedValue(new Error("Simulated error")),
+  };
+});
 
 describe("F4 Form", () => {
   let localStorageMock;
@@ -454,22 +456,30 @@ describe("F4 Form", () => {
   });
 
   describe("Export/Import buttons", () => {
-    it("should trigger export JSON handler when clicked", async () => {
-      const ioMod = await import("../../../js/forms/f4/f4-io.js");
+    it("should show success snackbar on export JSON click", () => {
       document.getElementById("btn-export-json").click();
-      expect(ioMod.handleExportJSON).toHaveBeenCalled();
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
+        "Datos exportados en JSON correctamente.",
+        "success",
+      );
     });
 
-    it("should trigger export YAML handler when clicked", async () => {
-      const ioMod = await import("../../../js/forms/f4/f4-io.js");
+    it("should show success snackbar on export YAML click", () => {
       document.getElementById("btn-export-yaml").click();
-      expect(ioMod.handleExportYAML).toHaveBeenCalled();
+      expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
+        "Datos exportados en YAML correctamente.",
+        "success",
+      );
     });
 
-    it("should trigger import handler when clicked", async () => {
-      const ioMod = await import("../../../js/forms/f4/f4-io.js");
+    it("should show error snackbar on import click when import fails", async () => {
       document.getElementById("btn-import").click();
-      expect(ioMod.handleImport).toHaveBeenCalled();
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
+          "Simulated error",
+          "error",
+        );
+      });
     });
   });
 });

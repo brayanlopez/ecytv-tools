@@ -1,4 +1,4 @@
-export function generateF4PDF(getSalasData) {
+export function generateF4PDF(data) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     window.EcytvUI.showSnackbar(
       "Error al cargar la librería PDF. Verifica tu conexión a internet.",
@@ -8,6 +8,18 @@ export function generateF4PDF(getSalasData) {
   }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
+  const {
+    proyecto,
+    asignatura,
+    docente,
+    "directo-responsable": directoResponsable,
+    "tipo-documento": tipoDoc,
+    "numero-documento": numDoc,
+    tiun,
+    observaciones,
+    salas: salaRows = [],
+  } = data;
 
   const primary = "#019587";
   const lightGray = "#f5f5f5";
@@ -47,27 +59,33 @@ export function generateF4PDF(getSalasData) {
   let yPos = 36;
 
   yPos = sectionHeader("1. INFORMACION DEL PROYECTO", yPos);
-  yPos = fieldRow("Nombre del proyecto", document.getElementById("proyecto").value, yPos);
-  yPos = fieldRow("Asignatura", document.getElementById("asignatura").value, yPos);
-  yPos = fieldRow("Docente que autoriza", document.getElementById("docente").value, yPos);
+  yPos = fieldRow("Nombre del proyecto", proyecto, yPos);
+  yPos = fieldRow("Asignatura", asignatura, yPos);
+  yPos = fieldRow("Docente que autoriza", docente, yPos);
   yPos += 4;
 
   yPos = sectionHeader("2. DATOS DEL DIRECTO RESPONSABLE", yPos);
-  yPos = fieldRow("Directo responsable", document.getElementById("directo-responsable").value, yPos);
-  const tipoDoc = document.getElementById("tipo-documento").value;
-  const numDoc = document.getElementById("numero-documento").value;
-  yPos = fieldRow("Documento", (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""), yPos);
-  yPos = fieldRow("TIUN", document.getElementById("tiun").value, yPos);
+  yPos = fieldRow("Directo responsable", directoResponsable, yPos);
+  yPos = fieldRow(
+    "Documento",
+    (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""),
+    yPos,
+  );
+  yPos = fieldRow("TIUN", tiun, yPos);
   yPos += 4;
 
   yPos = sectionHeader("3. SALAS DE EDICION", yPos);
 
-  const salaRows = getSalasData();
   if (salaRows.length > 0) {
     doc.autoTable({
       startY: yPos,
       head: [["Sala", "Fecha", "Hora inicio", "Hora fin"]],
-      body: salaRows.map((r) => [r.nombre, r.fecha, r["hora-inicio"], r["hora-fin"]]),
+      body: salaRows.map((r) => [
+        r.nombre,
+        r.fecha,
+        r["hora-inicio"],
+        r["hora-fin"],
+      ]),
       theme: "grid",
       headStyles: { fillColor: primary, fontSize: 8, fontStyle: "bold" },
       bodyStyles: { fontSize: 8 },
@@ -85,9 +103,8 @@ export function generateF4PDF(getSalasData) {
   doc.setTextColor("#222222");
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  const obs =
-    document.getElementById("observaciones").value || "(sin observaciones)";
-  const lines = doc.splitTextToSize(obs, 178);
+  const obsText = observaciones || "(sin observaciones)";
+  const lines = doc.splitTextToSize(obsText, 178);
   doc.text(lines, 16, yPos + 3);
   yPos = yPos + 3 + lines.length * 4 + 6;
 

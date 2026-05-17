@@ -1,34 +1,7 @@
-import {
-  downloadJSON,
-  downloadYAML,
-  importFromFile,
-} from "../common/io-config.js";
-import { collectFormData, restoreFormData } from "./f2-data.js";
+import { createFormFactory } from "../common/form-factory.js";
+import { f2Config } from "./f2-config.js";
 
-export async function handleExportJSON() {
-  const data = collectFormData();
-  downloadJSON(data, "F2-Acta-Compromiso");
-  window.EcytvUI.showSnackbar(
-    "Datos exportados en JSON correctamente.",
-    "success",
-  );
-}
+const { handleExportJSON, handleExportYAML, handleImport } =
+  createFormFactory(f2Config);
 
-export async function handleExportYAML() {
-  const data = collectFormData();
-  downloadYAML(data, "F2-Acta-Compromiso");
-  window.EcytvUI.showSnackbar(
-    "Datos exportados en YAML correctamente.",
-    "success",
-  );
-}
-
-export async function handleImport(form) {
-  try {
-    const data = await importFromFile();
-    restoreFormData(data, form);
-    window.EcytvUI.showSnackbar("Datos importados correctamente.", "success");
-  } catch (err) {
-    window.EcytvUI.showSnackbar(err.message, "error");
-  }
-}
+export { handleExportJSON, handleExportYAML, handleImport };

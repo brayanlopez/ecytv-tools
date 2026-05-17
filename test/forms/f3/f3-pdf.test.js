@@ -168,6 +168,24 @@ describe("F3 PDF Generation", () => {
     document.querySelector('input[name="equipo-elemento"]').value = "Reflector";
   }
 
+  function getFormData() {
+    return {
+      proyecto: document.getElementById("proyecto").value,
+      asignatura: document.getElementById("asignatura").value,
+      docente: document.getElementById("docente").value,
+      autorizado: document.getElementById("autorizado").value,
+      "tipo-documento": document.getElementById("tipo-documento").value,
+      "numero-documento": document.getElementById("numero-documento").value,
+      tiun: document.getElementById("tiun").value,
+      celular: document.getElementById("celular").value,
+      lugar: document.getElementById("lugar").value,
+      "fecha-retiro": document.getElementById("fecha-retiro").value,
+      "fecha-entrega": document.getElementById("fecha-entrega").value,
+      observaciones: document.getElementById("observaciones").value,
+      equipos: [],
+    };
+  }
+
   function mockJspdfEnv() {
     const doc = {
       setFillColor: vi.fn(function () {
@@ -215,9 +233,7 @@ describe("F3 PDF Generation", () => {
       document.getElementById("btn-pdf").click();
 
       expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-      expect(doc.save).toHaveBeenCalledWith(
-        "F3-Solicitud-Bodega-Arte.pdf",
-      );
+      expect(doc.save).toHaveBeenCalledWith("F3-Solicitud-Bodega-Arte.pdf");
     });
 
     it("should show alert when jsPDF is not loaded", () => {
@@ -288,9 +304,7 @@ describe("F3 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
       expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-      expect(doc.save).toHaveBeenCalledWith(
-        "F3-Solicitud-Bodega-Arte.pdf",
-      );
+      expect(doc.save).toHaveBeenCalledWith("F3-Solicitud-Bodega-Arte.pdf");
     });
 
     it("should handle empty tipo-documento via generateF3PDF", async () => {
@@ -299,7 +313,7 @@ describe("F3 PDF Generation", () => {
       fillAllRequired();
       document.getElementById("tipo-documento").value = "";
 
-      generateF3PDF(() => []);
+      generateF3PDF(getFormData());
 
       const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
       expect(allText).not.toContain("CC");
@@ -312,7 +326,7 @@ describe("F3 PDF Generation", () => {
       fillAllRequired();
       document.getElementById("proyecto").value = "";
 
-      generateF3PDF(() => []);
+      generateF3PDF(getFormData());
 
       const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
       expect(allText).toContain("(sin especificar)");
@@ -326,7 +340,8 @@ describe("F3 PDF Generation", () => {
       rows[1].querySelector('input[name="equipo-tipo"]').value = "Sonido";
       rows[1].querySelector('input[name="equipo-cantidad"]').value = "1";
       rows[1].querySelector('input[name="equipo-codigo"]').value = "COD-002";
-      rows[1].querySelector('input[name="equipo-elemento"]').value = "Micrófono";
+      rows[1].querySelector('input[name="equipo-elemento"]').value =
+        "Micrófono";
       rows[0].querySelector('input[name="equipo-item"]').value = "1";
       rows[1].querySelector('input[name="equipo-item"]').value = "2";
 

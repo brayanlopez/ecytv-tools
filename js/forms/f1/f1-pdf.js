@@ -1,4 +1,4 @@
-export function generateF1PDF(getEquipData) {
+export function generateF1PDF(data) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     window.EcytvUI.showSnackbar(
       "Error al cargar la librería PDF. Verifica tu conexión a internet.",
@@ -8,6 +8,21 @@ export function generateF1PDF(getEquipData) {
   }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
+  const {
+    proyecto,
+    asignatura,
+    docente,
+    responsable,
+    celular,
+    tiun,
+    lugar,
+    "tipo-prestamo": tipoPrestamo,
+    "fecha-retiro": fechaRetiro = "",
+    "fecha-entrega": fechaEntrega = "",
+    observaciones,
+    equipos: equipRows,
+  } = data;
 
   const primary = "#019587";
   const lightGray = "#f5f5f5";
@@ -51,59 +66,34 @@ export function generateF1PDF(getEquipData) {
   let yPos = 36;
 
   yPos = sectionHeader("1. INFORMACION DEL PROYECTO", yPos);
-  yPos = fieldRow(
-    "Nombre del proyecto",
-    document.getElementById("proyecto").value,
-    yPos,
-  );
-  yPos = fieldRow(
-    "Asignatura",
-    document.getElementById("asignatura").value,
-    yPos,
-  );
-  yPos = fieldRow(
-    "Docente que autoriza",
-    document.getElementById("docente").value,
-    yPos,
-  );
+  yPos = fieldRow("Nombre del proyecto", proyecto, yPos);
+  yPos = fieldRow("Asignatura", asignatura, yPos);
+  yPos = fieldRow("Docente que autoriza", docente, yPos);
   yPos += 4;
 
   yPos = sectionHeader("2. DATOS DEL RESPONSABLE", yPos);
-  yPos = fieldRow(
-    "Nombre del responsable",
-    document.getElementById("responsable").value,
-    yPos,
-  );
-  yPos = fieldRow("Celular", document.getElementById("celular").value, yPos);
-  yPos = fieldRow("TIUN", document.getElementById("tiun").value, yPos);
+  yPos = fieldRow("Nombre del responsable", responsable, yPos);
+  yPos = fieldRow("Celular", celular, yPos);
+  yPos = fieldRow("TIUN", tiun, yPos);
   yPos += 4;
 
   yPos = sectionHeader("3. INFORMACION DEL PRESTAMO", yPos);
-  yPos = fieldRow(
-    "Lugar de grabacion",
-    document.getElementById("lugar").value,
-    yPos,
-  );
-  yPos = fieldRow(
-    "Tipo de prestamo",
-    document.getElementById("tipo-prestamo").value,
-    yPos,
-  );
+  yPos = fieldRow("Lugar de grabacion", lugar, yPos);
+  yPos = fieldRow("Tipo de prestamo", tipoPrestamo, yPos);
   yPos = fieldRow(
     "Fecha y hora de retiro",
-    document.getElementById("fecha-retiro").value.replace("T", " "),
+    fechaRetiro.replace("T", " "),
     yPos,
   );
   yPos = fieldRow(
     "Fecha y hora de entrega",
-    document.getElementById("fecha-entrega").value.replace("T", " "),
+    fechaEntrega.replace("T", " "),
     yPos,
   );
   yPos += 4;
 
   yPos = sectionHeader("4. EQUIPOS A SOLICITAR", yPos);
 
-  const equipRows = getEquipData();
   if (equipRows.length > 0) {
     doc.autoTable({
       startY: yPos,
@@ -126,9 +116,8 @@ export function generateF1PDF(getEquipData) {
   doc.setTextColor("#222222");
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  const obs =
-    document.getElementById("observaciones").value || "(sin observaciones)";
-  const lines = doc.splitTextToSize(obs, 178);
+  const obsText = observaciones || "(sin observaciones)";
+  const lines = doc.splitTextToSize(obsText, 178);
   doc.text(lines, 16, yPos + 3);
   yPos = yPos + 3 + lines.length * 4 + 6;
 

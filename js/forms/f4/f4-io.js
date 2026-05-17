@@ -1,34 +1,7 @@
-import {
-  downloadJSON,
-  downloadYAML,
-  importFromFile,
-} from "../common/io-config.js";
-import { collectFormData, restoreFormData } from "./f4-data.js";
+import { createFormFactory } from "../common/form-factory.js";
+import { f4Config } from "./f4-config.js";
 
-export async function handleExportJSON(tbody) {
-  const data = collectFormData(tbody);
-  downloadJSON(data, "F4-Solicitud-Salas-Edicion");
-  window.EcytvUI.showSnackbar(
-    "Datos exportados en JSON correctamente.",
-    "success",
-  );
-}
+const { handleExportJSON, handleExportYAML, handleImport } =
+  createFormFactory(f4Config);
 
-export async function handleExportYAML(tbody) {
-  const data = collectFormData(tbody);
-  downloadYAML(data, "F4-Solicitud-Salas-Edicion");
-  window.EcytvUI.showSnackbar(
-    "Datos exportados en YAML correctamente.",
-    "success",
-  );
-}
-
-export async function handleImport(tbody, form) {
-  try {
-    const data = await importFromFile();
-    restoreFormData(data, tbody, form);
-    window.EcytvUI.showSnackbar("Datos importados correctamente.", "success");
-  } catch (err) {
-    window.EcytvUI.showSnackbar(err.message, "error");
-  }
-}
+export { handleExportJSON, handleExportYAML, handleImport };

@@ -1,4 +1,4 @@
-export async function generateF1ODS(getEquipData) {
+export async function generateF1ODS(data) {
   try {
     const resp = await fetch("data/f1-template.ods");
     if (!resp.ok) throw new Error("No se pudo cargar la plantilla ODS");
@@ -19,6 +19,21 @@ export async function generateF1ODS(getEquipData) {
     const table = tables[0];
     const rows = table.getElementsByTagNameNS(TABLE_NS, "table-row");
 
+    const {
+      proyecto,
+      asignatura,
+      responsable,
+      tiun,
+      lugar,
+      celular,
+      "tipo-prestamo": tipoPrestamo,
+      "fecha-retiro": fechaRetiro,
+      "fecha-entrega": fechaEntrega,
+      observaciones,
+      docente,
+      equipos: equipData,
+    } = data;
+
     const rowRefs = {
       proyecto: rows[6],
       responsable: rows[7],
@@ -38,41 +53,49 @@ export async function generateF1ODS(getEquipData) {
 
     function setCellOnRow(rowRef, cellIdx, value) {
       if (!rowRef) return;
+
       const cells = rowRef.getElementsByTagNameNS(TABLE_NS, "table-cell");
       const cell = cells[cellIdx];
+
       if (!cell) return;
-      let p = cell.getElementsByTagNameNS(TEXT_NS, "p")[0];
-      if (!p) {
-        p = xmlDoc.createElementNS(TEXT_NS, "p");
-        cell.appendChild(p);
+
+      // Remove existing paragraphs
+      const existingPs = cell.getElementsByTagNameNS(TEXT_NS, "p");
+      while (existingPs.length > 0) {
+        existingPs[0].remove();
       }
-      p.textContent = value;
+
+      // Create new paragraph
+      const p = xmlDoc.createElementNS(TEXT_NS, "p");
+      p.textContent = value || "";
+
+      // IMPORTANT:
+      // Set spreadsheet value metadata
+      cell.setAttributeNS(
+        "urn:oasis:names:tc:opendocument:xmlns:office:1.0",
+        "office:value-type",
+        "string",
+      );
+
+      cell.setAttributeNS(
+        "urn:oasis:names:tc:opendocument:xmlns:office:1.0",
+        "office:string-value",
+        value || "",
+      );
+
+      cell.appendChild(p);
     }
 
-    setCellOnRow(
-      rowRefs.proyecto,
-      2,
-      document.getElementById("proyecto").value,
-    );
-    setCellOnRow(
-      rowRefs.proyecto,
-      4,
-      document.getElementById("asignatura").value,
-    );
+    setCellOnRow(rowRefs.proyecto, 2, proyecto);
+    setCellOnRow(rowRefs.proyecto, 4, asignatura);
 
-    setCellOnRow(
-      rowRefs.responsable,
-      2,
-      document.getElementById("responsable").value,
-    );
-    const tiun = document.getElementById("tiun").value;
+    setCellOnRow(rowRefs.responsable, 2, responsable);
     setCellOnRow(rowRefs.responsable, 4, tiun);
 
-    setCellOnRow(rowRefs.lugar, 2, document.getElementById("lugar").value);
-    setCellOnRow(rowRefs.lugar, 4, document.getElementById("celular").value);
+    setCellOnRow(rowRefs.lugar, 2, lugar);
+    setCellOnRow(rowRefs.lugar, 4, celular);
 
-    const prestamo = document.getElementById("tipo-prestamo").value;
-    if (prestamo === "Interno") {
+    if (tipoPrestamo === "Interno") {
       setCellOnRow(rowRefs.prestamo, 2, "X");
       setCellOnRow(rowRefs.prestamo, 4, "");
     } else {
@@ -80,20 +103,17 @@ export async function generateF1ODS(getEquipData) {
       setCellOnRow(rowRefs.prestamo, 4, "X");
     }
 
-    const retiro = document.getElementById("fecha-retiro").value;
-    const entrega = document.getElementById("fecha-entrega").value;
-    if (retiro) {
-      const parts = retiro.split("T");
+    if (fechaRetiro) {
+      const parts = fechaRetiro.split("T");
       setCellOnRow(rowRefs.fechaRetiro, 2, parts[0]);
       setCellOnRow(rowRefs.horaRetiro, 2, parts[1] || "");
     }
-    if (entrega) {
-      const parts = entrega.split("T");
+    if (fechaEntrega) {
+      const parts = fechaEntrega.split("T");
       setCellOnRow(rowRefs.fechaRetiro, 4, parts[0]);
       setCellOnRow(rowRefs.horaRetiro, 4, parts[1] || "");
     }
 
-    const equipData = getEquipData();
     setCellOnRow(rowRefs.equipHeader, 1, "ITEM");
 
     for (let i = 0; i < 14; i++) {
@@ -118,20 +138,12 @@ export async function generateF1ODS(getEquipData) {
       }
     }
 
-    setCellOnRow(
-      rowRefs.observaciones,
-      2,
-      document.getElementById("observaciones").value,
-    );
+    setCellOnRow(rowRefs.observaciones, 2, observaciones);
 
-    setCellOnRow(rowRefs.docente, 2, document.getElementById("docente").value);
+    setCellOnRow(rowRefs.docente, 2, docente);
     setCellOnRow(rowRefs.docente, 4, "_________________________");
 
-    setCellOnRow(
-      rowRefs.nombre,
-      2,
-      "NOMBRE: " + document.getElementById("responsable").value,
-    );
+    setCellOnRow(rowRefs.nombre, 2, "NOMBRE: " + responsable);
     setCellOnRow(rowRefs.cc, 1, "C.C.: " + tiun);
 
     if (equipData.length > 14) {
