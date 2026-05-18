@@ -1,0 +1,6 @@
+# /robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://brayanlopez.github.io/ecytv-tools/sitemap.xml
