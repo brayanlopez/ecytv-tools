@@ -1,23 +1,91 @@
 # ECYTV Tools
 
-Proyecto para los estudiantes de la Escuela de Cine y TV de la Universidad Nacional (ECYTV). El objetivo es centralizar todas las herramientas que los estudiantes requieren durante su carrera.
+Herramientas centralizadas para los estudiantes de la Escuela de Cine y TV de la Universidad Nacional (ECYTV).
 
-## Características
+## Stack
 
-- **Acceso rápido a herramientas**: Catálogo de más de 50 herramientas organizadas por categorías (Edición, Diseño, Audio, 3D, VFX, Producción, Screenplay, Videojuegos, Encoders)
-- **Búsqueda y filtros**: Barra de búsqueda, filtros por categoría, nivel, plataforma y precio, con contador de resultados
-- **Información y protocolos**: Formulario de solicitud de espacios, horarios de estudios (TV, Animación, Cinematografía), programación de recursos
-- **Generador de formatos**: Próximamente - Generador de formatos internos (F1, F2, F3, F4) con descarga en PDF
-- **Documentación**: Próximamente - Manuales de cámaras, documentación técnica y guías de referencia
+- **Frontend**: HTML5, CSS3 (custom properties), Vanilla JS (ES6+ modules)
+- **Testing**: Vitest + jsdom
+- **Quality**: ESLint, Prettier
+- **Runtime**: Static site — no build step, no framework
 
-## Tecnologías
+## Features
 
-- **Frontend**: HTML5, CSS3 (con variables CSS personalizadas)
-- **JavaScript**: Vanilla JS con módulos ES6+
-- **Testing**: Vitest con jsdom
-- **Calidad**: ESLint, Prettier
-- **Control de versiones**: Git
+| Section   | Description                                                                                                                               |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tools** | Catalog of 50+ tools (Edición, Diseño, Audio, 3D, VFX, Producción, Screenplay, Videojuegos, Encoders) with search, filters, and favorites |
+| **Forms** | F1–F4 format generators with PDF/XLSX/ODS export                                                                                          |
+| **Info**  | Space request forms, studio schedules (TV, Animation, Cinematography)                                                                     |
+| **Docs**  | Camera manuals, technical guides, reference docs                                                                                          |
+| **FAQ**   | Frequently asked questions                                                                                                                |
 
-## Contribución
+## Directory Structure
 
-Las contribuciones son bienvenidas. Por favor abre un issue o pull request para sugerencias y mejoras.
+```
+ecytv-tools/
+├── index.html            # SPA entry point with hash-based routing
+├── css/                  # Stylesheets
+│   ├── main.css          # Base layout and reset
+│   ├── tools.css         # Tools catalog styles
+│   ├── ui.css            # UI components (cards, buttons, filters)
+│   └── variables.css     # CSS custom properties (theming)
+├── js/
+│   ├── app.js            # App bootstrap — initialises all modules
+│   ├── router.js         # Hash-based SPA router
+│   ├── ui.js             # Shared UI helpers (theme toggle, hamburger)
+│   ├── components/       # View renderers
+│   │   ├── formats-renderer.js
+│   │   ├── info-renderer.js
+│   │   ├── docs/         # Docs filters + renderer
+│   │   ├── qa/           # FAQ renderer + template
+│   │   └── tools/        # Tools catalog (card, filters, favorites, renderer)
+│   ├── forms/            # Form generators (F1–F4)
+│   │   ├── common/       # Shared form logic (DOM, dropdown, factory, validation, history, IO)
+│   │   ├── f1/ … f4/     # Per-form config, data, form, history, IO, PDF, XLSX, ODS
+│   └── utils/            # Utilities (constants, hamburger, theme)
+├── data/                 # Static data files (tools, docs, formats, info-cards, QA)
+├── test/                 # Test suite (mirrors js/ structure)
+├── assets/               # Favicon, tool icons (SVG)
+└── coverage/             # Generated test coverage reports
+```
+
+## Run
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Opens at `http://localhost:8000`.
+
+## Test
+
+```bash
+pnpm test          # Run tests (Vitest watch)
+pnpm test:coverage # Run tests with coverage report
+```
+
+## Lint & Format
+
+```bash
+pnpm lint          # ESLint
+pnpm format        # Prettier
+```
+
+## Deploy
+
+Static site — deploy to any static host (GitHub Pages, Vercel, Netlify, Railway).
+
+```bash
+# Example: deploy to GitHub Pages
+git push origin main
+# Enable GitHub Pages from root / main branch in repo settings
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## AI Contributors
+
+See [AGENTS.md](AGENTS.md) for operational instructions when working on this repo autonomously.

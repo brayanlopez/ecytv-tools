@@ -4,16 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F2 - Acta de Compromiso</title>
-    <meta
-      name="theme-color"
-      content="#f5f5f5"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#1a1a1a"
-      media="(prefers-color-scheme: dark)"
-    />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -31,8 +24,8 @@
     <main class="form-page">
       <h1>F2 - Acta de Compromiso</h1>
       <p>
-        Diligencia todos los campos obligatorios para generar el acta de
-        compromiso por el préstamo de equipos del laboratorio.
+        Diligencia todos los campos obligatorios para generar el acta de compromiso por el préstamo
+        de equipos del laboratorio.
       </p>
 
       <form id="f2-form" onsubmit="return false;">
@@ -43,13 +36,7 @@
           <div class="form-row full">
             <div class="form-group">
               <label for="nombre">Nombre completo</label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                required
-                placeholder="Nombre completo"
-              />
+              <input type="text" id="nombre" name="nombre" required placeholder="Nombre completo" />
             </div>
           </div>
 
@@ -98,21 +85,11 @@
           <div class="form-row">
             <div class="form-group">
               <label for="periodo-inicial">Periodo inicial</label>
-              <input
-                type="date"
-                id="periodo-inicial"
-                name="periodo-inicial"
-                required
-              />
+              <input type="date" id="periodo-inicial" name="periodo-inicial" required />
             </div>
             <div class="form-group">
               <label for="periodo-final">Periodo final</label>
-              <input
-                type="date"
-                id="periodo-final"
-                name="periodo-final"
-                required
-              />
+              <input type="date" id="periodo-final" name="periodo-final" required />
             </div>
           </div>
         </div>
@@ -124,21 +101,14 @@
           <div class="form-row full">
             <div class="form-group">
               <label for="fecha-constancia">Fecha de constancia</label>
-              <input
-                type="date"
-                id="fecha-constancia"
-                name="fecha-constancia"
-                required
-              />
+              <input type="date" id="fecha-constancia" name="fecha-constancia" required />
             </div>
           </div>
 
           <div class="form-row full">
             <div class="form-group checkbox-group">
               <input type="checkbox" id="firma-nombre" name="firma-nombre" />
-              <label for="firma-nombre">
-                Poner nombre como firma del directo responsable
-              </label>
+              <label for="firma-nombre"> Poner nombre como firma del directo responsable </label>
             </div>
           </div>
         </div>
@@ -161,8 +131,8 @@
         <div class="form-card" id="history-card" style="display: none">
           <h2>Historial de Actas</h2>
           <p class="history-desc">
-            Las actas se guardan automáticamente al descargar. Haz clic en
-            "Restaurar" para cargar los datos guardados.
+            Las actas se guardan automáticamente al descargar. Haz clic en "Restaurar" para cargar
+            los datos guardados.
           </p>
           <p class="history-privacy">
             Los datos solo se almacenan en tu dispositivo (localStorage).
@@ -183,9 +153,7 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path
-                  d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
-                />
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
                 <polyline points="17 21 17 13 7 13 7 21" />
                 <polyline points="7 3 7 8 15 8" />
               </svg>
@@ -245,12 +213,7 @@
               </svg>
             </button>
             <div class="dropdown-menu" id="download-menu" role="menu">
-              <button
-                type="button"
-                class="dropdown-item"
-                id="btn-pdf"
-                role="menuitem"
-              >
+              <button type="button" class="dropdown-item" id="btn-pdf" role="menuitem">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -260,9 +223,7 @@
                   stroke-linejoin="round"
                   aria-hidden="true"
                 >
-                  <path
-                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                  />
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <polyline points="14 2 14 8 20 8" />
                   <line x1="16" y1="13" x2="8" y2="13" />
                   <line x1="16" y1="17" x2="8" y2="17" />
@@ -325,8 +286,8 @@
             </button>
           </div>
           <p class="form-actions-hint">
-            Guarda los datos del formulario en un archivo (JSON o YAML) para
-            volver a cargarlos después con el botón Importar.
+            Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos
+            después con el botón Importar.
           </p>
         </div>
       </form>

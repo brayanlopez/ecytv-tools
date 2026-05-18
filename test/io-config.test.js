@@ -120,7 +120,7 @@ describe("parseYAML", () => {
       activo: true,
       cantidad: 42,
     };
-    const { serializeYAML } = { serializeYAML: module?.serializeYAML };
+    const { serializeYAML } = { serializeYAML: globalThis?.serializeYAML };
   });
 
   it("should round-trip complex object through serialize and parse", async () => {

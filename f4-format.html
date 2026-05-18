@@ -4,16 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F4 - Solicitud de Reserva y Préstamo Salas de Edición</title>
-    <meta
-      name="theme-color"
-      content="#f5f5f5"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#1a1a1a"
-      media="(prefers-color-scheme: dark)"
-    />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -31,8 +24,8 @@
     <main class="form-page">
       <h1>F4 - Solicitud de Reserva y Préstamo Salas de Edición</h1>
       <p>
-        Diligencia todos los campos obligatorios para solicitar la reserva y
-        préstamo de las salas de edición.
+        Diligencia todos los campos obligatorios para solicitar la reserva y préstamo de las salas
+        de edición.
       </p>
 
       <div class="form-notice">
@@ -51,10 +44,7 @@
           <line x1="12" y1="9" x2="12" y2="13" />
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
-        <span>
-          Antes de diligenciar, revisa la disponibilidad de las salas de
-          edición.
-        </span>
+        <span> Antes de diligenciar, revisa la disponibilidad de las salas de edición. </span>
       </div>
 
       <form id="f4-form" onsubmit="return false;">
@@ -145,13 +135,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="tiun">TIUN</label>
-              <input
-                type="text"
-                id="tiun"
-                name="tiun"
-                required
-                placeholder="TIUN"
-              />
+              <input type="text" id="tiun" name="tiun" required placeholder="TIUN" />
             </div>
           </div>
         </div>
@@ -183,12 +167,7 @@
                     />
                   </td>
                   <td data-label="Fecha">
-                    <input
-                      type="date"
-                      name="sala-fecha"
-                      required
-                      aria-label="Fecha"
-                    />
+                    <input type="date" name="sala-fecha" required aria-label="Fecha" />
                   </td>
                   <td data-label="Inicio">
                     <input
@@ -207,21 +186,13 @@
                     />
                   </td>
                   <td data-label="">
-                    <button
-                      type="button"
-                      class="btn-remove-equip"
-                      title="Eliminar sala"
-                    >
-                      ✕
-                    </button>
+                    <button type="button" class="btn-remove-equip" title="Eliminar sala">✕</button>
                   </td>
                 </tr>
               </tbody>
             </table>
             <datalist id="salas-sugeridas"></datalist>
-            <button type="button" class="btn-add-equip" id="add-sala-btn">
-              + Agregar sala
-            </button>
+            <button type="button" class="btn-add-equip" id="add-sala-btn">+ Agregar sala</button>
           </div>
         </div>
 
@@ -243,8 +214,8 @@
         <div class="form-card" id="history-card" style="display: none">
           <h2>Historial de Solicitudes</h2>
           <p class="history-desc">
-            Las solicitudes se guardan automáticamente al descargar. Haz clic en
-            "Restaurar" para cargar los datos guardados.
+            Las solicitudes se guardan automáticamente al descargar. Haz clic en "Restaurar" para
+            cargar los datos guardados.
           </p>
           <p class="history-privacy">
             Los datos solo se almacenan en tu dispositivo (localStorage).
@@ -265,9 +236,7 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path
-                  d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
-                />
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
                 <polyline points="17 21 17 13 7 13 7 21" />
                 <polyline points="7 3 7 8 15 8" />
               </svg>
@@ -327,12 +296,7 @@
               </svg>
             </button>
             <div class="dropdown-menu" id="download-menu" role="menu">
-              <button
-                type="button"
-                class="dropdown-item"
-                id="btn-pdf"
-                role="menuitem"
-              >
+              <button type="button" class="dropdown-item" id="btn-pdf" role="menuitem">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -342,9 +306,7 @@
                   stroke-linejoin="round"
                   aria-hidden="true"
                 >
-                  <path
-                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                  />
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <polyline points="14 2 14 8 20 8" />
                   <line x1="16" y1="13" x2="8" y2="13" />
                   <line x1="16" y1="17" x2="8" y2="17" />
@@ -407,8 +369,8 @@
             </button>
           </div>
           <p class="form-actions-hint">
-            Guarda los datos del formulario en un archivo (JSON o YAML) para
-            volver a cargarlos después con el botón Importar.
+            Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos
+            después con el botón Importar.
           </p>
         </div>
       </form>

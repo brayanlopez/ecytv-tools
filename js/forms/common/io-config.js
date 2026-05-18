@@ -89,18 +89,14 @@ function yamlValue(value) {
   if (value === null || value === undefined) return "null";
   const str = String(value);
   if (
-    /[:\[\]#{}|>*!&%@`\n"]/.test(str) ||
+    /[:[\]{}|>*!&%@`\n"]/.test(str) ||
     str === "" ||
     str === "true" ||
     str === "false" ||
     str === "null" ||
     /^\d/.test(str)
   ) {
-    return (
-      '"' +
-      str.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n") +
-      '"'
-    );
+    return '"' + str.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n") + '"';
   }
   return str;
 }
@@ -130,9 +126,7 @@ function parseYAML(text) {
         let arr = parent.obj;
         if (!Array.isArray(arr)) {
           arr = [];
-          const lastKey = Object.keys(parent.obj).find(
-            (k) => parent.obj[k] === arr,
-          );
+          const lastKey = Object.keys(parent.obj).find((k) => parent.obj[k] === arr);
           if (!lastKey) {
             const topObj = {};
             i++;
@@ -159,9 +153,7 @@ function parseYAML(text) {
       const colonIdx = val.indexOf(": ");
       if (colonIdx > 0) {
         const obj = {};
-        obj[val.slice(0, colonIdx).trim()] = parseYAMLValue(
-          val.slice(colonIdx + 2).trim(),
-        );
+        obj[val.slice(0, colonIdx).trim()] = parseYAMLValue(val.slice(colonIdx + 2).trim());
         if (Array.isArray(parent.obj)) {
           parent.obj.push(obj);
           stack.push({ obj, indent: indent + 2 });
@@ -213,15 +205,8 @@ function parseYAMLValue(str) {
   if (str === "null" || str === "~") return null;
   if (/^\d+$/.test(str)) return parseInt(str, 10);
   if (/^\d+\.\d+$/.test(str)) return parseFloat(str);
-  if (
-    (str.startsWith('"') && str.endsWith('"')) ||
-    (str.startsWith("'") && str.endsWith("'"))
-  ) {
-    return str
-      .slice(1, -1)
-      .replace(/\\n/g, "\n")
-      .replace(/\\"/g, '"')
-      .replace(/\\\\/g, "\\");
+  if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+    return str.slice(1, -1).replace(/\\n/g, "\n").replace(/\\"/g, '"').replace(/\\\\/g, "\\");
   }
   return str;
 }

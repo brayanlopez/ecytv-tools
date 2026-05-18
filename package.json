@@ -18,7 +18,7 @@
     "dev": "python -m http.server",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint js/**/*.mjs",
+    "lint": "eslint js/ data/ test/",
     "format": "prettier --write '**/*.{js,json,css,html}'"
   },
   "devDependencies": {

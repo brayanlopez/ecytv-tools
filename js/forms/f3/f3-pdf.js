@@ -126,7 +126,6 @@ export function generateF3PDF(data) {
   const obsText = observaciones || "(sin observaciones)";
   const lines = doc.splitTextToSize(obsText, 178);
   doc.text(lines, 16, yPos + 3);
-  yPos = yPos + 3 + lines.length * 4 + 6;
 
   const now = new Date();
   const dateStr = now.toLocaleDateString("es-CO", {

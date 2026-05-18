@@ -18,26 +18,16 @@ function drawCellBorders(doc, x, y, w, h, borders) {
   }
 }
 
-function renderRow(
-  doc,
-  rows,
-  rowIdx,
-  styleMap,
-  offsetX,
-  offsetY,
-  scale,
-  imageData,
-) {
+function renderRow(doc, rows, rowIdx, styleMap, offsetX, offsetY, scale, imageData) {
   const row = rows[rowIdx];
   if (!row || row.isPadding) return 0;
 
   const y0 = offsetY;
   const origH = row.height * scale;
 
-  // First pass: compute text wrapping per cell, track expanded height
   const cells = [];
   let maxH = origH;
-  let x = offsetX;
+  let x;
 
   for (const cell of row.cells) {
     const cw = cell.width * scale;
@@ -50,10 +40,7 @@ function renderRow(
     const ft = (st?.fontSize || 11) * scale;
     info.lh = (ft / 72) * 25.4 * 1.15;
     doc.setFontSize(ft);
-    doc.setFont(
-      mapFont(st?.fontName || "Calibri"),
-      st?.fontWeight === "bold" ? "bold" : "normal",
-    );
+    doc.setFont(mapFont(st?.fontName || "Calibri"), st?.fontWeight === "bold" ? "bold" : "normal");
     doc.setTextColor(st?.color || "#000000");
 
     const availableW = Math.max(cw - 2, 1);
@@ -106,9 +93,7 @@ function renderRow(
 
     if (cell.isImage && imageData) {
       const imgH =
-        imageData.width && imageData.height
-          ? cw * (imageData.height / imageData.width)
-          : origH;
+        imageData.width && imageData.height ? cw * (imageData.height / imageData.width) : origH;
       doc.addImage(imageData.data, "JPEG", x, y0, cw, imgH);
     }
     if (st?.bgColor) {
@@ -189,16 +174,7 @@ function renderPage(
       currentY = offsetY;
     }
 
-    const actualHeight = renderRow(
-      doc,
-      rows,
-      i,
-      styleMap,
-      offsetX,
-      currentY,
-      scale,
-      imageData,
-    );
+    const actualHeight = renderRow(doc, rows, i, styleMap, offsetX, currentY, scale, imageData);
 
     currentY += actualHeight;
   }
@@ -288,14 +264,11 @@ export async function generateF1PDF(formData) {
         const dims = await Promise.race([
           new Promise((resolve) => {
             const img = new Image();
-            img.onload = () =>
-              resolve({ w: img.naturalWidth, h: img.naturalHeight });
+            img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
             img.onerror = () => resolve({ w: 0, h: 0 });
             img.src = data;
           }),
-          new Promise((resolve) =>
-            setTimeout(() => resolve({ w: 0, h: 0 }), 50),
-          ),
+          new Promise((resolve) => setTimeout(() => resolve({ w: 0, h: 0 }), 50)),
         ]);
         imgW = dims.w;
         imgH = dims.h;
@@ -376,9 +349,6 @@ export async function generateF1PDF(formData) {
 
     doc.save("F1-Solicitud-Prestamo-Equipos.pdf");
   } catch (err) {
-    window.EcytvUI.showSnackbar(
-      "Error al generar el archivo PDF: " + err.message,
-      "error",
-    );
+    window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
   }
 }
