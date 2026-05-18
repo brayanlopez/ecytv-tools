@@ -1,10 +1,268 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
+function buildF4ContentXml({ extraStyles = "" } = {}) {
+  const styles = `
+    <style:style style:name="co1" style:family="table-column">
+      <style:table-column-properties style:column-width="0.63cm"/>
+    </style:style>
+    <style:style style:name="co2" style:family="table-column">
+      <style:table-column-properties style:column-width="6.88cm"/>
+    </style:style>
+    <style:style style:name="co3" style:family="table-column">
+      <style:table-column-properties style:column-width="0.61cm"/>
+    </style:style>
+    <style:style style:name="co4" style:family="table-column">
+      <style:table-column-properties style:column-width="2.47cm"/>
+    </style:style>
+    <style:style style:name="co5" style:family="table-column">
+      <style:table-column-properties style:column-width="2.33cm"/>
+    </style:style>
+    <style:style style:name="ce1" style:family="table-cell">
+      <style:table-cell-properties fo:border="thin solid #000000" style:vertical-align="middle"/>
+    </style:style>
+    <style:style style:name="ce2" style:family="table-cell">
+      <style:table-cell-properties fo:border="thin solid #000000" style:vertical-align="middle"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-weight="bold"/>
+    </style:style>
+    <style:style style:name="ce3" style:family="table-cell">
+      <style:table-cell-properties fo:border="thin solid #000000" style:vertical-align="middle"/>
+    </style:style>
+    <style:style style:name="ce4" style:family="table-cell">
+      <style:table-cell-properties fo:border="thin solid #000000" style:vertical-align="middle"/>
+      <style:paragraph-properties fo:text-align="center"/>
+      <style:text-properties fo:font-size="18pt" fo:font-weight="bold"/>
+    </style:style>
+    <style:style style:name="ce5" style:family="table-cell">
+      <style:table-cell-properties style:vertical-align="middle"/>
+    </style:style>
+    <style:style style:name="ce6" style:family="table-cell">
+      <style:table-cell-properties fo:border-top="none" fo:border-bottom="none" fo:border-left="thin solid #000000" fo:border-right="none" style:vertical-align="middle"/>
+    </style:style>
+    <style:style style:name="ce7" style:family="table-cell">
+      <style:table-cell-properties style:vertical-align="middle"/>
+      <style:text-properties fo:font-size="70pt" fo:font-weight="bold"/>
+    </style:style>
+    <style:style style:name="ce8" style:family="table-cell">
+      <style:table-cell-properties fo:border-top="none" fo:border-bottom="none" fo:border-left="none" fo:border-right="thin solid #000000" style:vertical-align="middle"/>
+    </style:style>
+    <style:style style:name="ce9" style:family="table-cell">
+      <style:table-cell-properties style:vertical-align="middle"/>
+      <style:text-properties fo:font-size="20pt" fo:font-weight="bold"/>
+    </style:style>
+    <style:style style:name="ro1" style:family="table-row">
+      <style:table-row-properties style:row-height="14.25pt"/>
+    </style:style>
+    <style:style style:name="ro2" style:family="table-row">
+      <style:table-row-properties style:row-height="73.5pt"/>
+    </style:style>
+    <style:style style:name="ro3" style:family="table-row">
+      <style:table-row-properties style:row-height="11.25pt"/>
+    </style:style>
+    <style:style style:name="ro4" style:family="table-row">
+      <style:table-row-properties style:row-height="27pt"/>
+    </style:style>
+    <style:style style:name="ro5" style:family="table-row">
+      <style:table-row-properties style:row-height="39.7pt"/>
+    </style:style>
+    <style:style style:name="ro6" style:family="table-row">
+      <style:table-row-properties style:row-height="29.95pt"/>
+    </style:style>
+    <style:style style:name="ro7" style:family="table-row">
+      <style:table-row-properties style:row-height="54.7pt"/>
+    </style:style>${extraStyles}`;
+
+  function emptyRow() {
+    return `<table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>`;
+  }
+
+  function dataRow(label1, label2) {
+    return `<table:table-row table:style-name="ro5">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>${label1}</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce2"><text:p>${label2}</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>`;
+  }
+
+  function salaHeaderRow() {
+    return `<table:table-row table:style-name="ro6">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>SALA ADJUDICADA</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce2"><text:p>FECHA</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce2"><text:p>HORA DE INICIO</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce2"><text:p>HORA DE FINALIZACIÓN</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>`;
+  }
+
+  function salaRow() {
+    return `<table:table-row table:style-name="ro4">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>`;
+  }
+
+  const salaRows = [];
+  for (let i = 0; i < 4; i++) salaRows.push(salaRow());
+
+  const footer = `
+    <table:table-row table:style-name="ro7">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>OBSERVACIONES:</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro7">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>DOCENTE QUE AUTORIZA:</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce2"><text:p>FIRMA DEL DOCENTE:</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    ${emptyRow()}
+    <table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>FIRMA DEL DIRECTO RESPONSABLE</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce2"><text:p>FIRMA DEL LABORATORIO</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>FIRMA DEL DIRECTO RESPONSABLE</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce2"><text:p>FIRMA DEL LABORATORIO</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce5"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro3">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>NOMBRE:</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro3">
+      <table:table-cell table:style-name="ce6"/>
+      <table:table-cell table:style-name="ce2"><text:p>C.C.:</text:p></table:table-cell>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce3"/>
+      <table:table-cell table:style-name="ce8"/>
+    </table:table-row>
+    ${emptyRow()}
+  `;
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<office:document-content
+  xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+  xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+  xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+  xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+  xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+  xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+  office:version="1.3">
+  <office:automatic-styles>
+    ${styles}
+  </office:automatic-styles>
+  <office:body>
+    <office:spreadsheet>
+      <table:table>
+        <table:table-column table:style-name="co1"/>
+        <table:table-column table:style-name="co2"/>
+        <table:table-column table:style-name="co3"/>
+        <table:table-column table:style-name="co4"/>
+        <table:table-column table:style-name="co5"/>
+        ${emptyRow()}
+        <table:table-row table:style-name="ro2">
+          <table:table-cell table:style-name="ce6"/>
+          <table:table-cell table:style-name="ce7"><text:p>F4</text:p></table:table-cell>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce8"/>
+        </table:table-row>
+        ${emptyRow()}
+        <table:table-row table:style-name="ro4">
+          <table:table-cell table:style-name="ce6"/>
+          <table:table-cell table:style-name="ce9"><text:p>SOLICITUD DE RESERVA Y PRÉSTAMO SALAS DE EDICIÓN</text:p></table:table-cell>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce8"/>
+        </table:table-row>
+        <table:table-row table:style-name="ro1">
+          <table:table-cell table:style-name="ce6"/>
+          <table:table-cell table:style-name="ce5"><text:p>*Revisa disponibilidad antes de diligenciar.</text:p></table:table-cell>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce5"/>
+          <table:table-cell table:style-name="ce8"/>
+        </table:table-row>
+        ${emptyRow()}
+        ${dataRow("NOMBRE DEL PROYECTO:", "ASIGNATURA:")}
+        ${dataRow("DIRECTO RESPONSABLE:", "TIUN:")}
+        ${emptyRow()}
+        ${salaHeaderRow()}
+        ${salaRows.join("\n")}
+        ${emptyRow()}
+        ${footer}
+      </table:table>
+    </office:spreadsheet>
+  </office:body>
+</office:document-content>`;
+}
+
 describe("F4 PDF Generation", () => {
   let localStorageMock;
+  let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
+    originalFetch = globalThis.fetch;
 
     localStorageMock = {};
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(
@@ -27,7 +285,7 @@ describe("F4 PDF Generation", () => {
     document.body.innerHTML = `
       <nav>
         <div class="container">
-          <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
+          <a href="#formats" class="logo" id="back-link">\u2190 Volver a Formatos</a>
         </div>
       </nav>
       <main class="form-page">
@@ -40,7 +298,7 @@ describe("F4 PDF Generation", () => {
             </div>
             <div class="form-row">
               <div class="form-group">
-                <input type="text" id="asignatura" required placeholder="Ej: Dirección de Arte" />
+                <input type="text" id="asignatura" list="asignaturas-sugeridas" required placeholder="Ej: Dirección de Arte" />
                 <datalist id="asignaturas-sugeridas"></datalist>
               </div>
               <div class="form-group">
@@ -58,9 +316,9 @@ describe("F4 PDF Generation", () => {
               <div class="form-group">
                 <select id="tipo-documento" required>
                   <option value="">Seleccionar...</option>
-                  <option value="CC">Cédula de Ciudadanía (CC)</option>
-                  <option value="CE">Cédula de Extranjería (CE)</option>
-                  <option value="TI">Tarjeta de Identidad (TI)</option>
+                  <option value="CC">CC</option>
+                  <option value="CE">CE</option>
+                  <option value="TI">TI</option>
                 </select>
               </div>
               <div class="form-group">
@@ -82,7 +340,7 @@ describe("F4 PDF Generation", () => {
                   <td><input type="date" name="sala-fecha" required /></td>
                   <td><input type="time" name="sala-hora-inicio" required /></td>
                   <td><input type="time" name="sala-hora-fin" required /></td>
-                  <td><button type="button" class="btn-remove-equip" title="Eliminar sala">✕</button></td>
+                  <td><button type="button" class="btn-remove-equip" title="Eliminar sala">\u2715</button></td>
                 </tr>
               </tbody>
             </table>
@@ -115,7 +373,7 @@ describe("F4 PDF Generation", () => {
               <button type="button" class="btn-secondary" id="btn-export-json">JSON</button>
               <button type="button" class="btn-secondary" id="btn-export-yaml">YAML</button>
             </div>
-            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargar los después con el botón Importar.</p>
+            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos despu\u00e9s con el bot\u00f3n Importar.</p>
           </div>
         </form>
       </main>
@@ -126,11 +384,12 @@ describe("F4 PDF Generation", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    globalThis.fetch = originalFetch;
   });
 
   function fillAllRequired() {
     document.getElementById("proyecto").value = "Proyecto Test";
-    document.getElementById("asignatura").value = "Dirección de Arte";
+    document.getElementById("asignatura").value = "Direcci\u00f3n de Arte";
     document.getElementById("docente").value = "Docente Test";
     document.getElementById("directo-responsable").value = "Responsable Test";
     document.getElementById("tipo-documento").value = "CC";
@@ -141,17 +400,22 @@ describe("F4 PDF Generation", () => {
     document.querySelector('input[name="sala-hora-fin"]').value = "10:00";
   }
 
-  function getFormData() {
-    return {
-      proyecto: document.getElementById("proyecto").value,
-      asignatura: document.getElementById("asignatura").value,
-      docente: document.getElementById("docente").value,
-      "directo-responsable": document.getElementById("directo-responsable").value,
-      "tipo-documento": document.getElementById("tipo-documento").value,
-      "numero-documento": document.getElementById("numero-documento").value,
-      tiun: document.getElementById("tiun").value,
-      observaciones: document.getElementById("observaciones").value,
-      salas: [],
+  function mockOdsTemplate({ contentXml } = {}) {
+    const xml = contentXml || buildF4ContentXml();
+    const encoder = new TextEncoder();
+    const buffer = encoder.encode(xml).buffer;
+
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      arrayBuffer: () => Promise.resolve(buffer),
+    });
+
+    window.JSZip = {
+      loadAsync: vi.fn().mockResolvedValue({
+        file: vi.fn((name) =>
+          name === "content.xml" ? { async: () => Promise.resolve(xml) } : null,
+        ),
+      }),
     };
   }
 
@@ -161,6 +425,12 @@ describe("F4 PDF Generation", () => {
         return doc;
       }),
       rect: vi.fn(function () {
+        return doc;
+      }),
+      setDrawColor: vi.fn(function () {
+        return doc;
+      }),
+      setLineWidth: vi.fn(function () {
         return doc;
       }),
       setTextColor: vi.fn(function () {
@@ -178,14 +448,11 @@ describe("F4 PDF Generation", () => {
       line: vi.fn(function () {
         return doc;
       }),
-      splitTextToSize: vi.fn(function (t) {
-        return [t];
+      addPage: vi.fn(function () {
+        return doc;
       }),
+      getTextWidth: vi.fn(() => 0),
       save: vi.fn(),
-      autoTable: vi.fn(function () {
-        this.lastAutoTable = { finalY: 200 };
-      }),
-      lastAutoTable: { finalY: 200 },
     };
     window.jspdf = {
       jsPDF: vi.fn(function () {
@@ -196,13 +463,19 @@ describe("F4 PDF Generation", () => {
   }
 
   describe("PDF Generation", () => {
-    it("should generate PDF when all fields are filled", () => {
+    it("should generate PDF when all fields are filled", async () => {
       const doc = mockJspdfEnv();
+      mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-      expect(doc.save).toHaveBeenCalledWith("f4_proyecto_test_responsable_test_2026-06-01.pdf");
+      await vi.waitFor(
+        () => {
+          expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
+          expect(doc.save).toHaveBeenCalledWith("f4_proyecto_test_responsable_test_2026-06-01.pdf");
+        },
+        { timeout: 5000 },
+      );
     });
 
     it("should show alert when jsPDF is not loaded", () => {
@@ -211,60 +484,138 @@ describe("F4 PDF Generation", () => {
       document.getElementById("btn-pdf").click();
 
       expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
-        "Error al cargar la librería PDF. Verifica tu conexión a internet.",
+        "Error al cargar la librer\u00eda PDF. Verifica tu conexi\u00f3n a internet.",
         "error",
       );
     });
 
-    it("should include form data in the PDF", () => {
+    it("should include form data in the PDF", async () => {
+      const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
       const doc = mockJspdfEnv();
-      fillAllRequired();
-      document.getElementById("observaciones").value = "Nota importante";
-      document.getElementById("btn-pdf").click();
+      mockOdsTemplate();
+
+      await generateF4PDF({
+        proyecto: "Proyecto Test",
+        asignatura: "Dirección de Arte",
+        docente: "Docente Test",
+        "directo-responsable": "Responsable Test",
+        "tipo-documento": "CC",
+        "numero-documento": "123456789",
+        tiun: "TIUN123",
+        observaciones: "",
+        salas: [
+          { nombre: "Sala NL1", fecha: "2026-06-01", "hora-inicio": "08:00", "hora-fin": "10:00" },
+        ],
+      });
 
       const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
       expect(allText).toContain("Proyecto Test");
       expect(allText).toContain("Dirección de Arte");
       expect(allText).toContain("Responsable Test");
-      expect(allText).toContain("Nota importante");
+      expect(allText).toContain("TIUN123");
     });
 
-    it("should use autotable for sala rows", () => {
+    it("should include dates in the PDF", async () => {
       const doc = mockJspdfEnv();
+      mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      expect(doc.autoTable).toHaveBeenCalled();
-      const tableCall = doc.autoTable.mock.calls[0][0];
-      expect(tableCall.head[0]).toContain("Sala");
-      expect(tableCall.body[0][0]).toBe("");
-    });
-
-    it("should handle empty sala rows gracefully", () => {
-      const doc = mockJspdfEnv();
-      fillAllRequired();
-      document.querySelector('input[name="sala-fecha"]').value = "";
-      document.querySelector('input[name="sala-hora-inicio"]').value = "";
-      document.querySelector('input[name="sala-hora-fin"]').value = "";
-
-      document.getElementById("btn-pdf").click();
-      expect(doc.autoTable).not.toHaveBeenCalled();
+      await vi.waitFor(
+        () => {
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+          expect(allText).toContain("2026-06-01");
+        },
+        { timeout: 5000 },
+      );
     });
   });
 
   describe("PDF branch coverage", () => {
-    it("should handle missing observaciones", () => {
-      const doc = mockJspdfEnv();
+    it("should handle fetch error", async () => {
+      mockJspdfEnv();
+      globalThis.fetch = vi.fn().mockResolvedValue({
+        ok: false,
+      });
+      window.JSZip = { loadAsync: vi.fn() };
       fillAllRequired();
-      document.getElementById("observaciones").value = "";
 
       document.getElementById("btn-pdf").click();
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("sin observaciones");
+      await vi.waitFor(
+        () => {
+          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+            "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
+            "error",
+          );
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should handle multiple sala rows in PDF", () => {
+    it("should handle text wrapping with long content", async () => {
       const doc = mockJspdfEnv();
+      doc.getTextWidth = vi.fn(() => 200);
+      mockOdsTemplate();
+      fillAllRequired();
+      document.getElementById("directo-responsable").value =
+        "Nombre muy largo del responsable que debe dividirse en varias l\u00edneas por el ancho de la celda";
+
+      document.getElementById("btn-pdf").click();
+      await vi.waitFor(
+        () => {
+          expect(window.jspdf.jsPDF).toHaveBeenCalled();
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should generate PDF via direct generateF4PDF call", async () => {
+      const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
+      const doc = mockJspdfEnv();
+      mockOdsTemplate();
+
+      generateF4PDF({
+        proyecto: "Direct Test",
+        asignatura: "Test Subject",
+        docente: "Teacher",
+        "directo-responsable": "Responsible Person",
+        "tipo-documento": "CC",
+        "numero-documento": "987654",
+        tiun: "TIUN456",
+        observaciones: "",
+        salas: [],
+      });
+
+      await vi.waitFor(
+        () => {
+          expect(doc.save).toHaveBeenCalled();
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+          expect(allText).toContain("Direct Test");
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should handle sala rows in template", async () => {
+      const doc = mockJspdfEnv();
+      mockOdsTemplate();
+      fillAllRequired();
+      document.querySelector('input[name="sala-nombre"]').value = "Sala NL1";
+
+      document.getElementById("btn-pdf").click();
+      await vi.waitFor(
+        () => {
+          expect(window.jspdf.jsPDF).toHaveBeenCalled();
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+          expect(allText).toContain("Sala NL1");
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should handle multiple sala rows", async () => {
+      const doc = mockJspdfEnv();
+      mockOdsTemplate();
       fillAllRequired();
       document.getElementById("add-sala-btn").click();
       const rows = document.querySelectorAll(".sala-row");
@@ -275,54 +626,49 @@ describe("F4 PDF Generation", () => {
       rows[1].querySelector('input[name="sala-hora-fin"]').value = "16:00";
 
       document.getElementById("btn-pdf").click();
-      expect(doc.autoTable).toHaveBeenCalled();
-      expect(doc.autoTable.mock.calls[0][0].body.length).toBe(2);
+      await vi.waitFor(
+        () => {
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+          expect(allText).toContain("Sala NL1");
+          expect(allText).toContain("Sala NL2");
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should include sala-nombre in autoTable body", () => {
-      const doc = mockJspdfEnv();
-      fillAllRequired();
-      document.querySelector('input[name="sala-nombre"]').value = "Sala NL1";
-
-      document.getElementById("btn-pdf").click();
-      expect(doc.autoTable).toHaveBeenCalled();
-      const tableCall = doc.autoTable.mock.calls[0][0];
-      expect(tableCall.body[0][0]).toBe("Sala NL1");
-    });
-
-    it("should show (sin especificar) for empty tipo-documento in PDF", async () => {
+    it("should handle sala overflow with continuation page", async () => {
       const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
       const doc = mockJspdfEnv();
-      document.getElementById("proyecto").value = "";
-      document.getElementById("asignatura").value = "";
-      document.getElementById("docente").value = "";
-      document.getElementById("directo-responsable").value = "";
-      document.getElementById("tipo-documento").value = "";
-      document.getElementById("numero-documento").value = "";
-      document.getElementById("tiun").value = "";
+      mockOdsTemplate();
 
-      generateF4PDF(getFormData());
+      const salas = [];
+      for (let i = 0; i < 6; i++) {
+        salas.push({
+          nombre: `Sala ${i + 1}`,
+          fecha: "2026-06-01",
+          "hora-inicio": "08:00",
+          "hora-fin": "10:00",
+        });
+      }
 
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("(sin especificar)");
-    });
+      generateF4PDF({
+        proyecto: "Overflow Test",
+        asignatura: "Test",
+        docente: "Docente",
+        "directo-responsable": "Responsible",
+        "tipo-documento": "CC",
+        "numero-documento": "123",
+        tiun: "TIUN",
+        observaciones: "",
+        salas,
+      });
 
-    it("should show (ninguna) when no sala rows in PDF", async () => {
-      const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
-      const doc = mockJspdfEnv();
-      document.getElementById("proyecto").value = "Proyecto Test";
-      document.getElementById("asignatura").value = "Dirección de Arte";
-      document.getElementById("docente").value = "Docente Test";
-      document.getElementById("directo-responsable").value = "Responsable Test";
-      document.getElementById("tipo-documento").value = "CC";
-      document.getElementById("numero-documento").value = "123456789";
-      document.getElementById("tiun").value = "TIUN123";
-
-      generateF4PDF(getFormData());
-
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("(ninguna)");
-      expect(doc.autoTable).not.toHaveBeenCalled();
+      await vi.waitFor(
+        () => {
+          expect(doc.addPage).toHaveBeenCalled();
+        },
+        { timeout: 5000 },
+      );
     });
   });
 });

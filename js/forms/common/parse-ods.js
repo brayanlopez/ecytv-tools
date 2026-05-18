@@ -127,12 +127,14 @@ function parseColumns(xmlDoc, table) {
   for (const col of colEls) {
     const styleName = getAttr(col, NS.TABLE, "style-name");
     const repeat = parseInt(getAttr(col, NS.TABLE, "number-columns-repeated") || "1", 10);
+    // Large repeat counts indicate padding columns — stop here
+    if (repeat > 100) break;
     const widthStr = getStyleProp(xmlDoc, styleName, "table-column", NS.STYLE, "column-width");
     const w = widthStr ? toMm(widthStr) : 20;
-    for (let i = 0; i < repeat && i < 20; i++) widths.push(w);
-    if (widths.length >= 20) break;
+    for (let i = 0; i < repeat && widths.length < 10; i++) widths.push(w);
+    if (widths.length >= 10) break;
   }
-  return widths.slice(0, 10);
+  return widths;
 }
 
 function parseRows(xmlDoc, table, colWidths) {
