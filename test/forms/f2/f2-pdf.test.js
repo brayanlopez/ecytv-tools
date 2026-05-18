@@ -2,9 +2,12 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
 describe("F2 PDF Generation", () => {
   let localStorageMock;
+  let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
+
+    originalFetch = globalThis.fetch;
 
     localStorageMock = {};
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(
@@ -114,7 +117,7 @@ describe("F2 PDF Generation", () => {
               <button type="button" class="btn-secondary" id="btn-export-json">JSON</button>
               <button type="button" class="btn-secondary" id="btn-export-yaml">YAML</button>
             </div>
-            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos despu&eacute;s con el bot&oacute;n Importar.</p>
+            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos después con el botón Importar.</p>
           </div>
         </form>
       </main>
@@ -125,6 +128,7 @@ describe("F2 PDF Generation", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    globalThis.fetch = originalFetch;
   });
 
   function fillAllRequiredF2() {
@@ -137,55 +141,60 @@ describe("F2 PDF Generation", () => {
     document.getElementById("fecha-constancia").value = "2026-01-15";
   }
 
-  function mockJspdfEnv() {
+  function mockPdfLib() {
+    const font = { widthOfTextAtSize: vi.fn(() => 50) };
+    const page = {
+      getSize: vi.fn(() => ({ width: 596, height: 843 })),
+      drawText: vi.fn(),
+      drawLine: vi.fn(),
+      drawRectangle: vi.fn(),
+    };
     const doc = {
-      setFillColor: vi.fn(function () {
-        return doc;
-      }),
-      rect: vi.fn(function () {
-        return doc;
-      }),
-      setTextColor: vi.fn(function () {
-        return doc;
-      }),
-      setFontSize: vi.fn(function () {
-        return doc;
-      }),
-      setFont: vi.fn(function () {
-        return doc;
-      }),
-      text: vi.fn(function () {
-        return doc;
-      }),
-      line: vi.fn(function () {
-        return doc;
-      }),
-      splitTextToSize: vi.fn(function (t) {
-        return [t];
-      }),
-      save: vi.fn(),
+      getPages: vi.fn(() => [page]),
+      embedFont: vi.fn(() => Promise.resolve(font)),
+      save: vi.fn(() => Promise.resolve(new Uint8Array())),
     };
-    window.jspdf = {
-      jsPDF: vi.fn(function () {
-        return doc;
-      }),
+    window.PDFLib = {
+      PDFDocument: { load: vi.fn(() => Promise.resolve(doc)) },
+      rgb: vi.fn(() => ({})),
+      StandardFonts: {
+        Helvetica: "Helvetica",
+        HelveticaBold: "Helvetica-Bold",
+      },
     };
-    return doc;
+    return { doc, page, font };
+  }
+
+  function mockTemplateFetch(ok) {
+    if (ok === false) {
+      globalThis.fetch = vi.fn().mockResolvedValue({ ok: false });
+    } else {
+      globalThis.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(new Uint8Array([1, 2, 3]).buffer),
+      });
+    }
   }
 
   describe("PDF Generation", () => {
-    it("should generate PDF when all fields are filled", () => {
-      const doc = mockJspdfEnv();
+    it("should generate PDF when all fields are filled", async () => {
+      const { doc } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
 
       document.getElementById("btn-pdf").click();
 
-      expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-      expect(doc.save).toHaveBeenCalledWith("F2-Acta-Compromiso.pdf");
+      await vi.waitFor(
+        () => {
+          expect(window.PDFLib.PDFDocument.load).toHaveBeenCalledOnce();
+          expect(doc.save).toHaveBeenCalledOnce();
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should show alert when jsPDF is not loaded", () => {
-      window.jspdf = undefined;
+    it("should show alert when PDFLib is not loaded", () => {
+      window.PDFLib = undefined;
       fillAllRequiredF2();
 
       document.getElementById("btn-pdf").click();
@@ -196,103 +205,224 @@ describe("F2 PDF Generation", () => {
       );
     });
 
-    it("should include name and document in the PDF body", () => {
-      const doc = mockJspdfEnv();
-      fillAllRequiredF2();
-      document.getElementById("observaciones").value = "Nota adicional";
-
-      document.getElementById("btn-pdf").click();
-
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("Juan Pérez");
-      expect(allText).toContain("CC. 123456789");
-      expect(allText).toContain("Nota adicional");
-    });
-
-    it("should include period and constancia dates in the PDF", () => {
-      const doc = mockJspdfEnv();
+    it("should show alert when template fetch fails", async () => {
+      mockPdfLib();
+      mockTemplateFetch(false);
       fillAllRequiredF2();
 
       document.getElementById("btn-pdf").click();
 
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("Periodo del prestamo");
-      expect(allText).toContain("Fecha de constancia");
-      expect(allText).toContain("Firma del directo responsable");
-      expect(allText).toContain("Numero de contacto");
+      await vi.waitFor(
+        () => {
+          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+            "Error al generar el archivo PDF: No se pudo cargar la plantilla PDF",
+            "error",
+          );
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should render name as signature when firma checkbox is checked", () => {
-      const doc = mockJspdfEnv();
+    it("should include name and document in the PDF", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
-      document.getElementById("firma-nombre").checked = true;
 
       document.getElementById("btn-pdf").click();
 
-      expect(doc.line.mock.calls.length).toBeGreaterThan(0);
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("Juan Pérez");
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("Juan Pérez");
+          expect(allText).toContain("123456789");
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should render signature line without name when firma unchecked", () => {
-      const doc = mockJspdfEnv();
+    it("should fill period date parts in blanks", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
+      fillAllRequiredF2();
+
+      document.getElementById("btn-pdf").click();
+
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("2026");
+          expect(allText).toContain("enero");
+          expect(allText).toContain("febrero");
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should fill constancia date parts in blanks", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
+      fillAllRequiredF2();
+
+      document.getElementById("btn-pdf").click();
+
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("15");
+          expect(allText).toContain("enero");
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should render name only once when signature is unchecked", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
       document.getElementById("firma-nombre").checked = false;
 
       document.getElementById("btn-pdf").click();
 
-      expect(doc.line).toHaveBeenCalled();
+      await vi.waitFor(
+        () => {
+          const nameCalls = page.drawText.mock.calls.filter(
+            (c) => String(c[0]) === "Juan Pérez",
+          );
+          expect(nameCalls).toHaveLength(1);
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should render name twice when signature is checked", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
+      fillAllRequiredF2();
+      document.getElementById("firma-nombre").checked = true;
+
+      document.getElementById("btn-pdf").click();
+
+      await vi.waitFor(
+        () => {
+          const nameCalls = page.drawText.mock.calls.filter(
+            (c) => String(c[0]) === "Juan Pérez",
+          );
+          expect(nameCalls).toHaveLength(2);
+        },
+        { timeout: 5000 },
+      );
     });
   });
 
-  describe("formatDate", () => {
-    it("should format a date string correctly", () => {
-      const doc = mockJspdfEnv();
+  describe("Date handling", () => {
+    it("should format and display period dates correctly", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
 
       document.getElementById("btn-pdf").click();
 
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("1 de enero");
-      expect(allText).toContain("1 de febrero");
-      expect(allText).toContain("15 de enero");
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("1");
+          expect(allText).toContain("enero");
+          expect(allText).toContain("febrero");
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should handle empty date gracefully", () => {
-      mockJspdfEnv();
+    it("should handle empty date gracefully", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
+      document.getElementById("periodo-inicial").removeAttribute("required");
+      document.getElementById("periodo-final").removeAttribute("required");
+      document.getElementById("fecha-constancia").removeAttribute("required");
       document.getElementById("periodo-inicial").value = "";
       document.getElementById("periodo-final").value = "";
       document.getElementById("fecha-constancia").value = "";
 
-      expect(() => {
-        document.getElementById("btn-pdf").click();
-      }).not.toThrow();
+      document.getElementById("btn-pdf").click();
+
+      await vi.waitFor(
+        () => {
+          expect(page.drawText).toHaveBeenCalled();
+        },
+        { timeout: 5000 },
+      );
     });
   });
 
   describe("PDF additional branches", () => {
-    it("should handle empty tipo-documento with documento number", () => {
-      const doc = mockJspdfEnv();
+    it("should handle empty tipo-documento with documento number", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
       document.getElementById("tipo-documento").removeAttribute("required");
       document.getElementById("tipo-documento").value = "";
       document.getElementById("numero-documento").value = "123456789";
 
       document.getElementById("btn-pdf").click();
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("123456789");
+
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("123456789");
+        },
+        { timeout: 5000 },
+      );
     });
 
-    it("should handle empty contacto gracefully", () => {
-      const doc = mockJspdfEnv();
+    it("should handle non-CC document type by overwriting ciudadanía", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
+      fillAllRequiredF2();
+      document.getElementById("tipo-documento").value = "CE";
+
+      document.getElementById("btn-pdf").click();
+
+      await vi.waitFor(
+        () => {
+          expect(page.drawRectangle).toHaveBeenCalled();
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("Extranjería");
+        },
+        { timeout: 5000 },
+      );
+    });
+
+    it("should handle empty contacto gracefully", async () => {
+      const { page } = mockPdfLib();
+      mockTemplateFetch();
       fillAllRequiredF2();
       document.getElementById("contacto").removeAttribute("required");
       document.getElementById("contacto").value = "";
 
       document.getElementById("btn-pdf").click();
-      const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-      expect(allText).toContain("sin especificar");
+
+      await vi.waitFor(
+        () => {
+          const allText = page.drawText.mock.calls
+            .map((c) => String(c[0]))
+            .join(" ");
+          expect(allText).toContain("sin especificar");
+        },
+        { timeout: 5000 },
+      );
     });
   });
 });
