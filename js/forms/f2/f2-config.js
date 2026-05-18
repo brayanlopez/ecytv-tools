@@ -1,6 +1,14 @@
+import { buildFilename } from "../common/filename.js";
+
 export const f2Config = {
   formId: "f2-form",
-  exportFilename: "F2-Acta-Compromiso",
+  buildExportFilename: (d) =>
+    buildFilename({
+      formId: "f2",
+      project: "acta",
+      username: d.nombre,
+      date: d["fecha-constancia"],
+    }),
 
   fields: [
     { id: "nombre" },

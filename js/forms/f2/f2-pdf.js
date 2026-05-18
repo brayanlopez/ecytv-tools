@@ -1,3 +1,5 @@
+import { buildFilename } from "../common/filename.js";
+
 function formatDateParts(dateStr) {
   if (!dateStr) return null;
   const d = new Date(dateStr + "T00:00:00");
@@ -163,7 +165,9 @@ export async function generateF2PDF(data) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "F2-Acta-Compromiso.pdf";
+    a.download =
+      buildFilename({ formId: "f2", project: "acta", username: nombre, date: fechaConstancia }) +
+      ".pdf";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -1,5 +1,6 @@
 import { parseOds } from "../common/parse-ods.js";
 import { renderPage } from "../common/ods-pdf-renderer.js";
+import { buildFilename } from "../common/filename.js";
 
 function injectData(rows, formData) {
   const d = formData;
@@ -149,7 +150,14 @@ export async function generateF3PDF(formData) {
       }
     }
 
-    doc.save("F3-Solicitud-Bodega-Arte.pdf");
+    doc.save(
+      buildFilename({
+        formId: "f3",
+        project: formData.proyecto,
+        username: formData.autorizado,
+        date: formData["fecha-retiro"],
+      }) + ".pdf",
+    );
   } catch (err) {
     window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
   }

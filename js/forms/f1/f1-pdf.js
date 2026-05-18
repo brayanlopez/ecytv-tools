@@ -1,5 +1,6 @@
 import { parseOds } from "../common/parse-ods.js";
 import { renderPage } from "../common/ods-pdf-renderer.js";
+import { buildFilename } from "../common/filename.js";
 
 function injectData(rows, formData) {
   const d = formData;
@@ -168,7 +169,14 @@ export async function generateF1PDF(formData) {
       }
     }
 
-    doc.save("F1-Solicitud-Prestamo-Equipos.pdf");
+    doc.save(
+      buildFilename({
+        formId: "f1",
+        project: formData.proyecto,
+        username: formData.responsable,
+        date: formData["fecha-retiro"],
+      }) + ".pdf",
+    );
   } catch (err) {
     window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
   }

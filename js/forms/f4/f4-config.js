@@ -1,8 +1,18 @@
 import { ASIGNATURAS_SUGERIDAS, SALAS_SUGERIDAS } from "../../utils/constants.js";
+import { buildFilename } from "../common/filename.js";
 
 export const f4Config = {
   formId: "f4-form",
-  exportFilename: "F4-Solicitud-Salas-Edicion",
+  buildExportFilename: (d) => {
+    const salaDate =
+      d.salas?.length > 0 ? d.salas[0].fecha : new Date().toISOString().split("T")[0];
+    return buildFilename({
+      formId: "f4",
+      project: d.proyecto,
+      username: d["directo-responsable"],
+      date: salaDate,
+    });
+  },
 
   fields: [
     { id: "proyecto" },

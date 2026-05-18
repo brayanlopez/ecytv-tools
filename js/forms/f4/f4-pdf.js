@@ -1,3 +1,5 @@
+import { buildFilename } from "../common/filename.js";
+
 export function generateF4PDF(data) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     window.EcytvUI.showSnackbar(
@@ -110,5 +112,13 @@ export function generateF4PDF(data) {
   doc.setTextColor("#999999");
   doc.text("Documento generado el " + dateStr, 105, 288, { align: "center" });
 
-  doc.save("F4-Solicitud-Salas-Edicion.pdf");
+  const salaDate = salaRows.length > 0 ? salaRows[0].fecha : now.toISOString().split("T")[0];
+  doc.save(
+    buildFilename({
+      formId: "f4",
+      project: proyecto,
+      username: directoResponsable,
+      date: salaDate,
+    }) + ".pdf",
+  );
 }

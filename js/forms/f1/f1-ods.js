@@ -1,3 +1,5 @@
+import { buildFilename } from "../common/filename.js";
+
 export async function generateF1ODS(data) {
   try {
     const resp = await fetch("data/f1-template.ods");
@@ -181,7 +183,9 @@ export async function generateF1ODS(data) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "F1-Solicitud-Prestamo-Equipos.ods";
+    a.download =
+      buildFilename({ formId: "f1", project: proyecto, username: responsable, date: fechaRetiro }) +
+      ".ods";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

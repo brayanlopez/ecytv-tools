@@ -1,4 +1,4 @@
-import { getValue, setValue, getChecked, setChecked, setFieldValues } from "./dom.js";
+import { getValue, setValue, getChecked, setFieldValues } from "./dom.js";
 import { initDropdown } from "./dropdown.js";
 import { validateForm } from "./validation.js";
 import { downloadJSON, downloadYAML, importFromFile } from "./io-config.js";
@@ -6,7 +6,8 @@ import { createHistoryManager } from "./history.js";
 import { escHtml } from "./esc-html.js";
 
 export function createFormFactory(config) {
-  const { formId, fields, table, datalists, historyConfig, generators, exportFilename } = config;
+  const { formId, fields, table, datalists, historyConfig, generators, buildExportFilename } =
+    config;
 
   const historyManager = createHistoryManager(historyConfig.key);
 
@@ -344,14 +345,16 @@ export function createFormFactory(config) {
   function handleExportJSON(tbody) {
     const tb = tbody ?? getTbody();
     const data = collectFormData(tb);
-    downloadJSON(data, exportFilename);
+    const filename = buildExportFilename ? buildExportFilename(data) : formId;
+    downloadJSON(data, filename);
     window.EcytvUI.showSnackbar("Datos exportados en JSON correctamente.", "success");
   }
 
   function handleExportYAML(tbody) {
     const tb = tbody ?? getTbody();
     const data = collectFormData(tb);
-    downloadYAML(data, exportFilename);
+    const filename = buildExportFilename ? buildExportFilename(data) : formId;
+    downloadYAML(data, filename);
     window.EcytvUI.showSnackbar("Datos exportados en YAML correctamente.", "success");
   }
 

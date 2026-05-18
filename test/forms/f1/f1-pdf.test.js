@@ -404,7 +404,7 @@ describe("F1 PDF Generation", () => {
       await vi.waitFor(
         () => {
           expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledWith("F1-Solicitud-Prestamo-Equipos.pdf");
+          expect(doc.save).toHaveBeenCalledWith("f1_proyecto_test_responsable_test_2026-01-01.pdf");
         },
         { timeout: 5000 },
       );

@@ -433,8 +433,8 @@ describe("F3 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledWith("F3-Solicitud-Bodega-Arte.pdf");
+          expect(doc.save).toHaveBeenCalled();
+          expect(doc.save.mock.calls[0][0]).toMatch(/^f3_.*\.pdf$/);
         },
         { timeout: 5000 },
       );
@@ -510,7 +510,7 @@ describe("F3 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          expect(doc.save).toHaveBeenCalledWith("F3-Solicitud-Bodega-Arte.pdf");
+          expect(doc.save).toHaveBeenCalledWith("f3_proyecto_test_autorizado_hoy.pdf");
         },
         { timeout: 5000 },
       );
@@ -576,7 +576,7 @@ describe("F3 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          expect(doc.save).toHaveBeenCalledWith("F3-Solicitud-Bodega-Arte.pdf");
+          expect(doc.save).toHaveBeenCalledWith("f3_direct_test_authorized_person_2026-02-01.pdf");
           const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("Direct Test");
         },

@@ -1,8 +1,15 @@
 import { ASIGNATURAS_SUGERIDAS } from "../../utils/constants.js";
+import { buildFilename } from "../common/filename.js";
 
 export const f3Config = {
   formId: "f3-form",
-  exportFilename: "F3-Solicitud-Bodega-Arte",
+  buildExportFilename: (d) =>
+    buildFilename({
+      formId: "f3",
+      project: d.proyecto,
+      username: d.autorizado,
+      date: d["fecha-retiro"],
+    }),
 
   fields: [
     { id: "proyecto" },

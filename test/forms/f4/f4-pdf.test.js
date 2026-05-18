@@ -202,7 +202,7 @@ describe("F4 PDF Generation", () => {
       document.getElementById("btn-pdf").click();
 
       expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-      expect(doc.save).toHaveBeenCalledWith("F4-Solicitud-Salas-Edicion.pdf");
+      expect(doc.save).toHaveBeenCalledWith("f4_proyecto_test_responsable_test_2026-06-01.pdf");
     });
 
     it("should show alert when jsPDF is not loaded", () => {
