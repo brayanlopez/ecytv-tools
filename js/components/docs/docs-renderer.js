@@ -52,8 +52,9 @@ class DocsRenderer {
         </div>
         <p class="doc-card-description">${doc.description}</p>
         ${doc.manufacturer ? `<div class="doc-card-manufacturer">${doc.manufacturer}</div>` : ""}
-        <a href="${doc.url}" target="_blank" rel="noopener" class="btn btn-primary">
+        <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
           ${doc.type === "manual" ? "Ver Manual" : "Ver Guía"}
+          <span class="visually-hidden">(se abre en una nueva ventana)</span>
         </a>
       </div>
     `,

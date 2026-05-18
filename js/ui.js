@@ -14,6 +14,8 @@ function ensureSnackbarContainer() {
   if (!snackbarContainer) {
     snackbarContainer = document.createElement("div");
     snackbarContainer.className = "snackbar-container";
+    snackbarContainer.setAttribute("aria-live", "polite");
+    snackbarContainer.setAttribute("aria-atomic", "true");
     document.body.appendChild(snackbarContainer);
   }
   return snackbarContainer;
@@ -137,6 +139,12 @@ function showModal(options = {}) {
   previousActiveElement = document.activeElement;
   overlay.classList.add("show");
 
+  const mainContent = document.querySelector("main");
+  if (mainContent) {
+    mainContent.setAttribute("aria-hidden", "true");
+    mainContent.setAttribute("inert", "");
+  }
+
   const focusable = modal.querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
   );
@@ -152,6 +160,11 @@ function showModal(options = {}) {
 function closeModal(result) {
   if (modalOverlay) {
     modalOverlay.classList.remove("show");
+  }
+  const mainContent = document.querySelector("main");
+  if (mainContent) {
+    mainContent.removeAttribute("aria-hidden");
+    mainContent.removeAttribute("inert");
   }
   if (currentModalResolve) {
     currentModalResolve(result);

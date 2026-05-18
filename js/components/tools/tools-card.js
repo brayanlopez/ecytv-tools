@@ -10,7 +10,7 @@ export function buildToolCard(tool, isFavorited) {
         .map((altId) => {
           const alt = tools.find((t) => t.id === altId);
           return alt
-            ? `<a href="${alt.url}" target="_blank" class="alt-link" aria-label="Ver alternativa: ${alt.name}">${alt.name}</a>`
+            ? `<a href="${alt.url}" target="_blank" rel="noopener noreferrer" class="alt-link" aria-label="Ver alternativa: ${alt.name} (se abre en nueva ventana)">${alt.name}</a>`
             : "";
         })
         .join("")}
@@ -39,7 +39,7 @@ export function buildToolCard(tool, isFavorited) {
       </div>
       ${alternativesHtml}
       <div class="tool-footer">
-        <a href="${tool.url}" target="_blank" rel="noopener" class="btn btn-primary">Abrir</a>
+        <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir<span class="visually-hidden">(se abre en una nueva ventana)</span></a>
         <button class="btn btn-favorite ${isFavorited ? "active" : ""}" data-id="${tool.id}" aria-label="${isFavorited ? "Quitar de favoritos" : "Añadir a favoritos"}" aria-pressed="${isFavorited}">
           ${isFavorited ? "★" : "☆"}
         </button>

@@ -206,10 +206,22 @@
   padding: 0.5rem;
   font-size: 1.2rem;
   line-height: 1;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
 }
 
 .btn-favorite.active {
   color: var(--accent);
+}
+
+.btn-favorite:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 .filter-bar {
@@ -293,12 +305,19 @@
   transition: all var(--transition);
   font-size: 0.9rem;
   height: fit-content;
+  min-height: 24px;
 }
 
 .clear-filters-btn:hover {
   background: var(--accent);
   color: white;
   border-color: var(--accent);
+}
+
+.clear-filters-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 .tools-count {

@@ -15,13 +15,14 @@
     <link rel="stylesheet" href="css/ui.css" />
   </head>
   <body>
-    <nav>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <nav aria-label="Navegación principal">
       <div class="container">
         <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
       </div>
     </nav>
 
-    <main class="form-page">
+    <main id="main-content" class="form-page">
       <h1>F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte</h1>
       <p>
         Diligencia todos los campos obligatorios para solicitar el préstamo de elementos de la
@@ -443,6 +444,7 @@
       </form>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
     <script src="js/ui.js"></script>

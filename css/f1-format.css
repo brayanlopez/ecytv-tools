@@ -124,6 +124,7 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  min-height: 32px;
 }
 
 .form-group.checkbox-group label {
@@ -131,6 +132,10 @@
   font-weight: 400;
   font-size: 0.9rem;
   cursor: pointer;
+  padding: 0.25rem 0;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Equipment table */
@@ -193,11 +198,22 @@
   border-radius: 4px;
   font-size: 1rem;
   transition: all var(--transition);
+  min-width: 24px;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-remove-equip:hover {
   background: #fde8e8;
   border-color: #e63946;
+}
+
+.btn-remove-equip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 [data-theme="dark"] .btn-remove-equip:hover {
@@ -216,11 +232,18 @@
   font-family: inherit;
   transition: all var(--transition);
   width: 100%;
+  min-height: 24px;
 }
 
 .btn-add-equip:hover {
   border-color: var(--accent);
   background: rgba(1, 149, 135, 0.05);
+}
+
+.btn-add-equip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 .form-actions {
@@ -392,10 +415,16 @@
   font-family: inherit;
   text-align: left;
   transition: background var(--transition);
+  min-height: 24px;
 }
 
 .dropdown-item:hover {
   background: var(--bg-secondary);
+}
+
+.dropdown-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .dropdown-item svg {
@@ -471,11 +500,18 @@
   font-size: 0.82rem;
   font-family: inherit;
   transition: all var(--transition);
+  min-height: 24px;
 }
 
 .btn-history-restore:hover {
   background: var(--accent);
   color: #fff;
+}
+
+.btn-history-restore:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 .btn-history-delete {
@@ -488,11 +524,18 @@
   font-size: 0.82rem;
   font-family: inherit;
   transition: all var(--transition);
+  min-height: 24px;
 }
 
 .btn-history-delete:hover {
   background: #e63946;
   color: #fff;
+}
+
+.btn-history-delete:focus-visible {
+  outline: 2px solid #e63946;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.4);
 }
 
 .history-empty {

@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="css/ui.css" />
   </head>
   <body>
-    <nav>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <nav aria-label="Navegación principal">
       <div class="container">
         <a href="#info" class="logo">ECYTV Tools</a>
         <ul class="nav-links" id="nav-links">
@@ -34,7 +35,7 @@
       </div>
     </nav>
 
-    <main class="container">
+    <main id="main-content" class="container">
       <section id="info-section" class="section active" aria-labelledby="info-heading">
         <h1 id="info-heading">Información y Protocolos</h1>
 
@@ -73,16 +74,18 @@
             </ul>
 
             <div class="schedule-list">
-              <h4>Horarios de Estudios:</h4>
+              <h3>Horarios de Estudios:</h3>
               <ul>
                 <li>
                   <strong>Estudio de Televisión (303C-012)</strong>
                   <a
                     href="https://calendar.google.com/calendar/embed?src=c_9c1c15cae67718164dde4e73290346400d8593cc108ca4c100ee5ee050815166%40group.calendar.google.com&ctz=America%2FBogota"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
                 <li>
@@ -90,9 +93,11 @@
                   <a
                     href="https://calendar.google.com/calendar/embed?src=c_03203d03a0e0b227c90d544eda6397713379d4546ee8b18589c5390bad15db9f%40group.calendar.google.com&ctz=America%2FBogota"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
                 <li>
@@ -100,9 +105,11 @@
                   <a
                     href="https://calendar.google.com/calendar/embed?src=unal.edu.co_td1q8h3349elv26c1751k884ng%40group.calendar.google.com&ctz=America%2FBogota"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
               </ul>
@@ -111,9 +118,11 @@
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSeLHN9XCmFlg3gVoVufWju9OOQ5I9fOArKJtEmuawQDIIJ6tw/viewform"
               target="_blank"
+              rel="noopener noreferrer"
               class="btn btn-primary"
             >
               Acceder al Formulario
+              <span class="visually-hidden">(se abre en una nueva ventana)</span>
             </a>
           </div>
 

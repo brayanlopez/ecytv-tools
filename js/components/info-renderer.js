@@ -13,7 +13,7 @@ export function renderInfoCards() {
         <h3>${card.title}</h3>
       </div>
       <p>${card.description}</p>
-      <a href="${card.url}" target="_blank" class="btn btn-primary">${card.label}</a>
+      <a href="${card.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${card.label}<span class="visually-hidden">(se abre en una nueva ventana)</span></a>
     </div>
   `,
     )
