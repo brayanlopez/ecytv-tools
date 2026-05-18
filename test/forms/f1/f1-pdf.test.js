@@ -319,8 +319,7 @@ describe("F1 PDF Generation", () => {
     document.getElementById("fecha-retiro").value = "2026-01-01T10:00";
     document.getElementById("fecha-entrega").value = "2026-01-01T12:00";
     document.querySelector('input[name="equipo-nombre"]').value = "C\u00e1mara";
-    document.querySelector('input[name="equipo-consecutivo"]').value =
-      "CON-001";
+    document.querySelector('input[name="equipo-consecutivo"]').value = "CON-001";
   }
 
   function mockOdsTemplate({ contentXml, includeImage } = {}) {
@@ -405,9 +404,7 @@ describe("F1 PDF Generation", () => {
       await vi.waitFor(
         () => {
           expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledWith(
-            "F1-Solicitud-Prestamo-Equipos.pdf",
-          );
+          expect(doc.save).toHaveBeenCalledWith("F1-Solicitud-Prestamo-Equipos.pdf");
         },
         { timeout: 5000 },
       );
@@ -433,9 +430,7 @@ describe("F1 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = doc.text.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("Proyecto Test");
           expect(allText).toContain("Sonido I");
           expect(allText).toContain("Nota importante");
@@ -455,9 +450,7 @@ describe("F1 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = doc.text.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("C\u00e1mara");
           expect(allText).toContain("CON-001");
         },
@@ -494,9 +487,7 @@ describe("F1 PDF Generation", () => {
       document.getElementById("btn-pdf").click();
       await vi.waitFor(
         () => {
-          const allText = doc.text.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("PRESTAMO EXTERNO");
         },
         { timeout: 5000 },
@@ -524,19 +515,15 @@ describe("F1 PDF Generation", () => {
       fillAllRequired();
       document.getElementById("add-equip-btn").click();
       const rows = document.querySelectorAll(".equip-row");
-      rows[1].querySelector('input[name="equipo-nombre"]').value =
-        "Micr\u00f3fono";
-      rows[1].querySelector('input[name="equipo-consecutivo"]').value =
-        "MIC-001";
+      rows[1].querySelector('input[name="equipo-nombre"]').value = "Micr\u00f3fono";
+      rows[1].querySelector('input[name="equipo-consecutivo"]').value = "MIC-001";
       rows[0].querySelector('input[name="equipo-item"]').value = "1";
       rows[1].querySelector('input[name="equipo-item"]').value = "2";
 
       document.getElementById("btn-pdf").click();
       await vi.waitFor(
         () => {
-          const allText = doc.text.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("Micr\u00f3fono");
           expect(allText).toContain("MIC-001");
         },
@@ -556,8 +543,7 @@ describe("F1 PDF Generation", () => {
         const equipRows = document.querySelectorAll(".equip-row");
         const eq = equipRows[i];
         if (eq) {
-          eq.querySelector('input[name="equipo-nombre"]').value =
-            "Equipo " + (i + 1);
+          eq.querySelector('input[name="equipo-nombre"]').value = "Equipo " + (i + 1);
           eq.querySelector('input[name="equipo-consecutivo"]').value =
             "CON-" + String(i + 1).padStart(3, "0");
           eq.querySelector('input[name="equipo-item"]').value = String(i + 1);
@@ -604,10 +590,7 @@ describe("F1 PDF Generation", () => {
         </draw:frame>
       </table:table-cell>
     </table:table-row>`;
-      const contentXml = buildContentXml().replace(
-        "</table:table>",
-        imageRow + "</table:table>",
-      );
+      const contentXml = buildContentXml().replace("</table:table>", imageRow + "</table:table>");
       const doc = mockJspdfEnv();
       mockOdsTemplate({ contentXml, includeImage: true });
       fillAllRequired();

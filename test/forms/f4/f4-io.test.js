@@ -159,17 +159,10 @@ describe("handleImport (F4)", () => {
     const form = document.getElementById("f4-form");
     await handleImport(tbody, form);
 
-    expect(document.getElementById("proyecto").value).toBe(
-      "Proyecto Restaurado",
-    );
-    expect(document.getElementById("directo-responsable").value).toBe(
-      "Responsable Test",
-    );
+    expect(document.getElementById("proyecto").value).toBe("Proyecto Restaurado");
+    expect(document.getElementById("directo-responsable").value).toBe("Responsable Test");
     expect(document.getElementById("tipo-documento").value).toBe("CC");
-    expect(snackbarSpy).toHaveBeenCalledWith(
-      "Datos importados correctamente.",
-      "success",
-    );
+    expect(snackbarSpy).toHaveBeenCalledWith("Datos importados correctamente.", "success");
   });
 });
 
@@ -224,16 +217,10 @@ describe("restoreFormData (F4)", () => {
     const tbody = document.getElementById("sala-tbody");
     restoreFormData(data, tbody);
 
-    expect(document.getElementById("proyecto").value).toBe(
-      "Proyecto Restaurado",
-    );
-    expect(document.getElementById("asignatura").value).toBe(
-      "Dirección de Arte",
-    );
+    expect(document.getElementById("proyecto").value).toBe("Proyecto Restaurado");
+    expect(document.getElementById("asignatura").value).toBe("Dirección de Arte");
     expect(document.getElementById("docente").value).toBe("Docente Restaurado");
-    expect(document.getElementById("directo-responsable").value).toBe(
-      "Responsable Test",
-    );
+    expect(document.getElementById("directo-responsable").value).toBe("Responsable Test");
   });
 
   it("should restore sala rows", () => {
@@ -322,9 +309,7 @@ describe("restoreFormData (F4)", () => {
 
     const rows = tbody.querySelectorAll(".sala-row");
     expect(rows).toHaveLength(1);
-    expect(rows[0].querySelector('input[name="sala-nombre"]').value).toBe(
-      "New Sala",
-    );
+    expect(rows[0].querySelector('input[name="sala-nombre"]').value).toBe("New Sala");
   });
 
   it("should restore salas with empty field values", () => {

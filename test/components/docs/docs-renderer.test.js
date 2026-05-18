@@ -139,10 +139,7 @@ describe("DocsRenderer", () => {
     const renderer = new DocsRenderer();
     renderer.renderFilters();
 
-    expect(mockSelect.addEventListener).toHaveBeenCalledWith(
-      "change",
-      expect.any(Function),
-    );
+    expect(mockSelect.addEventListener).toHaveBeenCalledWith("change", expect.any(Function));
   });
 
   it("should filter by category when select changes", () => {

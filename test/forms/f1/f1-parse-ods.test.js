@@ -251,9 +251,7 @@ describe("parseOds", () => {
   it("throws when no table element", () => {
     const xml = `<?xml version="1.0"?><root/>`;
     const doc = parseXml(xml);
-    expect(() => parseOds(doc)).toThrow(
-      "No se encontró la tabla en la plantilla",
-    );
+    expect(() => parseOds(doc)).toThrow("No se encontró la tabla en la plantilla");
   });
 
   it("strips trailing padding rows", () => {

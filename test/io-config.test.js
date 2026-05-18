@@ -49,9 +49,9 @@ describe("serializeYAML", () => {
     const result = serializeYAML(data);
     expect(result).toContain("equipos:");
     expect(result).toContain("  -");
-    expect(result).toContain("    item: \"1\"");
+    expect(result).toContain('    item: "1"');
     expect(result).toContain("    nombre: Cámara");
-    expect(result).toContain("    item: \"2\"");
+    expect(result).toContain('    item: "2"');
     expect(result).toContain("    nombre: Trípode");
   });
 
@@ -104,7 +104,8 @@ describe("parseYAML", () => {
   });
 
   it("should parse inline dash list", () => {
-    const yaml = "equipos:\n  - item: \"1\"\n    nombre: Cámara\n  - item: \"2\"\n    nombre: Trípode\n";
+    const yaml =
+      'equipos:\n  - item: "1"\n    nombre: Cámara\n  - item: "2"\n    nombre: Trípode\n';
     const result = parseYAML(yaml);
     expect(result.equipos).toBeInstanceOf(Array);
     expect(result.equipos).toHaveLength(2);
@@ -170,37 +171,29 @@ describe("validateImportData", () => {
   });
 
   it("should return true when required key exists with value", () => {
-    expect(validateImportData({ proyecto: "Test" }, ["proyecto"], "test")).toBe(
-      true,
-    );
+    expect(validateImportData({ proyecto: "Test" }, ["proyecto"], "test")).toBe(true);
   });
 
   it("should return true when required key exists with undefined value", () => {
-    expect(validateImportData({ proyecto: undefined }, ["proyecto"], "test")).toBe(
+    expect(validateImportData({ proyecto: undefined }, ["proyecto"], "test")).toBe(true);
+  });
+
+  it("should return true when at least one of multiple required keys exists", () => {
+    expect(validateImportData({ responsable: "Juan" }, ["proyecto", "responsable"], "test")).toBe(
       true,
     );
   });
 
-  it("should return true when at least one of multiple required keys exists", () => {
-    expect(
-      validateImportData(
-        { responsable: "Juan" },
-        ["proyecto", "responsable"],
-        "test",
-      ),
-    ).toBe(true);
-  });
-
   it("should throw when no required keys exist in data", () => {
-    expect(() =>
-      validateImportData({ foo: "bar" }, ["proyecto"], "solicitud F1"),
-    ).toThrow("El archivo no contiene datos válidos de solicitud F1.");
+    expect(() => validateImportData({ foo: "bar" }, ["proyecto"], "solicitud F1")).toThrow(
+      "El archivo no contiene datos válidos de solicitud F1.",
+    );
   });
 
   it("should throw when data is empty object", () => {
-    expect(() =>
-      validateImportData({}, ["nombre"], "acta F2"),
-    ).toThrow("El archivo no contiene datos válidos de acta F2.");
+    expect(() => validateImportData({}, ["nombre"], "acta F2")).toThrow(
+      "El archivo no contiene datos válidos de acta F2.",
+    );
   });
 
   it("should use the provided formLabel in the error message", () => {
@@ -219,9 +212,7 @@ describe("downloadJSON", () => {
     const module = await import("../js/forms/common/io-config.js");
     downloadJSON = module.downloadJSON;
 
-    createObjectURLSpy = vi
-      .spyOn(URL, "createObjectURL")
-      .mockReturnValue("blob:mock");
+    createObjectURLSpy = vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:mock");
     vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
     vi.spyOn(document.body, "appendChild").mockImplementation(() => {});
     vi.spyOn(document.body, "removeChild").mockImplementation(() => {});
@@ -267,9 +258,7 @@ describe("downloadYAML", () => {
     const module = await import("../js/forms/common/io-config.js");
     downloadYAML = module.downloadYAML;
 
-    createObjectURLSpy = vi
-      .spyOn(URL, "createObjectURL")
-      .mockReturnValue("blob:mock");
+    createObjectURLSpy = vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:mock");
     vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
     vi.spyOn(document.body, "appendChild").mockImplementation(() => {});
     vi.spyOn(document.body, "removeChild").mockImplementation(() => {});

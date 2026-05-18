@@ -44,10 +44,7 @@ describe("initHamburger", () => {
 
   it("should add click event listener to hamburger", () => {
     initHamburger();
-    expect(hamburgerEl.addEventListener).toHaveBeenCalledWith(
-      "click",
-      expect.any(Function),
-    );
+    expect(hamburgerEl.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
   });
 
   it("should toggle active classes on hamburger click", () => {
@@ -65,10 +62,7 @@ describe("initHamburger", () => {
     initHamburger();
     expect(navLinksEl.querySelectorAll).toHaveBeenCalledWith("a");
     linkEls.forEach((link) => {
-      expect(link.addEventListener).toHaveBeenCalledWith(
-        "click",
-        expect.any(Function),
-      );
+      expect(link.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
     });
   });
 

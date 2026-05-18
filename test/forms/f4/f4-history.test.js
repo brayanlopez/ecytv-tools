@@ -151,12 +151,8 @@ describe("F4 History", () => {
       restoreBtns[0].click();
 
       expect(document.getElementById("proyecto").value).toBe("Proyecto Test");
-      expect(document.getElementById("directo-responsable").value).toBe(
-        "Responsable Test",
-      );
-      expect(document.getElementById("asignatura").value).toBe(
-        "Dirección de Arte",
-      );
+      expect(document.getElementById("directo-responsable").value).toBe("Responsable Test");
+      expect(document.getElementById("asignatura").value).toBe("Dirección de Arte");
     });
 
     it("should delete history entries", () => {
@@ -170,14 +166,11 @@ describe("F4 History", () => {
       deleteBtns[0].click();
 
       expect(JSON.parse(localStorageMock["f4-history"])).toHaveLength(0);
-      expect(document.getElementById("history-card").style.display).toBe(
-        "none",
-      );
+      expect(document.getElementById("history-card").style.display).toBe("none");
     });
 
     it("should return history manager via getHistoryManager", async () => {
-      const { getHistoryManager } =
-        await import("../../../js/forms/f4/f4-history.js");
+      const { getHistoryManager } = await import("../../../js/forms/f4/f4-history.js");
       const mgr = getHistoryManager();
       expect(mgr).toBeDefined();
       expect(typeof mgr.addEntry).toBe("function");
@@ -186,8 +179,7 @@ describe("F4 History", () => {
     it("should limit history to 20 entries", () => {
       for (let i = 0; i < 25; i++) {
         document.getElementById("proyecto").value = "Proyecto " + i;
-        document.getElementById("directo-responsable").value =
-          "Responsable " + i;
+        document.getElementById("directo-responsable").value = "Responsable " + i;
         document.getElementById("btn-save").click();
       }
 
@@ -219,9 +211,7 @@ describe("F4 History", () => {
       const restoreBtns = document.querySelectorAll(".btn-history-restore");
       restoreBtns[0].click();
 
-      expect(document.querySelector('input[name="sala-nombre"]').value).toBe(
-        "Sala NL1",
-      );
+      expect(document.querySelector('input[name="sala-nombre"]').value).toBe("Sala NL1");
       const restoredRows = document.querySelectorAll(".sala-row");
       expect(restoredRows).toHaveLength(2);
     });

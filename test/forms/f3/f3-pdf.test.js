@@ -340,8 +340,7 @@ describe("F3 PDF Generation", () => {
       rows[1].querySelector('input[name="equipo-tipo"]').value = "Sonido";
       rows[1].querySelector('input[name="equipo-cantidad"]').value = "1";
       rows[1].querySelector('input[name="equipo-codigo"]').value = "COD-002";
-      rows[1].querySelector('input[name="equipo-elemento"]').value =
-        "Micrófono";
+      rows[1].querySelector('input[name="equipo-elemento"]').value = "Micrófono";
       rows[0].querySelector('input[name="equipo-item"]').value = "1";
       rows[1].querySelector('input[name="equipo-item"]').value = "2";
 

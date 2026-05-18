@@ -102,22 +102,14 @@ describe("QaRenderer", () => {
       setAttribute: vi.fn(),
     };
 
-    mockContainer.querySelectorAll = vi
-      .fn()
-      .mockReturnValue([mockBtn1, mockBtn2]);
+    mockContainer.querySelectorAll = vi.fn().mockReturnValue([mockBtn1, mockBtn2]);
 
     const renderer = new QaRenderer();
     renderer.render();
 
     expect(mockContainer.querySelectorAll).toHaveBeenCalledWith(".qa-question");
-    expect(mockBtn1.addEventListener).toHaveBeenCalledWith(
-      "click",
-      expect.any(Function),
-    );
-    expect(mockBtn2.addEventListener).toHaveBeenCalledWith(
-      "click",
-      expect.any(Function),
-    );
+    expect(mockBtn1.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
+    expect(mockBtn2.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
   });
 
   it("should toggle open class on click", () => {

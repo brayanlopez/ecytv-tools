@@ -158,8 +158,7 @@ describe("F1 Form", () => {
     document.getElementById("fecha-retiro").value = "2026-01-01T10:00";
     document.getElementById("fecha-entrega").value = "2026-01-01T12:00";
     document.querySelector('input[name="equipo-nombre"]').value = "Cámara";
-    document.querySelector('input[name="equipo-consecutivo"]').value =
-      "CON-001";
+    document.querySelector('input[name="equipo-consecutivo"]').value = "CON-001";
   }
 
   describe("Form initialization", () => {
@@ -206,8 +205,7 @@ describe("F1 Form", () => {
       btnPdf.click();
       const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
-        (args) =>
-          args[0] === "Por favor completa todos los campos obligatorios.",
+        (args) => args[0] === "Por favor completa todos los campos obligatorios.",
       );
       expect(hasValidationError).toBe(false);
     });

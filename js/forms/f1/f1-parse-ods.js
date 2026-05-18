@@ -110,9 +110,7 @@ function parseCellStyles(xmlDoc) {
     styles[name] = {
       borders,
       bgColor: bg && bg !== "transparent" ? bg : null,
-      fontName: tp
-        ? getAttr(tp, NS.STYLE, "font-name") || "Calibri"
-        : "Calibri",
+      fontName: tp ? getAttr(tp, NS.STYLE, "font-name") || "Calibri" : "Calibri",
       fontSize: tp ? parseFloat(getAttr(tp, NS.FO, "font-size") || "11") : 11,
       fontWeight: tp ? getAttr(tp, NS.FO, "font-weight") || "normal" : "normal",
       color: tp ? getAttr(tp, NS.FO, "color") || "#000000" : "#000000",
@@ -128,17 +126,8 @@ function parseColumns(xmlDoc, table) {
   const widths = [];
   for (const col of colEls) {
     const styleName = getAttr(col, NS.TABLE, "style-name");
-    const repeat = parseInt(
-      getAttr(col, NS.TABLE, "number-columns-repeated") || "1",
-      10,
-    );
-    const widthStr = getStyleProp(
-      xmlDoc,
-      styleName,
-      "table-column",
-      NS.STYLE,
-      "column-width",
-    );
+    const repeat = parseInt(getAttr(col, NS.TABLE, "number-columns-repeated") || "1", 10);
+    const widthStr = getStyleProp(xmlDoc, styleName, "table-column", NS.STYLE, "column-width");
     const w = widthStr ? toMm(widthStr) : 20;
     for (let i = 0; i < repeat && i < 20; i++) widths.push(w);
     if (widths.length >= 20) break;
@@ -154,17 +143,8 @@ function parseRows(xmlDoc, table, colWidths) {
 
   for (const rowEl of rowEls) {
     const styleName = getAttr(rowEl, NS.TABLE, "style-name");
-    const repeat = parseInt(
-      getAttr(rowEl, NS.TABLE, "number-rows-repeated") || "1",
-      10,
-    );
-    const heightStr = getStyleProp(
-      xmlDoc,
-      styleName,
-      "table-row",
-      NS.STYLE,
-      "row-height",
-    );
+    const repeat = parseInt(getAttr(rowEl, NS.TABLE, "number-rows-repeated") || "1", 10);
+    const heightStr = getStyleProp(xmlDoc, styleName, "table-row", NS.STYLE, "row-height");
     const height = heightStr ? toMm(heightStr) : 8;
 
     if (repeat > 50) {
@@ -180,20 +160,13 @@ function parseRows(xmlDoc, table, colWidths) {
 
     for (const cell of cellEls) {
       if (ci >= 10) break;
-      const span = parseInt(
-        getAttr(cell, NS.TABLE, "number-columns-spanned") || "1",
-        10,
-      );
-      const crepeat = parseInt(
-        getAttr(cell, NS.TABLE, "number-columns-repeated") || "1",
-        10,
-      );
+      const span = parseInt(getAttr(cell, NS.TABLE, "number-columns-spanned") || "1", 10);
+      const crepeat = parseInt(getAttr(cell, NS.TABLE, "number-columns-repeated") || "1", 10);
       const cellStyleName = getAttr(cell, NS.TABLE, "style-name");
       const ncols = Math.max(span, crepeat);
 
       let w = 0;
-      for (let i = 0; i < ncols && ci + i < colWidths.length; i++)
-        w += colWidths[ci + i];
+      for (let i = 0; i < ncols && ci + i < colWidths.length; i++) w += colWidths[ci + i];
 
       const p = cell.getElementsByTagNameNS(NS.TEXT, "p")[0];
       const text = p ? p.textContent : "";
@@ -238,8 +211,7 @@ export {
 export function parseOds(xmlDoc) {
   const styleMap = parseCellStyles(xmlDoc);
   const tables = xmlDoc.getElementsByTagNameNS(NS.TABLE, "table");
-  if (!tables.length)
-    throw new Error("No se encontró la tabla en la plantilla");
+  if (!tables.length) throw new Error("No se encontró la tabla en la plantilla");
   const table = tables[0];
   const colWidths = parseColumns(xmlDoc, table);
   const rows = parseRows(xmlDoc, table, colWidths);

@@ -95,9 +95,6 @@ export async function generateF1XLSX(data) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   } catch (err) {
-    window.EcytvUI.showSnackbar(
-      "Error al generar el archivo XLSX: " + err.message,
-      "error",
-    );
+    window.EcytvUI.showSnackbar("Error al generar el archivo XLSX: " + err.message, "error");
   }
 }

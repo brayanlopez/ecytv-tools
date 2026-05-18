@@ -158,8 +158,7 @@ describe("F1 ODS Generation", () => {
     document.getElementById("fecha-retiro").value = "2026-01-01T10:00";
     document.getElementById("fecha-entrega").value = "2026-01-01T12:00";
     document.querySelector('input[name="equipo-nombre"]').value = "Cámara";
-    document.querySelector('input[name="equipo-consecutivo"]').value =
-      "CON-001";
+    document.querySelector('input[name="equipo-consecutivo"]').value = "CON-001";
   }
 
   describe("ODS Generation", () => {
@@ -168,9 +167,7 @@ describe("F1 ODS Generation", () => {
     });
 
     it("should show alert when fetch fails for ODS template", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(
-        new Error("Network error"),
-      );
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("Network error"));
       document.getElementById("btn-ods").click();
 
       await vi.waitFor(() => {
@@ -215,8 +212,7 @@ describe("F1 ODS Generation", () => {
       const cell = "<table:table-cell><text:p>x</text:p></table:table-cell>";
       const tableRows = Array.from(
         { length: 40 },
-        () =>
-          `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
+        () => `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
       ).join("");
 
       window.JSZip = {
@@ -269,8 +265,7 @@ describe("F1 ODS Generation", () => {
       const cell = "<table:table-cell><text:p>x</text:p></table:table-cell>";
       const tableRows = Array.from(
         { length: 40 },
-        () =>
-          `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
+        () => `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
       ).join("");
 
       window.JSZip = {
@@ -312,18 +307,15 @@ describe("F1 ODS Generation", () => {
         document.getElementById("add-equip-btn").click();
         const rows = document.querySelectorAll(".equip-row");
         const lastRow = rows[rows.length - 1];
-        lastRow.querySelector('input[name="equipo-nombre"]').value =
-          `Equipo ${i}`;
-        lastRow.querySelector('input[name="equipo-consecutivo"]').value =
-          `CON-${i}`;
+        lastRow.querySelector('input[name="equipo-nombre"]').value = `Equipo ${i}`;
+        lastRow.querySelector('input[name="equipo-consecutivo"]').value = `CON-${i}`;
         lastRow.querySelector('input[name="equipo-item"]').value = `${i + 1}`;
       }
 
       const cell = "<table:table-cell><text:p>x</text:p></table:table-cell>";
       const tableRows = Array.from(
         { length: 40 },
-        () =>
-          `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
+        () => `<table:table-row>${cell}${cell}${cell}${cell}${cell}</table:table-row>`,
       ).join("");
 
       window.JSZip = {

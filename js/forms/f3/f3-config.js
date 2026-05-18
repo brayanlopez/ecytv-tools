@@ -60,18 +60,14 @@ export const f3Config = {
     ],
   },
 
-  datalists: [
-    { elementId: "asignaturas-sugeridas", source: ASIGNATURAS_SUGERIDAS },
-  ],
+  datalists: [{ elementId: "asignaturas-sugeridas", source: ASIGNATURAS_SUGERIDAS }],
 
   historyConfig: {
     key: "f3-history",
     getTitle: (d) => d.proyecto || "(sin proyecto)",
-    getSubtitle: (d) =>
-      [d.autorizado, d.asignatura].filter(Boolean).join(" — "),
+    getSubtitle: (d) => [d.autorizado, d.asignatura].filter(Boolean).join(" — "),
     isValid: (d) => d.proyecto?.trim() && d.autorizado?.trim(),
-    warnMsg:
-      "Completa al menos el nombre del proyecto y el autorizado antes de guardar.",
+    warnMsg: "Completa al menos el nombre del proyecto y el autorizado antes de guardar.",
     successMsg: "Solicitud guardada en el historial.",
   },
 };

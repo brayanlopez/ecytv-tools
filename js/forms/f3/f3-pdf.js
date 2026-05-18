@@ -70,27 +70,15 @@ export function generateF3PDF(data) {
 
   yPos = sectionHeader("2. DATOS DEL AUTORIZADO", yPos);
   yPos = fieldRow("Autorizado", autorizado, yPos);
-  yPos = fieldRow(
-    "Documento",
-    (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""),
-    yPos,
-  );
+  yPos = fieldRow("Documento", (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""), yPos);
   yPos = fieldRow("TIUN", tiun, yPos);
   yPos = fieldRow("Celular", celular, yPos);
   yPos += 4;
 
   yPos = sectionHeader("3. INFORMACION DEL PRESTAMO", yPos);
   yPos = fieldRow("Lugar de grabacion", lugar, yPos);
-  yPos = fieldRow(
-    "Fecha y hora de retiro",
-    fechaRetiro.replace("T", " "),
-    yPos,
-  );
-  yPos = fieldRow(
-    "Fecha y hora de entrega",
-    fechaEntrega.replace("T", " "),
-    yPos,
-  );
+  yPos = fieldRow("Fecha y hora de retiro", fechaRetiro.replace("T", " "), yPos);
+  yPos = fieldRow("Fecha y hora de entrega", fechaEntrega.replace("T", " "), yPos);
   yPos += 4;
 
   yPos = sectionHeader("4. ELEMENTOS A SOLICITAR", yPos);
@@ -99,13 +87,7 @@ export function generateF3PDF(data) {
     doc.autoTable({
       startY: yPos,
       head: [["Item", "Tipo", "Cantidad", "Codigo", "Elemento"]],
-      body: equipRows.map((r) => [
-        r.item,
-        r.tipo,
-        r.cantidad,
-        r.codigo,
-        r.elemento,
-      ]),
+      body: equipRows.map((r) => [r.item, r.tipo, r.cantidad, r.codigo, r.elemento]),
       theme: "grid",
       headStyles: { fillColor: primary, fontSize: 8, fontStyle: "bold" },
       bodyStyles: { fontSize: 8 },

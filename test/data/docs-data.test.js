@@ -13,15 +13,7 @@ describe("Docs Data", () => {
   });
 
   it("should have all required fields", () => {
-    const requiredFields = [
-      "id",
-      "name",
-      "category",
-      "type",
-      "description",
-      "url",
-      "manufacturer",
-    ];
+    const requiredFields = ["id", "name", "category", "type", "description", "url", "manufacturer"];
 
     docs.forEach((doc) => {
       requiredFields.forEach((field) => {

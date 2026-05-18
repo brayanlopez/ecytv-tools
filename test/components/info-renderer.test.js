@@ -24,15 +24,9 @@ describe("renderInfoCards", () => {
 
     renderInfoCards();
 
-    expect(container.innerHTML).toContain(
-      "Programación de Recursos - Lab Postproducción",
-    );
-    expect(container.innerHTML).toContain(
-      "Programación de Recursos - Lab Instrumentos",
-    );
-    expect(container.innerHTML).toContain(
-      "Base de datos Casting general de la Escuela",
-    );
+    expect(container.innerHTML).toContain("Programación de Recursos - Lab Postproducción");
+    expect(container.innerHTML).toContain("Programación de Recursos - Lab Instrumentos");
+    expect(container.innerHTML).toContain("Base de datos Casting general de la Escuela");
   });
 
   it("should render info-card elements", () => {

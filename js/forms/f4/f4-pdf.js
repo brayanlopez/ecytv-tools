@@ -66,11 +66,7 @@ export function generateF4PDF(data) {
 
   yPos = sectionHeader("2. DATOS DEL DIRECTO RESPONSABLE", yPos);
   yPos = fieldRow("Directo responsable", directoResponsable, yPos);
-  yPos = fieldRow(
-    "Documento",
-    (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""),
-    yPos,
-  );
+  yPos = fieldRow("Documento", (tipoDoc ? tipoDoc + ". " : "") + (numDoc || ""), yPos);
   yPos = fieldRow("TIUN", tiun, yPos);
   yPos += 4;
 
@@ -80,12 +76,7 @@ export function generateF4PDF(data) {
     doc.autoTable({
       startY: yPos,
       head: [["Sala", "Fecha", "Hora inicio", "Hora fin"]],
-      body: salaRows.map((r) => [
-        r.nombre,
-        r.fecha,
-        r["hora-inicio"],
-        r["hora-fin"],
-      ]),
+      body: salaRows.map((r) => [r.nombre, r.fecha, r["hora-inicio"], r["hora-fin"]]),
       theme: "grid",
       headStyles: { fillColor: primary, fontSize: 8, fontStyle: "bold" },
       bodyStyles: { fontSize: 8 },

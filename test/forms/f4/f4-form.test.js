@@ -199,8 +199,7 @@ describe("F4 Form", () => {
       btnPdf.click();
       const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
-        (args) =>
-          args[0] === "Por favor completa todos los campos obligatorios.",
+        (args) => args[0] === "Por favor completa todos los campos obligatorios.",
       );
       expect(hasValidationError).toBe(false);
     });
@@ -475,10 +474,7 @@ describe("F4 Form", () => {
     it("should show error snackbar on import click when import fails", async () => {
       document.getElementById("btn-import").click();
       await vi.waitFor(() => {
-        expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
-          "Simulated error",
-          "error",
-        );
+        expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith("Simulated error", "error");
       });
     });
   });

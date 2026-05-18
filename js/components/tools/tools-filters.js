@@ -3,10 +3,7 @@ import tools from "../../../data/tools.js";
 export function getAllValues() {
   const categories = ["all", ...new Set(tools.map((t) => t.category))];
   const levels = ["all", ...new Set(tools.map((t) => t.level))];
-  const platforms = [
-    "all",
-    ...new Set(tools.flatMap((t) => t.platform)),
-  ].sort();
+  const platforms = ["all", ...new Set(tools.flatMap((t) => t.platform))].sort();
   const pricings = ["all", ...new Set(tools.map((t) => t.pricing))];
   return { categories, levels, platforms, pricings };
 }

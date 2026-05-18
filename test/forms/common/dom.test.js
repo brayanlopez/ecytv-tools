@@ -182,10 +182,7 @@ describe("setFieldValues", () => {
   });
 
   it("should handle missing elements gracefully", () => {
-    const fields = [
-      { id: "nonexistent" },
-      { id: "nonexistent-check", type: "checkbox" },
-    ];
+    const fields = [{ id: "nonexistent" }, { id: "nonexistent-check", type: "checkbox" }];
     expect(() => setFieldValues(fields, {})).not.toThrow();
   });
 });

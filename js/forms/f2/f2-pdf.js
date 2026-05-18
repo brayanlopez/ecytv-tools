@@ -169,9 +169,6 @@ export async function generateF2PDF(data) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   } catch (err) {
-    window.EcytvUI.showSnackbar(
-      "Error al generar el archivo PDF: " + err.message,
-      "error",
-    );
+    window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
   }
 }

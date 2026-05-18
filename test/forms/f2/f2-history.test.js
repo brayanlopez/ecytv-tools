@@ -150,9 +150,7 @@ describe("F2 History", () => {
 
       expect(document.getElementById("nombre").value).toBe("Juan Pérez");
       expect(document.getElementById("tipo-documento").value).toBe("CC");
-      expect(document.getElementById("numero-documento").value).toBe(
-        "123456789",
-      );
+      expect(document.getElementById("numero-documento").value).toBe("123456789");
     });
 
     it("should delete history entries", () => {
@@ -164,9 +162,7 @@ describe("F2 History", () => {
       deleteBtns[0].click();
 
       expect(JSON.parse(localStorageMock["f2-history"])).toHaveLength(0);
-      expect(document.getElementById("history-card").style.display).toBe(
-        "none",
-      );
+      expect(document.getElementById("history-card").style.display).toBe("none");
     });
 
     it("should limit history to 20 entries", () => {

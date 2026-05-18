@@ -169,9 +169,7 @@ describe("F1 History", () => {
       restoreBtns[0].click();
 
       expect(document.getElementById("proyecto").value).toBe("Proyecto Test");
-      expect(document.getElementById("responsable").value).toBe(
-        "Responsable Test",
-      );
+      expect(document.getElementById("responsable").value).toBe("Responsable Test");
       expect(document.getElementById("asignatura").value).toBe("Sonido I");
     });
 
@@ -186,9 +184,7 @@ describe("F1 History", () => {
       deleteBtns[0].click();
 
       expect(JSON.parse(localStorageMock["f1-history"])).toHaveLength(0);
-      expect(document.getElementById("history-card").style.display).toBe(
-        "none",
-      );
+      expect(document.getElementById("history-card").style.display).toBe("none");
     });
 
     it("should limit history to 20 entries", () => {
@@ -217,9 +213,7 @@ describe("F1 History", () => {
       const restoreBtns = document.querySelectorAll(".btn-history-restore");
       restoreBtns[0].click();
 
-      expect(document.getElementById("fecha-entrega").value).toBe(
-        "2026-01-01T10:00",
-      );
+      expect(document.getElementById("fecha-entrega").value).toBe("2026-01-01T10:00");
       expect(document.getElementById("fecha-entrega").disabled).toBe(true);
     });
 

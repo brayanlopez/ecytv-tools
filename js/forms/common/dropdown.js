@@ -19,12 +19,7 @@ export function initDropdown(btnId, menuId) {
   });
 
   btn.addEventListener("keydown", (e) => {
-    if (
-      e.key === "ArrowDown" ||
-      e.key === "ArrowUp" ||
-      e.key === "Enter" ||
-      e.key === " "
-    ) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       if (!menu.classList.contains("show")) {
         menu.classList.add("show");

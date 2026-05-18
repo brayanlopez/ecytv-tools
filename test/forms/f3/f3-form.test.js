@@ -212,8 +212,7 @@ describe("F3 Form", () => {
       btnPdf.click();
       const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
-        (args) =>
-          args[0] === "Por favor completa todos los campos obligatorios.",
+        (args) => args[0] === "Por favor completa todos los campos obligatorios.",
       );
       expect(hasValidationError).toBe(false);
     });
@@ -346,8 +345,7 @@ describe("F3 Form", () => {
     it("should clear form fields and reset equip rows on reset", async () => {
       document.getElementById("proyecto").value = "Test";
       document.getElementById("autorizado").value = "Test";
-      document.querySelector('input[name="equipo-tipo"]').value =
-        "Iluminación";
+      document.querySelector('input[name="equipo-tipo"]').value = "Iluminación";
       document.querySelector('input[name="equipo-cantidad"]').value = "2";
 
       document.getElementById("add-equip-btn").click();

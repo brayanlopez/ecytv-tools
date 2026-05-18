@@ -88,9 +88,7 @@ describe("createFormFactory", () => {
       document.getElementById("btn-ods").click();
 
       expect(mockODS).toHaveBeenCalled();
-      expect(mockODS).toHaveBeenCalledWith(
-        expect.objectContaining({ name: "Test" }),
-      );
+      expect(mockODS).toHaveBeenCalledWith(expect.objectContaining({ name: "Test" }));
     });
 
     it("should call xlsx generator when btn-xlsx is clicked", () => {
@@ -123,9 +121,7 @@ describe("createFormFactory", () => {
       document.getElementById("btn-xlsx").click();
 
       expect(mockXLSX).toHaveBeenCalled();
-      expect(mockXLSX).toHaveBeenCalledWith(
-        expect.objectContaining({ name: "Test" }),
-      );
+      expect(mockXLSX).toHaveBeenCalledWith(expect.objectContaining({ name: "Test" }));
     });
   });
 });

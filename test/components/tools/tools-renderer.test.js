@@ -98,8 +98,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
       .mockImplementation(() => localStorageData);
     vi.spyOn(localStorage, "setItem").mockImplementation(() => {});
 
-    const module =
-      await import("../../../js/components/tools/tools-renderer.js");
+    const module = await import("../../../js/components/tools/tools-renderer.js");
     ToolsRenderer = module.ToolsRenderer;
   });
 
@@ -177,10 +176,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
     const renderer = new ToolsRenderer();
     renderer.renderFilters();
 
-    expect(mockClearButton.addEventListener).toHaveBeenCalledWith(
-      "click",
-      expect.any(Function),
-    );
+    expect(mockClearButton.addEventListener).toHaveBeenCalledWith("click", expect.any(Function));
   });
 
   it("should filter tools by search query", () => {
@@ -224,9 +220,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
     renderer.searchQuery = "editor";
     renderer.render();
 
-    const matches = tools.filter((t) =>
-      t.description.toLowerCase().includes("editor"),
-    );
+    const matches = tools.filter((t) => t.description.toLowerCase().includes("editor"));
     expect(matches.length).toBeGreaterThan(0);
     matches.forEach((t) => {
       expect(mockContainer.innerHTML).toContain(t.name);
@@ -238,9 +232,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
     renderer.searchQuery = "video";
     renderer.render();
 
-    const matches = tools.filter((t) =>
-      t.tags.some((tag) => tag.toLowerCase().includes("video")),
-    );
+    const matches = tools.filter((t) => t.tags.some((tag) => tag.toLowerCase().includes("video")));
     expect(matches.length).toBeGreaterThan(0);
     matches.forEach((t) => {
       expect(mockContainer.innerHTML).toContain(t.name);
@@ -252,9 +244,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
     renderer.searchQuery = "edición";
     renderer.render();
 
-    const matches = tools.filter((t) =>
-      t.category.toLowerCase().includes("edición"),
-    );
+    const matches = tools.filter((t) => t.category.toLowerCase().includes("edición"));
     expect(matches.length).toBeGreaterThan(0);
     matches.forEach((t) => {
       expect(mockContainer.innerHTML).toContain(t.name);
@@ -296,9 +286,7 @@ describe("ToolsRenderer class with DOM mocking", () => {
     renderer.render();
 
     expect(mockContainer.innerHTML).toContain('data-id="davinci-resolve"');
-    const davinciCard = mockContainer.innerHTML.match(
-      /data-id="davinci-resolve"[^]*?<\/div>/,
-    );
+    const davinciCard = mockContainer.innerHTML.match(/data-id="davinci-resolve"[^]*?<\/div>/);
     expect(davinciCard).toBeTruthy();
   });
 

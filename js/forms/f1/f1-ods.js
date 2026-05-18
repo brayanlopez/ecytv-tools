@@ -14,8 +14,7 @@ export async function generateF1ODS(data) {
     const TEXT_NS = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
 
     const tables = xmlDoc.getElementsByTagNameNS(TABLE_NS, "table");
-    if (!tables.length)
-      throw new Error("No se encontró la tabla en la plantilla");
+    if (!tables.length) throw new Error("No se encontró la tabla en la plantilla");
     const table = tables[0];
     const rows = table.getElementsByTagNameNS(TABLE_NS, "table-row");
 
@@ -188,9 +187,6 @@ export async function generateF1ODS(data) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   } catch (err) {
-    window.EcytvUI.showSnackbar(
-      "Error al generar el archivo ODS: " + err.message,
-      "error",
-    );
+    window.EcytvUI.showSnackbar("Error al generar el archivo ODS: " + err.message, "error");
   }
 }

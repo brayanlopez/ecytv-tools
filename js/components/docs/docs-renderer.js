@@ -23,9 +23,7 @@ class DocsRenderer {
 
   render() {
     const filtered =
-      this.activeCategory === "all"
-        ? docs
-        : docs.filter((d) => d.category === this.activeCategory);
+      this.activeCategory === "all" ? docs : docs.filter((d) => d.category === this.activeCategory);
 
     const countEl = document.getElementById("docs-count");
     countEl.textContent = `${filtered.length} recurso${filtered.length !== 1 ? "s" : ""}`;

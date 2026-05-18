@@ -169,8 +169,7 @@ describe("F2 Form", () => {
       document.getElementById("btn-pdf").click();
       const lastCallArgs = window.EcytvUI.showSnackbar.mock.calls;
       const hasValidationError = lastCallArgs.some(
-        (args) =>
-          args[0] === "Por favor completa todos los campos obligatorios.",
+        (args) => args[0] === "Por favor completa todos los campos obligatorios.",
       );
       expect(hasValidationError).toBe(false);
     });

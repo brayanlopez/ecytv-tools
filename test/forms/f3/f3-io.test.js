@@ -174,10 +174,7 @@ describe("handleImport (F3)", () => {
     expect(document.getElementById("proyecto").value).toBe("Proyecto Restaurado");
     expect(document.getElementById("autorizado").value).toBe("Autorizado Test");
     expect(document.getElementById("tipo-documento").value).toBe("CC");
-    expect(snackbarSpy).toHaveBeenCalledWith(
-      "Datos importados correctamente.",
-      "success",
-    );
+    expect(snackbarSpy).toHaveBeenCalledWith("Datos importados correctamente.", "success");
   });
 });
 

@@ -146,8 +146,7 @@ describe("F4 PDF Generation", () => {
       proyecto: document.getElementById("proyecto").value,
       asignatura: document.getElementById("asignatura").value,
       docente: document.getElementById("docente").value,
-      "directo-responsable": document.getElementById("directo-responsable")
-        .value,
+      "directo-responsable": document.getElementById("directo-responsable").value,
       "tipo-documento": document.getElementById("tipo-documento").value,
       "numero-documento": document.getElementById("numero-documento").value,
       tiun: document.getElementById("tiun").value,

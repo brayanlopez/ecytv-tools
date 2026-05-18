@@ -44,18 +44,14 @@ export const f1Config = {
     ],
   },
 
-  datalists: [
-    { elementId: "asignaturas-sugeridas", source: ASIGNATURAS_SUGERIDAS },
-  ],
+  datalists: [{ elementId: "asignaturas-sugeridas", source: ASIGNATURAS_SUGERIDAS }],
 
   historyConfig: {
     key: "f1-history",
     getTitle: (d) => d.proyecto || "(sin proyecto)",
-    getSubtitle: (d) =>
-      [d.responsable, d.asignatura].filter(Boolean).join(" — "),
+    getSubtitle: (d) => [d.responsable, d.asignatura].filter(Boolean).join(" — "),
     isValid: (d) => d.proyecto?.trim() && d.responsable?.trim(),
-    warnMsg:
-      "Completa al menos el nombre del proyecto y el responsable antes de guardar.",
+    warnMsg: "Completa al menos el nombre del proyecto y el responsable antes de guardar.",
     successMsg: "Solicitud guardada en el historial.",
   },
 };

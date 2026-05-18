@@ -191,11 +191,9 @@ const docs = [
   {
     id: "sennheiser-mkh416",
     name: "Sennheiser MKH 416",
-    category:
-      "Accesorios equipos grabación de audio sistema doble y micrófonos de ficción",
+    category: "Accesorios equipos grabación de audio sistema doble y micrófonos de ficción",
     type: "manual",
-    description:
-      "Micrófono shotgun de interferencia de RF para diálogos y ficción",
+    description: "Micrófono shotgun de interferencia de RF para diálogos y ficción",
     url: "https://assets.sennheiser.com/global-downloads/file/5630/5630.pdf",
     manufacturer: "Sennheiser",
   },
@@ -330,8 +328,7 @@ const docs = [
     name: "Countryman B3",
     category: "Cápsulas lavalier especiales",
     type: "manual",
-    description:
-      "Micrófono lavalier de alta calidad con respuesta de frecuencia amplia",
+    description: "Micrófono lavalier de alta calidad con respuesta de frecuencia amplia",
     url: "https://countryman.com/product/b3-wired-microphone/",
     manufacturer: "Countryman",
   },
@@ -358,8 +355,7 @@ const docs = [
     name: "Soportes y Accesorios para Iluminación",
     category: "Soportes y accesorios para iluminación",
     type: "guide",
-    description:
-      "Equipo básico de grip, difusores, banderas, chimera ARRI y tripodes en C",
+    description: "Equipo básico de grip, difusores, banderas, chimera ARRI y tripodes en C",
     url: "https://www.arri.com/en/learn-help/support-service/lighting-support",
     manufacturer: "ECYTV",
   },
@@ -368,8 +364,7 @@ const docs = [
     name: "Guía de Exposición",
     category: "Equipos de medición para fotografía",
     type: "guide",
-    description:
-      "Guía rápida de exposición, apertura, velocidad ISO y medición de luz",
+    description: "Guía rápida de exposición, apertura, velocidad ISO y medición de luz",
     url: "https://www.sekonic.com/support/downloads/",
     manufacturer: "",
   },
@@ -378,8 +373,7 @@ const docs = [
     name: "Protocolo de Préstamo",
     category: "Soportes y accesorios para iluminación",
     type: "guide",
-    description:
-      "Normativas y procedimientos para préstamo de equipos del Laboratorio",
+    description: "Normativas y procedimientos para préstamo de equipos del Laboratorio",
     url: "#",
     manufacturer: "ECYTV",
   },

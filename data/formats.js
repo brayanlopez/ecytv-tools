@@ -14,8 +14,7 @@ const formats = [
   {
     id: "f2",
     name: "F2 - Acta de Compromiso",
-    description:
-      "Acta de compromiso para el uso de equipos y espacios del laboratorio",
+    description: "Acta de compromiso para el uso de equipos y espacios del laboratorio",
     url: "f2-format.html",
     label: "Abrir F2",
     available: true,
@@ -27,8 +26,7 @@ const formats = [
   {
     id: "f3",
     name: "F3 - Solicitud de Reserva y Préstamo de Elementos Bodega de Arte",
-    description:
-      "Formato para solicitar la reserva y préstamo de elementos de la bodega de arte",
+    description: "Formato para solicitar la reserva y préstamo de elementos de la bodega de arte",
     url: "f3-format.html",
     label: "Abrir F3",
     available: true,
@@ -41,8 +39,7 @@ const formats = [
   {
     id: "f4",
     name: "F4 - Solicitud de Reserva y Préstamo Salas de Edición",
-    description:
-      "Formato para solicitar la reserva y préstamo de las salas de edición",
+    description: "Formato para solicitar la reserva y préstamo de las salas de edición",
     url: "f4-format.html",
     label: "Abrir F4",
     available: true,

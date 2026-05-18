@@ -138,10 +138,7 @@ describe("handleImport (F2)", () => {
 
     expect(document.getElementById("nombre").value).toBe("Juan Pérez");
     expect(document.getElementById("tipo-documento").value).toBe("CC");
-    expect(snackbarSpy).toHaveBeenCalledWith(
-      "Datos importados correctamente.",
-      "success",
-    );
+    expect(snackbarSpy).toHaveBeenCalledWith("Datos importados correctamente.", "success");
   });
 });
 
@@ -199,13 +196,9 @@ describe("restoreFormData (F2)", () => {
     expect(document.getElementById("contacto").value).toBe("3019876543");
     expect(document.getElementById("periodo-inicial").value).toBe("2026-03-01");
     expect(document.getElementById("periodo-final").value).toBe("2026-03-15");
-    expect(document.getElementById("fecha-constancia").value).toBe(
-      "2026-03-10",
-    );
+    expect(document.getElementById("fecha-constancia").value).toBe("2026-03-10");
     expect(document.getElementById("firma-nombre").checked).toBe(true);
-    expect(document.getElementById("observaciones").value).toBe(
-      "Acta de prueba",
-    );
+    expect(document.getElementById("observaciones").value).toBe("Acta de prueba");
   });
 
   it("should set checkbox to false when data has false", () => {

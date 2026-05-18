@@ -107,10 +107,7 @@ describe("restoreTheme", () => {
   });
 
   it("should not add event listeners or modify icon", () => {
-    const addEventListenerSpy = vi.spyOn(
-      document.documentElement,
-      "addEventListener",
-    );
+    const addEventListenerSpy = vi.spyOn(document.documentElement, "addEventListener");
     restoreTheme();
     expect(addEventListenerSpy).not.toHaveBeenCalled();
   });

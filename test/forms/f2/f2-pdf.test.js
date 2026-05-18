@@ -232,9 +232,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("Juan Pérez");
           expect(allText).toContain("123456789");
         },
@@ -251,9 +249,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("2026");
           expect(allText).toContain("enero");
           expect(allText).toContain("febrero");
@@ -271,9 +267,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("15");
           expect(allText).toContain("enero");
         },
@@ -291,9 +285,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const nameCalls = page.drawText.mock.calls.filter(
-            (c) => String(c[0]) === "Juan Pérez",
-          );
+          const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
           expect(nameCalls).toHaveLength(1);
         },
         { timeout: 5000 },
@@ -310,9 +302,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const nameCalls = page.drawText.mock.calls.filter(
-            (c) => String(c[0]) === "Juan Pérez",
-          );
+          const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
           expect(nameCalls).toHaveLength(2);
         },
         { timeout: 5000 },
@@ -330,9 +320,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("1");
           expect(allText).toContain("enero");
           expect(allText).toContain("febrero");
@@ -376,9 +364,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("123456789");
         },
         { timeout: 5000 },
@@ -396,9 +382,7 @@ describe("F2 PDF Generation", () => {
       await vi.waitFor(
         () => {
           expect(page.drawRectangle).toHaveBeenCalled();
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("Extranjería");
         },
         { timeout: 5000 },
@@ -416,9 +400,7 @@ describe("F2 PDF Generation", () => {
 
       await vi.waitFor(
         () => {
-          const allText = page.drawText.mock.calls
-            .map((c) => String(c[0]))
-            .join(" ");
+          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
           expect(allText).toContain("sin especificar");
         },
         { timeout: 5000 },

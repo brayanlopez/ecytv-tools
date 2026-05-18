@@ -24,9 +24,7 @@ describe("UI Components", () => {
       window.EcytvUI.showSnackbar("Test message", "info", 0);
       const snackbar = document.querySelector(".snackbar");
       expect(snackbar).toBeTruthy();
-      expect(snackbar.querySelector(".snackbar-message").textContent).toBe(
-        "Test message",
-      );
+      expect(snackbar.querySelector(".snackbar-message").textContent).toBe("Test message");
     });
 
     it("should add the correct type class", () => {
@@ -108,12 +106,8 @@ describe("UI Components", () => {
       });
       const overlay = document.querySelector(".modal-overlay");
       expect(overlay.classList.contains("show")).toBe(true);
-      expect(overlay.querySelector(".modal-title").textContent).toBe(
-        "Confirmar acción",
-      );
-      expect(overlay.querySelector(".modal-message").textContent).toBe(
-        "¿Estás seguro?",
-      );
+      expect(overlay.querySelector(".modal-title").textContent).toBe("Confirmar acción");
+      expect(overlay.querySelector(".modal-message").textContent).toBe("¿Estás seguro?");
     });
 
     it("should have confirm and cancel buttons by default", () => {
@@ -205,9 +199,7 @@ describe("UI Components", () => {
     it("should close with closeModal", () => {
       window.EcytvUI.showModal({ title: "Test", message: "Test" });
       window.EcytvUI.closeModal(null);
-      expect(
-        document.querySelector(".modal-overlay").classList.contains("show"),
-      ).toBe(false);
+      expect(document.querySelector(".modal-overlay").classList.contains("show")).toBe(false);
     });
 
     it("should trap Tab key and wrap to last element when Shift+Tab from first", () => {
@@ -230,7 +222,9 @@ describe("UI Components", () => {
       );
       const focusSpy = vi.spyOn(focusable[0], "focus");
 
-      const restoreActiveElement = vi.spyOn(document, "activeElement", "get").mockReturnValue(focusable[focusable.length - 1]);
+      const restoreActiveElement = vi
+        .spyOn(document, "activeElement", "get")
+        .mockReturnValue(focusable[focusable.length - 1]);
 
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }));
       expect(focusSpy).toHaveBeenCalled();
@@ -251,9 +245,7 @@ describe("UI Components", () => {
       window.EcytvUI.showModal({ title: "Test", message: "Test" });
       const overlay = document.querySelector(".modal-overlay");
 
-      overlay.dispatchEvent(
-        new KeyboardEvent("keydown", { key: "ArrowDown" }),
-      );
+      overlay.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
       expect(overlay.classList.contains("show")).toBe(true);
     });
   });

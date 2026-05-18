@@ -1,10 +1,4 @@
-import {
-  getValue,
-  setValue,
-  getChecked,
-  setChecked,
-  setFieldValues,
-} from "./dom.js";
+import { getValue, setValue, getChecked, setChecked, setFieldValues } from "./dom.js";
 import { initDropdown } from "./dropdown.js";
 import { validateForm } from "./validation.js";
 import { downloadJSON, downloadYAML, importFromFile } from "./io-config.js";
@@ -12,15 +6,7 @@ import { createHistoryManager } from "./history.js";
 import { escHtml } from "./esc-html.js";
 
 export function createFormFactory(config) {
-  const {
-    formId,
-    fields,
-    table,
-    datalists,
-    historyConfig,
-    generators,
-    exportFilename,
-  } = config;
+  const { formId, fields, table, datalists, historyConfig, generators, exportFilename } = config;
 
   const historyManager = createHistoryManager(historyConfig.key);
 
@@ -39,8 +25,7 @@ export function createFormFactory(config) {
       const data = {};
       for (const col of table.columns) {
         const inputName = col.name;
-        data[col.key || col.name] =
-          row.querySelector(`[name="${inputName}"]`)?.value ?? "";
+        data[col.key || col.name] = row.querySelector(`[name="${inputName}"]`)?.value ?? "";
       }
       return data;
     });
@@ -297,9 +282,7 @@ export function createFormFactory(config) {
           minute: "2-digit",
         });
         const title = historyConfig.getTitle(entry.data);
-        const subtitle = historyConfig.getSubtitle
-          ? historyConfig.getSubtitle(entry.data)
-          : "";
+        const subtitle = historyConfig.getSubtitle ? historyConfig.getSubtitle(entry.data) : "";
         return `<div class="history-entry">
         <div class="history-entry-info">
           <div class="history-entry-title">${escHtml(title)}</div>
@@ -314,9 +297,7 @@ export function createFormFactory(config) {
       .join("");
 
     listEl.querySelectorAll(".btn-history-restore").forEach((btn) => {
-      btn.addEventListener("click", () =>
-        restoreFromHistory(btn.dataset.id, tbody, form),
-      );
+      btn.addEventListener("click", () => restoreFromHistory(btn.dataset.id, tbody, form));
     });
     listEl.querySelectorAll(".btn-history-delete").forEach((btn) => {
       btn.addEventListener("click", () =>
@@ -338,10 +319,7 @@ export function createFormFactory(config) {
 
   function validateAndRun(handler, tbody) {
     const form = getFormEl();
-    if (
-      !validateForm(form, "Por favor completa todos los campos obligatorios.")
-    )
-      return;
+    if (!validateForm(form, "Por favor completa todos los campos obligatorios.")) return;
     const tb = tbody ?? getTbody();
     const formData = collectFormData(tb);
     saveFormToHistory(() => formData, tb);
@@ -367,20 +345,14 @@ export function createFormFactory(config) {
     const tb = tbody ?? getTbody();
     const data = collectFormData(tb);
     downloadJSON(data, exportFilename);
-    window.EcytvUI.showSnackbar(
-      "Datos exportados en JSON correctamente.",
-      "success",
-    );
+    window.EcytvUI.showSnackbar("Datos exportados en JSON correctamente.", "success");
   }
 
   function handleExportYAML(tbody) {
     const tb = tbody ?? getTbody();
     const data = collectFormData(tb);
     downloadYAML(data, exportFilename);
-    window.EcytvUI.showSnackbar(
-      "Datos exportados en YAML correctamente.",
-      "success",
-    );
+    window.EcytvUI.showSnackbar("Datos exportados en YAML correctamente.", "success");
   }
 
   async function handleImport(tbody, form) {

@@ -1,7 +1,4 @@
-import {
-  ASIGNATURAS_SUGERIDAS,
-  SALAS_SUGERIDAS,
-} from "../../utils/constants.js";
+import { ASIGNATURAS_SUGERIDAS, SALAS_SUGERIDAS } from "../../utils/constants.js";
 
 export const f4Config = {
   formId: "f4-form",
@@ -63,11 +60,9 @@ export const f4Config = {
   historyConfig: {
     key: "f4-history",
     getTitle: (d) => d.proyecto || "(sin proyecto)",
-    getSubtitle: (d) =>
-      [d["directo-responsable"], d.asignatura].filter(Boolean).join(" — "),
+    getSubtitle: (d) => [d["directo-responsable"], d.asignatura].filter(Boolean).join(" — "),
     isValid: (d) => d.proyecto?.trim() && d["directo-responsable"]?.trim(),
-    warnMsg:
-      "Completa al menos el nombre del proyecto y el directo responsable antes de guardar.",
+    warnMsg: "Completa al menos el nombre del proyecto y el directo responsable antes de guardar.",
     successMsg: "Solicitud guardada en el historial.",
   },
 };
