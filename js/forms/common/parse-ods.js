@@ -196,18 +196,6 @@ function parseRows(xmlDoc, table, colWidths) {
   return result;
 }
 
-export {
-  mapFont,
-  toMm,
-  getAttr,
-  getStyleProp,
-  parseBorderString,
-  getBorders,
-  parseCellStyles,
-  parseColumns,
-  parseRows,
-};
-
 export function parseOds(xmlDoc) {
   const styleMap = parseCellStyles(xmlDoc);
   const tables = xmlDoc.getElementsByTagNameNS(NS.TABLE, "table");
@@ -227,3 +215,16 @@ export function parseOds(xmlDoc) {
   }
   return { colWidths, rows, styleMap };
 }
+
+export {
+  NS,
+  mapFont,
+  toMm,
+  getAttr,
+  getStyleProp,
+  parseBorderString,
+  getBorders,
+  parseCellStyles,
+  parseColumns,
+  parseRows,
+};

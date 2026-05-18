@@ -6,7 +6,7 @@ import {
   parseOds,
   parseCellStyles,
   getBorders,
-} from "../../../js/forms/f1/f1-parse-ods.js";
+} from "../../../js/forms/common/parse-ods.js";
 
 const NS = {
   TABLE: "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
