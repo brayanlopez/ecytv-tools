@@ -37,6 +37,18 @@ const infoCards = [
     url: "https://drive.google.com/drive/folders/1GL9-QmHbkrPKDRC15qW9rXt7VQTcSjgM?usp=drive_link",
     label: "Acceder a la Base de Datos",
   },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </svg>`,
+    title: "Bases de datos recursos producción escuela de cine y tv",
+    description:
+      "Consulta la base de datos de recursos de producción para saber qué estudiantes tienen acceso a equipos especiales de la Escuela de Cine y TV",
+    url: "https://drive.google.com/drive/folders/0Bzv7kKEORiWjZjJ1OTgweVJhOTQ?resourcekey=0-fd8TpYbcmb3nEB7h1LJ8yw",
+    label: "Acceder a la Base de Datos",
+  },
 ];
 
 export default infoCards;

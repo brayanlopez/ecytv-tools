@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import infoCards from "../../data/info-cards.js";
 
 describe("Info Cards Data", () => {
-  it("should have exactly 3 cards", () => {
-    expect(infoCards).toHaveLength(3);
+  it("should have exactly 4 cards", () => {
+    expect(infoCards).toHaveLength(4);
   });
 
   it("should have all required fields on every card", () => {
@@ -36,6 +36,7 @@ describe("Info Cards Data", () => {
     expect(titles).toContain("Programación de Recursos - Lab Postproducción");
     expect(titles).toContain("Programación de Recursos - Lab Instrumentos");
     expect(titles).toContain("Base de datos Casting general de la Escuela");
+    expect(titles).toContain("Bases de datos recursos producción escuela de cine y tv");
   });
 
   it("should have unique titles", () => {
