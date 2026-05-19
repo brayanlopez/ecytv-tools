@@ -35,7 +35,28 @@ function render() {
     return;
   }
 
-  container.innerHTML = filtered.map(buildDocCard).join("");
+  if (activeCategory === "all") {
+    const groups = new Map();
+    for (const doc of filtered) {
+      if (!groups.has(doc.category)) groups.set(doc.category, []);
+      groups.get(doc.category).push(doc);
+    }
+    container.className = "docs-columns";
+    container.innerHTML = [...groups.entries()]
+      .map(
+        ([category, items]) => `
+        <div class="docs-group">
+          <h3 class="docs-group-heading">${category}</h3>
+          <div class="docs-group-grid">
+            ${items.map(buildDocCard).join("")}
+          </div>
+        </div>`,
+      )
+      .join("");
+  } else {
+    container.className = "docs-grid";
+    container.innerHTML = filtered.map(buildDocCard).join("");
+  }
 }
 
 export function destroy() {
