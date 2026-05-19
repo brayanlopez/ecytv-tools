@@ -1,4 +1,4 @@
-import tools from "../../../data/tools.js";
+import tools from "../../data/tools.js";
 
 export function buildToolCard(tool, isFavorited) {
   const alternativesHtml =

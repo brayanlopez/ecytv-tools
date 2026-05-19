@@ -1,18 +1,18 @@
 import router from "./router.js";
-import toolsRenderer from "./components/tools/tools-renderer.js";
-import { renderInfoCards } from "./components/info-renderer.js";
-import docsRenderer from "./components/docs/docs-renderer.js";
-import qaRenderer from "./components/qa/qa-renderer.js";
-import { renderFormats } from "./components/formats-renderer.js";
+import * as infoPage from "./pages/info-page.js";
+import * as formatsPage from "./pages/formats-page.js";
+import * as toolsPage from "./pages/tools-page.js";
+import * as docsPage from "./pages/docs-page.js";
+import * as qaPage from "./pages/qa-page.js";
 import { initTheme } from "./utils/theme.js";
 import { initHamburger } from "./utils/hamburger.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderInfoCards();
-  toolsRenderer.init();
-  docsRenderer.init();
-  qaRenderer.init();
-  renderFormats();
+  router.registerPage("info", "info-section", infoPage);
+  router.registerPage("tools", "tools-section", toolsPage);
+  router.registerPage("formats", "formats-section", formatsPage);
+  router.registerPage("docs", "docs-section", docsPage);
+  router.registerPage("qa", "qa-section", qaPage);
   router.init();
   initTheme();
   initHamburger();

@@ -1,6 +1,4 @@
-import formats from "../../data/formats.js";
-
-function renderCard(f) {
+export function buildFormatCard(f) {
   return `
     <div class="format-card ${f.available ? "" : "coming-soon"}">
       <div class="format-card-header">
@@ -13,23 +11,12 @@ function renderCard(f) {
   `;
 }
 
-function renderSection(title, items) {
+export function buildFormatSection(title, items) {
   if (items.length === 0) return "";
   return `
     <h3 class="formats-subheading">${title}</h3>
     <div class="formats-grid">
-      ${items.map(renderCard).join("")}
+      ${items.map(buildFormatCard).join("")}
     </div>
   `;
-}
-
-export function renderFormats() {
-  const container = document.getElementById("formats-grid");
-  if (!container) return;
-
-  const forms = formats.filter((f) => f.type === "form");
-  const tools = formats.filter((f) => f.type === "tool");
-
-  container.innerHTML =
-    renderSection("Generar Formatos", forms) + renderSection("Herramientas Útiles", tools);
 }

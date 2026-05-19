@@ -8,6 +8,7 @@ describe("Router", () => {
     // Reset router state
     router.routes = {};
     router.currentSection = null;
+    router.currentHash = null;
 
     // Create mock DOM elements
     mockElements = {

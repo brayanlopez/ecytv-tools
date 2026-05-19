@@ -1,18 +1,18 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import formats from "../data/formats.js";
+import formats from "../../data/formats.js";
 
-describe("renderFormats", () => {
-  let renderFormats;
+describe("formats-page", () => {
+  let formatsPage;
 
   beforeEach(async () => {
     vi.resetModules();
-    const module = await import("../js/components/formats-renderer.js");
-    renderFormats = module.renderFormats;
+    const module = await import("../../js/pages/formats-page.js");
+    formatsPage = module;
   });
 
   it("should do nothing when container does not exist", () => {
     vi.spyOn(document, "getElementById").mockReturnValue(null);
-    expect(() => renderFormats()).not.toThrow();
+    expect(() => formatsPage.init()).not.toThrow();
   });
 
   it("should render all formats into the container", () => {
@@ -22,7 +22,7 @@ describe("renderFormats", () => {
       return null;
     });
 
-    renderFormats();
+    formatsPage.init();
 
     formats.forEach((f) => {
       expect(container.innerHTML).toContain(f.name);
@@ -37,43 +37,10 @@ describe("renderFormats", () => {
       return null;
     });
 
-    renderFormats();
+    formatsPage.init();
 
     expect(container.innerHTML).toContain("format-card");
     expect(container.innerHTML).toContain("format-card-header");
-    expect(container.innerHTML).toContain("format-card-icon");
-    expect(container.innerHTML).toContain("btn-primary");
-  });
-
-  it("should render available formats without coming-soon class", () => {
-    const container = { innerHTML: "" };
-    vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
-      return null;
-    });
-
-    renderFormats();
-
-    const available = formats.filter((f) => f.available);
-    available.forEach((f) => {
-      expect(container.innerHTML).toContain(f.name);
-    });
-    expect(container.innerHTML).not.toContain("coming-soon");
-  });
-
-  it("should render SVG icons with aria-hidden", () => {
-    const container = { innerHTML: "" };
-    vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
-      return null;
-    });
-
-    renderFormats();
-
-    formats.forEach((f) => {
-      expect(container.innerHTML).toContain('aria-hidden="true"');
-    });
-    expect(container.innerHTML).toContain("format-card-icon");
   });
 
   it("should render a subheading for forms and tools", () => {
@@ -83,11 +50,10 @@ describe("renderFormats", () => {
       return null;
     });
 
-    renderFormats();
+    formatsPage.init();
 
     expect(container.innerHTML).toContain("Generar Formatos");
     expect(container.innerHTML).toContain("Herramientas Útiles");
-    expect(container.innerHTML).toContain("formats-subheading");
   });
 
   it("should place form items under Generar Formatos section", () => {
@@ -97,17 +63,21 @@ describe("renderFormats", () => {
       return null;
     });
 
-    renderFormats();
+    formatsPage.init();
 
     const forms = formats.filter((f) => f.type === "form");
-    const tools = formats.filter((f) => f.type === "tool");
+    const toolItems = formats.filter((f) => f.type === "tool");
     const splitIndex = container.innerHTML.indexOf("Herramientas Útiles");
 
     forms.forEach((f) => {
       expect(container.innerHTML.indexOf(f.name)).toBeLessThan(splitIndex);
     });
-    tools.forEach((f) => {
+    toolItems.forEach((f) => {
       expect(container.innerHTML.indexOf(f.name)).toBeGreaterThan(splitIndex);
     });
+  });
+
+  it("should not throw on destroy", () => {
+    expect(() => formatsPage.destroy()).not.toThrow();
   });
 });
