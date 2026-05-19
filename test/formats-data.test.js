@@ -13,11 +13,26 @@ describe("Formats Data", () => {
   });
 
   it("should have all required fields", () => {
-    const requiredFields = ["id", "name", "description", "url", "label", "available", "icon"];
+    const requiredFields = [
+      "id",
+      "name",
+      "description",
+      "url",
+      "label",
+      "available",
+      "icon",
+      "type",
+    ];
     formats.forEach((f) => {
       requiredFields.forEach((field) => {
         expect(f).toHaveProperty(field);
       });
+    });
+  });
+
+  it("should have valid type values", () => {
+    formats.forEach((f) => {
+      expect(["form", "tool"]).toContain(f.type);
     });
   });
 

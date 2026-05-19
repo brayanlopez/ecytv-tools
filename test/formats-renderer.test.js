@@ -75,4 +75,39 @@ describe("renderFormats", () => {
     });
     expect(container.innerHTML).toContain("format-card-icon");
   });
+
+  it("should render a subheading for forms and tools", () => {
+    const container = { innerHTML: "" };
+    vi.spyOn(document, "getElementById").mockImplementation((id) => {
+      if (id === "formats-grid") return container;
+      return null;
+    });
+
+    renderFormats();
+
+    expect(container.innerHTML).toContain("Generar Formatos");
+    expect(container.innerHTML).toContain("Herramientas Útiles");
+    expect(container.innerHTML).toContain("formats-subheading");
+  });
+
+  it("should place form items under Generar Formatos section", () => {
+    const container = { innerHTML: "" };
+    vi.spyOn(document, "getElementById").mockImplementation((id) => {
+      if (id === "formats-grid") return container;
+      return null;
+    });
+
+    renderFormats();
+
+    const forms = formats.filter((f) => f.type === "form");
+    const tools = formats.filter((f) => f.type === "tool");
+    const splitIndex = container.innerHTML.indexOf("Herramientas Útiles");
+
+    forms.forEach((f) => {
+      expect(container.innerHTML.indexOf(f.name)).toBeLessThan(splitIndex);
+    });
+    tools.forEach((f) => {
+      expect(container.innerHTML.indexOf(f.name)).toBeGreaterThan(splitIndex);
+    });
+  });
 });

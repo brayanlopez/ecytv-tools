@@ -128,6 +128,19 @@ body {
 }
 
 /* Formats Section */
+.formats-subheading {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.formats-subheading:first-child {
+  margin-top: 0;
+}
+
 .formats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));

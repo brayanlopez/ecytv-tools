@@ -7,6 +7,7 @@ const formats = [
     url: "f1-format.html",
     label: "Abrir F1",
     available: true,
+    type: "form",
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
     </svg>`,
@@ -18,6 +19,7 @@ const formats = [
     url: "f2-format.html",
     label: "Abrir F2",
     available: true,
+    type: "form",
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 12l2 2 4-4"/>
       <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
@@ -30,6 +32,7 @@ const formats = [
     url: "f3-format.html",
     label: "Abrir F3",
     available: true,
+    type: "form",
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
       <line x1="12" y1="8" x2="12" y2="16"/>
@@ -43,6 +46,7 @@ const formats = [
     url: "f4-format.html",
     label: "Abrir F4",
     available: true,
+    type: "form",
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
       <line x1="8" y1="21" x2="16" y2="21"/>
@@ -57,6 +61,7 @@ const formats = [
     url: "pdf-merge.html",
     label: "Abrir",
     available: true,
+    type: "tool",
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 20h9"/>
       <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
