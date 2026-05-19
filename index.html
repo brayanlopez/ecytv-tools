@@ -76,8 +76,12 @@
     <main id="main-content" class="container">
       <section id="info-section" class="section active" aria-labelledby="info-heading">
         <h1 id="info-heading">ECYTV Tools - Información y Protocolos</h1>
+        <p class="section-intro">
+          Accede rápidamente a formularios, horarios y recursos del Laboratorio de Instrumentos de
+          Producción Audiovisual.
+        </p>
 
-        <div class="info-grid">
+        <div class="info-layout">
           <div class="info-card">
             <div class="info-card-header">
               <div class="info-card-icon">
@@ -103,13 +107,17 @@
               Solicita acceso a los espacios especializados del Laboratorio de Instrumentos de
               Producción Audiovisual
             </p>
-            <ul class="info-details">
-              <li>Enviar solicitud con mínimo 5 días hábiles de anticipación</li>
-              <li>Ser estudiante o docente activo de la Universidad Nacional</li>
-              <li>Llenar un formulario por día (no días consecutivos)</li>
-              <li>Al enviar aceptas las Condiciones generales del Laboratorio</li>
-              <li>Respuesta en máximo 5 días hábiles vía correo</li>
-            </ul>
+
+            <details class="info-requirements">
+              <summary class="info-requirements-toggle">Requisitos de solicitud</summary>
+              <ul class="info-details">
+                <li>Enviar solicitud con mínimo 5 días hábiles de anticipación</li>
+                <li>Ser estudiante o docente activo de la Universidad Nacional</li>
+                <li>Llenar un formulario por día (no días consecutivos)</li>
+                <li>Al enviar aceptas las Condiciones generales del Laboratorio</li>
+                <li>Respuesta en máximo 5 días hábiles vía correo</li>
+              </ul>
+            </details>
 
             <div class="schedule-list">
               <h3>Horarios de Estudios:</h3>
@@ -123,6 +131,7 @@
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
@@ -135,6 +144,7 @@
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
@@ -147,6 +157,7 @@
                     class="btn btn-small"
                   >
                     Ver Horario
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     <span class="visually-hidden">(se abre en una nueva ventana)</span>
                   </a>
                 </li>
@@ -164,7 +175,10 @@
             </a>
           </div>
 
-          <div id="info-card-list"></div>
+          <div class="info-resources">
+            <h2 class="info-resources-title">Recursos y Programación</h2>
+            <div id="info-card-list" class="info-link-list"></div>
+          </div>
         </div>
       </section>
 

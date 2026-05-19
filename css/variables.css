@@ -10,6 +10,8 @@
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
   --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --transition: 0.2s ease;
   --max-width: 1200px;
   --focus-ring: 0 0 0 3px rgba(1, 149, 135, 0.4);
