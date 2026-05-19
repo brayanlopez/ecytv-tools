@@ -1,0 +1,297 @@
+.merge-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-right: calc(1rem + env(safe-area-inset-right, 0px));
+  padding-left: calc(1rem + env(safe-area-inset-left, 0px));
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+}
+
+.merge-page h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.merge-page > p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.merge-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.merge-card h2 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+  color: var(--text-secondary);
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(1, 149, 135, 0.04);
+}
+
+.drop-zone-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 0.75rem;
+  color: var(--accent);
+}
+
+.drop-zone-text {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.drop-zone-hint {
+  font-size: 0.8rem;
+}
+
+.drop-zone-btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.drop-zone-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.merge-file-list {
+  margin-top: 0.5rem;
+}
+
+.merge-file-list-empty {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+}
+
+.merge-file-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.4rem;
+  background: var(--bg-primary);
+  transition: box-shadow var(--transition);
+  user-select: none;
+}
+
+.merge-file-item.dragging {
+  opacity: 0.4;
+}
+
+.merge-file-item.drag-over {
+  box-shadow: 0 1px 6px rgba(1, 149, 135, 0.3);
+  border-color: var(--accent);
+}
+
+.merge-file-item:last-child {
+  margin-bottom: 0;
+}
+
+.merge-file-drag {
+  cursor: grab;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+  flex-shrink: 0;
+}
+
+.merge-file-drag:active {
+  cursor: grabbing;
+}
+
+.merge-file-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.merge-file-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.merge-file-meta {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.merge-file-remove {
+  background: none;
+  border: 1px solid transparent;
+  color: #e63946;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.merge-file-remove:hover {
+  background: #fde8e8;
+  border-color: #e63946;
+}
+
+[data-theme="dark"] .merge-file-remove:hover {
+  background: #3d1a1a;
+}
+
+.merge-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.merge-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: background var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.merge-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.merge-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.merge-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.download-section {
+  display: none;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 2px solid #28a745;
+  border-radius: var(--radius);
+  background: rgba(40, 167, 69, 0.04);
+  text-align: center;
+}
+
+[data-theme="dark"] .download-section {
+  background: rgba(40, 167, 69, 0.08);
+}
+
+.download-section-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 0.5rem;
+  color: #28a745;
+}
+
+.download-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: #28a745;
+}
+
+.merge-result-info {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  background: #28a745;
+  color: white;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition);
+}
+
+.btn-download:hover {
+  background: #218838;
+}
+
+.btn-download svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 640px) {
+  .merge-page {
+    padding: 1rem 0.75rem;
+  }
+
+  .drop-zone {
+    padding: 1.5rem 1rem;
+  }
+
+  .merge-actions {
+    flex-direction: column;
+  }
+
+  .merge-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

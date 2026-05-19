@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fusionar PDFs | ECYTV Tools</title>
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="Fusiona dos o más archivos PDF en uno solo. Arrastra y reordena las páginas antes de combinar."
+    />
+    <link rel="canonical" href="https://brayanlopez.github.io/ecytv-tools/pdf-merge.html" />
+    <meta property="og:title" content="Fusionar PDFs | ECYTV Tools" />
+    <meta
+      property="og:description"
+      content="Combina archivos PDF en línea. Arrastra archivos para reordenarlos y descarga el resultado."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://brayanlopez.github.io/ecytv-tools/pdf-merge.html" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content="ECYTV Tools" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Fusionar PDFs | ECYTV Tools" />
+    <meta
+      name="twitter:description"
+      content="Fusiona archivos PDF en línea. Arrastra para reordenar y descarga el PDF combinado."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/f1-format.css" />
+    <link rel="stylesheet" href="css/pdf-merge.css" />
+    <link rel="stylesheet" href="css/ui.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <nav aria-label="Navegación principal">
+      <div class="container">
+        <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
+      </div>
+    </nav>
+
+    <main id="main-content" class="merge-page">
+      <h1>Fusionar PDFs</h1>
+      <p>
+        Sube dos o más archivos PDF, arrastra para reordenarlos y fusiónalos en un solo documento.
+      </p>
+
+      <div class="merge-card">
+        <h2>Seleccionar archivos</h2>
+        <div
+          id="drop-zone"
+          class="drop-zone"
+          role="button"
+          tabindex="0"
+          aria-label="Subir archivos PDF"
+        >
+          <div class="drop-zone-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <div class="drop-zone-text">Arrastra archivos PDF aquí</div>
+          <div class="drop-zone-hint">o haz clic para seleccionarlos</div>
+          <button type="button" class="drop-zone-btn">Seleccionar archivos</button>
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,application/pdf"
+            multiple
+            style="display: none"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+
+      <div class="merge-card">
+        <h2>Archivos seleccionados</h2>
+        <div id="file-list" class="merge-file-list">
+          <p id="file-list-empty" class="merge-file-list-empty">
+            Aún no has seleccionado ningún archivo PDF.
+          </p>
+        </div>
+
+        <div class="merge-actions">
+          <button type="button" id="btn-merge" class="merge-btn" disabled>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+            </svg>
+            Fusionar PDFs
+          </button>
+        </div>
+      </div>
+
+      <div id="download-section" class="download-section" role="alert">
+        <div class="download-section-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+        <h3>¡Fusión completada!</h3>
+        <p class="merge-result-info"></p>
+        <a id="btn-download-merged" class="btn-download" download>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Descargar PDF fusionado
+        </a>
+      </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script type="module" src="js/forms/pdf-merge/pdf-merge.js"></script>
+  </body>
+</html>
