@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { createMockJsPDF } from "../../fixtures/mock-pdf.js";
 
 function buildContentXml({ extraStyles = "" } = {}) {
   const styles = `
@@ -159,30 +160,11 @@ function buildContentXml({ extraStyles = "" } = {}) {
 }
 
 describe("F1 PDF Generation", () => {
-  let localStorageMock;
   let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
     originalFetch = globalThis.fetch;
-
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { href: "", assign: vi.fn() },
-      writable: true,
-    });
 
     document.body.innerHTML = `
       <nav>
@@ -348,66 +330,17 @@ describe("F1 PDF Generation", () => {
     };
   }
 
-  function mockJspdfEnv() {
-    const doc = {
-      setFillColor: vi.fn(function () {
-        return doc;
-      }),
-      rect: vi.fn(function () {
-        return doc;
-      }),
-      setDrawColor: vi.fn(function () {
-        return doc;
-      }),
-      setLineWidth: vi.fn(function () {
-        return doc;
-      }),
-      setTextColor: vi.fn(function () {
-        return doc;
-      }),
-      setFontSize: vi.fn(function () {
-        return doc;
-      }),
-      setFont: vi.fn(function () {
-        return doc;
-      }),
-      text: vi.fn(function () {
-        return doc;
-      }),
-      line: vi.fn(function () {
-        return doc;
-      }),
-      addImage: vi.fn(function () {
-        return doc;
-      }),
-      addPage: vi.fn(function () {
-        return doc;
-      }),
-      getTextWidth: vi.fn(() => 0),
-      save: vi.fn(),
-    };
-    window.jspdf = {
-      jsPDF: vi.fn(function () {
-        return doc;
-      }),
-    };
-    return doc;
-  }
-
   describe("PDF Generation", () => {
     it("should generate PDF when all fields are filled", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledWith("f1_proyecto_test_responsable_test_2026-01-01.pdf");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
+        expect(doc.save).toHaveBeenCalledWith("f1_proyecto_test_responsable_test_2026-01-01.pdf");
+      });
     });
 
     it("should show alert when jsPDF is not loaded", () => {
@@ -422,95 +355,84 @@ describe("F1 PDF Generation", () => {
     });
 
     it("should include form data in the PDF", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("observaciones").value = "Nota importante";
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Proyecto Test");
-          expect(allText).toContain("Sonido I");
-          expect(allText).toContain("Nota importante");
-          expect(allText).toContain("Responsable Test");
-          expect(allText).toContain("TIUN123");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Proyecto Test");
+        expect(allText).toContain("Sonido I");
+        expect(allText).toContain("Nota importante");
+        expect(allText).toContain("Responsable Test");
+        expect(allText).toContain("TIUN123");
+      });
     });
 
     it("should render equipment data via template", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.querySelector('input[name="equipo-item"]').value = "1";
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("C\u00e1mara");
-          expect(allText).toContain("CON-001");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("C\u00e1mara");
+        expect(allText).toContain("CON-001");
+      });
     });
 
     it("should render equipment with provided data", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.querySelector('input[name="equipo-item"]').value = "1";
 
       document.getElementById("btn-pdf").click();
-      await new Promise((r) => setTimeout(r, 2000));
 
-      const errors = window.EcytvUI.showSnackbar.mock.calls
-        .map((c) => c[0])
-        .filter((m) => m.toLowerCase().includes("error"));
-      if (errors.length > 0) {
-        throw new Error("PDF generation error: " + errors.join(", "));
-      }
-      expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      await vi.waitFor(() => {
+        const errors = window.EcytvUI.showSnackbar.mock.calls
+          .map((c) => c[0])
+          .filter((m) => m.toLowerCase().includes("error"));
+        if (errors.length > 0) {
+          throw new Error("PDF generation error: " + errors.join(", "));
+        }
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
   });
 
   describe("PDF branch coverage", () => {
     it("should handle external loan type", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("tipo-prestamo").value = "Externo";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("PRESTAMO EXTERNO");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("PRESTAMO EXTERNO");
+      });
     });
 
     it("should handle missing observaciones", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("observaciones").value = "";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should handle multiple equipment rows without overflow", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("add-equip-btn").click();
@@ -521,18 +443,15 @@ describe("F1 PDF Generation", () => {
       rows[1].querySelector('input[name="equipo-item"]').value = "2";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Micr\u00f3fono");
-          expect(allText).toContain("MIC-001");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Micr\u00f3fono");
+        expect(allText).toContain("MIC-001");
+      });
     });
 
     it("should handle equipment overflow with extra pages", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
 
@@ -551,12 +470,9 @@ describe("F1 PDF Generation", () => {
       }
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(doc.addPage).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.addPage).toHaveBeenCalled();
+      });
     });
 
     it("should handle vertical-align bottom style", async () => {
@@ -569,17 +485,14 @@ describe("F1 PDF Generation", () => {
         'table:style-name="ce30"><text:p>NOMBRE DEL PROYECTO:</text:p>',
         'table:style-name="ce-vbottom"><text:p>NOMBRE DEL PROYECTO:</text:p>',
       );
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate({ contentXml });
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should handle image in ODS template", async () => {
@@ -591,21 +504,18 @@ describe("F1 PDF Generation", () => {
       </table:table-cell>
     </table:table-row>`;
       const contentXml = buildContentXml().replace("</table:table>", imageRow + "</table:table>");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate({ contentXml, includeImage: true });
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(doc.addImage).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.addImage).toHaveBeenCalled();
+      });
     });
 
     it("should handle fetch error", async () => {
-      mockJspdfEnv();
+      createMockJsPDF();
       globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
       });
@@ -613,19 +523,16 @@ describe("F1 PDF Generation", () => {
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
-            "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
-            "error",
-          );
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+          "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
+          "error",
+        );
+      });
     });
 
     it("should handle text wrapping with long content", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       doc.getTextWidth = vi.fn(() => 200);
       mockOdsTemplate();
       fillAllRequired();
@@ -633,16 +540,13 @@ describe("F1 PDF Generation", () => {
         "Observación muy larga que debe dividirse en varias líneas por el ancho de la celda";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should handle text wrapping with long unbroken word", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       doc.getTextWidth = vi.fn(() => 200);
       const contentXml = buildContentXml({
         extraStyles: `
@@ -658,12 +562,9 @@ describe("F1 PDF Generation", () => {
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should render background color for cells", async () => {
@@ -676,17 +577,14 @@ describe("F1 PDF Generation", () => {
         'table:style-name="ce30"><text:p>NOMBRE DEL PROYECTO:</text:p>',
         'table:style-name="ce-bg"><text:p>NOMBRE DEL PROYECTO:</text:p>',
       );
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate({ contentXml });
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(doc.setFillColor).toHaveBeenCalledWith("#ffcccc");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.setFillColor).toHaveBeenCalledWith("#ffcccc");
+      });
     });
 
     it("should render right-aligned text", async () => {
@@ -700,17 +598,14 @@ describe("F1 PDF Generation", () => {
         'table:style-name="ce30"><text:p>NOMBRE DEL PROYECTO:</text:p>',
         'table:style-name="ce-right"><text:p>NOMBRE DEL PROYECTO:</text:p>',
       );
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate({ contentXml });
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
   });
 });

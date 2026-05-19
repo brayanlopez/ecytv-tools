@@ -2,25 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { createFormFactory } from "../../../js/forms/common/form-factory.js";
 
 describe("createFormFactory", () => {
-  let localStorageMock;
-
-  beforeEach(() => {
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-  });
-
   afterEach(() => {
-    vi.restoreAllMocks();
     document.body.innerHTML = "";
   });
 

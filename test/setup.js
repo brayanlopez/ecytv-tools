@@ -29,7 +29,7 @@ beforeEach(() => {
   Element.prototype.scrollIntoView = vi.fn();
 
   Object.defineProperty(window, "location", {
-    value: { href: "", assign: vi.fn() },
+    value: { href: "", hash: "", assign: vi.fn() },
     writable: true,
   });
 });

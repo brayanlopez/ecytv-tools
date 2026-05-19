@@ -33,6 +33,9 @@ export function createMockJsPDF() {
     line: vi.fn(function () {
       return doc;
     }),
+    addImage: vi.fn(function () {
+      return doc;
+    }),
     addPage: vi.fn(function () {
       return doc;
     }),

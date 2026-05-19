@@ -115,15 +115,6 @@ describe("parseYAML", () => {
     expect(result.equipos[1].nombre).toBe("Trípode");
   });
 
-  it("should round-trip simple object through serialize and parse", () => {
-    const original = {
-      nombre: "Test",
-      activo: true,
-      cantidad: 42,
-    };
-    const { serializeYAML } = { serializeYAML: globalThis?.serializeYAML };
-  });
-
   it("should round-trip complex object through serialize and parse", async () => {
     const mod = await import("../js/forms/common/io-config.js");
     const original = {
@@ -283,5 +274,109 @@ describe("downloadYAML", () => {
 
     downloadYAML({}, "test-file");
     expect(mockAnchor.download).toBe("test-file.yaml");
+  });
+});
+
+describe("importFromFile", () => {
+  let importFromFile;
+
+  beforeEach(async () => {
+    vi.resetModules();
+    const module = await import("../js/forms/common/io-config.js");
+    importFromFile = module.importFromFile;
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  function mockCreateElement(handlerCallback) {
+    const mockInput = document.createElement("input");
+    vi.spyOn(mockInput, "click").mockImplementation(() => {});
+    vi.spyOn(mockInput, "addEventListener").mockImplementation((event, handler) => {
+      if (event === "change") handlerCallback(handler);
+    });
+    vi.spyOn(document, "createElement").mockReturnValue(mockInput);
+    return mockInput;
+  }
+
+  it("should create file input and click it", () => {
+    let registeredHandler;
+    const mockInput = mockCreateElement((h) => {
+      registeredHandler = h;
+    });
+
+    importFromFile();
+    expect(document.createElement).toHaveBeenCalledWith("input");
+    expect(mockInput.type).toBe("file");
+    expect(mockInput.accept).toBe(".json,.yaml,.yml");
+    expect(mockInput.click).toHaveBeenCalled();
+  });
+
+  it("should resolve with parsed JSON for .json file", async () => {
+    let changeHandler;
+    mockCreateElement((h) => {
+      changeHandler = h;
+    });
+
+    const file = new Blob(['{"nombre": "Test", "valor": 42}'], { type: "application/json" });
+    Object.defineProperty(file, "name", { value: "data.json" });
+    const promise = importFromFile();
+    changeHandler({ target: { files: [file] } });
+    const result = await promise;
+    expect(result).toEqual({ nombre: "Test", valor: 42 });
+  });
+
+  it("should resolve with parsed YAML for .yaml file", async () => {
+    let changeHandler;
+    mockCreateElement((h) => {
+      changeHandler = h;
+    });
+
+    const file = new Blob(["nombre: Juan\nedad: 25\n"], { type: "text/yaml" });
+    Object.defineProperty(file, "name", { value: "data.yaml" });
+    const promise = importFromFile();
+    changeHandler({ target: { files: [file] } });
+    const result = await promise;
+    expect(result).toEqual({ nombre: "Juan", edad: 25 });
+  });
+
+  it("should do nothing when no file is selected", async () => {
+    let changeHandler;
+    mockCreateElement((h) => {
+      changeHandler = h;
+    });
+
+    const promise = importFromFile();
+    changeHandler({ target: { files: [] } });
+    await vi.waitFor(() => {});
+  });
+
+  it("should reject on invalid JSON content", async () => {
+    let changeHandler;
+    mockCreateElement((h) => {
+      changeHandler = h;
+    });
+
+    const file = new Blob(["not json"], { type: "text/plain" });
+    Object.defineProperty(file, "name", { value: "bad.json" });
+    const promise = importFromFile();
+    changeHandler({ target: { files: [file] } });
+
+    await expect(promise).rejects.toThrow("Formato de archivo no v\u00e1lido. Usa JSON o YAML.");
+  });
+
+  it("should handle .yml extension as YAML", async () => {
+    let changeHandler;
+    mockCreateElement((h) => {
+      changeHandler = h;
+    });
+
+    const file = new Blob(["clave: valor\n"], { type: "text/yaml" });
+    Object.defineProperty(file, "name", { value: "data.yml" });
+    const promise = importFromFile();
+    changeHandler({ target: { files: [file] } });
+    const result = await promise;
+    expect(result).toEqual({ clave: "valor" });
   });
 });

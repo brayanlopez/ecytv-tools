@@ -1,124 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { F2_FORM_HTML } from "../../fixtures/f2-form-dom.js";
 
 describe("F2 Form", () => {
-  let localStorageMock;
-
   beforeEach(async () => {
     vi.resetModules();
 
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { href: "", assign: vi.fn() },
-      writable: true,
-    });
-
-    document.body.innerHTML = `
-      <nav>
-        <div class="container">
-          <a href="#formats" class="logo" id="back-link">← Volver a Formatos</a>
-        </div>
-      </nav>
-      <main class="form-page">
-        <form id="f2-form" onsubmit="return false;">
-          <div class="form-card">
-            <h2>Datos del Responsable</h2>
-            <div class="form-row full">
-              <div class="form-group">
-                <input type="text" id="nombre" required placeholder="Nombre completo" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <select id="tipo-documento" required>
-                  <option value="">Seleccionar...</option>
-                  <option value="CC">Cédula de Ciudadanía (CC)</option>
-                  <option value="CE">Cédula de Extranjería (CE)</option>
-                  <option value="TI">Tarjeta de Identidad (TI)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input type="text" id="numero-documento" required placeholder="Número de documento" />
-              </div>
-            </div>
-            <div class="form-row full">
-              <div class="form-group">
-                <input type="tel" id="contacto" required placeholder="Número de contacto" />
-              </div>
-            </div>
-          </div>
-          <div class="form-card">
-            <h2>Período del Préstamo</h2>
-            <div class="form-row">
-              <div class="form-group">
-                <input type="date" id="periodo-inicial" required />
-              </div>
-              <div class="form-group">
-                <input type="date" id="periodo-final" required />
-              </div>
-            </div>
-          </div>
-          <div class="form-card">
-            <h2>Fecha de Constancia</h2>
-            <div class="form-row full">
-              <div class="form-group">
-                <input type="date" id="fecha-constancia" required />
-              </div>
-            </div>
-            <div class="form-row full">
-              <div class="form-group checkbox-group">
-                <input type="checkbox" id="firma-nombre" />
-                <label for="firma-nombre">Poner nombre como firma del directo responsable</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-card">
-            <h2>Observaciones</h2>
-            <div class="form-row full">
-              <div class="form-group">
-                <textarea id="observaciones" placeholder="Observaciones adicionales..."></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="form-card" id="history-card" style="display:none">
-            <h2>Historial de Actas</h2>
-            <div id="history-list"></div>
-          </div>
-          <div class="form-actions">
-            <div class="btn-group">
-              <button type="button" class="btn-secondary" id="btn-save">Guardar</button>
-              <button type="reset" class="btn-secondary">Limpiar</button>
-            </div>
-            <div class="dropdown">
-              <button type="button" class="btn-submit" id="btn-download">Descargar</button>
-              <div class="dropdown-menu" id="download-menu">
-                <button type="button" class="dropdown-item" id="btn-pdf">PDF</button>
-              </div>
-            </div>
-          </div>
-          <div class="form-actions">
-            <span class="form-actions-label">Archivo:</span>
-            <div class="btn-group">
-              <button type="button" class="btn-secondary" id="btn-import">Importar</button>
-              <button type="button" class="btn-secondary" id="btn-export-json">JSON</button>
-              <button type="button" class="btn-secondary" id="btn-export-yaml">YAML</button>
-            </div>
-            <p class="form-actions-hint">Guarda los datos del formulario en un archivo (JSON o YAML) para volver a cargarlos despu&eacute;s con el bot&oacute;n Importar.</p>
-          </div>
-        </form>
-      </main>
-    `;
+    document.body.innerHTML = F2_FORM_HTML;
 
     await import("../../../js/forms/f2/f2-form.js");
   });
@@ -214,13 +101,14 @@ describe("F2 Form", () => {
 
       document.querySelector('button[type="reset"]').click();
 
-      await new Promise((r) => setTimeout(r, 5));
-      expect(document.getElementById("nombre").value).toBe("");
-      expect(document.getElementById("tipo-documento").value).toBe("");
-      expect(document.getElementById("numero-documento").value).toBe("");
-      expect(document.getElementById("contacto").value).toBe("");
-      expect(document.getElementById("firma-nombre").checked).toBe(false);
-      expect(document.getElementById("observaciones").value).toBe("");
+      await vi.waitFor(() => {
+        expect(document.getElementById("nombre").value).toBe("");
+        expect(document.getElementById("tipo-documento").value).toBe("");
+        expect(document.getElementById("numero-documento").value).toBe("");
+        expect(document.getElementById("contacto").value).toBe("");
+        expect(document.getElementById("firma-nombre").checked).toBe(false);
+        expect(document.getElementById("observaciones").value).toBe("");
+      });
     });
   });
 

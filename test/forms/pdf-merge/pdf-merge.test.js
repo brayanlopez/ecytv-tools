@@ -74,7 +74,7 @@ describe("PDF Merge", () => {
   describe("Initialization", () => {
     it("should show error snackbar when PDFLib is not loaded", async () => {
       window.PDFLib = undefined;
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
       expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
@@ -85,7 +85,7 @@ describe("PDF Merge", () => {
 
     it("should disable merge button when PDFLib is not loaded", async () => {
       window.PDFLib = undefined;
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
       const mergeBtn = document.getElementById("btn-merge");
@@ -94,7 +94,7 @@ describe("PDF Merge", () => {
 
     it("should enable merge button when PDFLib is loaded", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
       const mergeBtn = document.getElementById("btn-merge");
@@ -105,7 +105,7 @@ describe("PDF Merge", () => {
   describe("Back link", () => {
     it("should navigate to ./#formats on click", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
       const backLink = document.getElementById("back-link");
@@ -119,7 +119,7 @@ describe("PDF Merge", () => {
   describe("File management", () => {
     it("should add valid PDF files and render them in the list", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -140,7 +140,7 @@ describe("PDF Merge", () => {
 
     it("should reject non-PDF files with warning", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -163,7 +163,7 @@ describe("PDF Merge", () => {
 
     it("should remove a file when remove button is clicked", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -192,7 +192,7 @@ describe("PDF Merge", () => {
 
     it("should reorder files on drag and drop", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -238,7 +238,7 @@ describe("PDF Merge", () => {
   describe("Merge button state", () => {
     it("should be disabled with fewer than 2 files", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -261,7 +261,7 @@ describe("PDF Merge", () => {
 
     it("should become enabled with 2 or more files", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -287,7 +287,7 @@ describe("PDF Merge", () => {
   describe("PDF merge flow", () => {
     it("should merge files and show download section on success", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       vi.spyOn(document.body, "appendChild");
 
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
@@ -329,8 +329,6 @@ describe("PDF Merge", () => {
       createMockPDFLib();
       window.PDFLib.PDFDocument.create.mockRejectedValue(new Error("Test error"));
 
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -366,7 +364,7 @@ describe("PDF Merge", () => {
   describe("Drop zone interactions", () => {
     it("should open file selector on click", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -380,7 +378,7 @@ describe("PDF Merge", () => {
 
     it("should add class on dragover and remove on dragleave", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 
@@ -394,7 +392,7 @@ describe("PDF Merge", () => {
 
     it("should add files on drop event", async () => {
       createMockPDFLib();
-      window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
+
       await import("../../../js/forms/pdf-merge/pdf-merge.js");
       document.dispatchEvent(new Event("DOMContentLoaded"));
 

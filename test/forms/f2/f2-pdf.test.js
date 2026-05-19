@@ -1,31 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
 describe("F2 PDF Generation", () => {
-  let localStorageMock;
   let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
 
     originalFetch = globalThis.fetch;
-
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { href: "", assign: vi.fn() },
-      writable: true,
-    });
 
     document.body.innerHTML = `
       <nav>
@@ -184,13 +165,10 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(window.PDFLib.PDFDocument.load).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledOnce();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.PDFLib.PDFDocument.load).toHaveBeenCalledOnce();
+        expect(doc.save).toHaveBeenCalledOnce();
+      });
     });
 
     it("should show alert when PDFLib is not loaded", () => {
@@ -212,15 +190,12 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
-            "Error al generar el archivo PDF: No se pudo cargar la plantilla PDF",
-            "error",
-          );
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+          "Error al generar el archivo PDF: No se pudo cargar la plantilla PDF",
+          "error",
+        );
+      });
     });
 
     it("should include name and document in the PDF", async () => {
@@ -230,14 +205,11 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Juan Pérez");
-          expect(allText).toContain("123456789");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Juan Pérez");
+        expect(allText).toContain("123456789");
+      });
     });
 
     it("should fill period date parts in blanks", async () => {
@@ -247,15 +219,12 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("2026");
-          expect(allText).toContain("enero");
-          expect(allText).toContain("febrero");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("2026");
+        expect(allText).toContain("enero");
+        expect(allText).toContain("febrero");
+      });
     });
 
     it("should fill constancia date parts in blanks", async () => {
@@ -265,14 +234,11 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("15");
-          expect(allText).toContain("enero");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("15");
+        expect(allText).toContain("enero");
+      });
     });
 
     it("should render name only once when signature is unchecked", async () => {
@@ -283,13 +249,10 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
-          expect(nameCalls).toHaveLength(1);
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
+        expect(nameCalls).toHaveLength(1);
+      });
     });
 
     it("should render name twice when signature is checked", async () => {
@@ -300,13 +263,10 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
-          expect(nameCalls).toHaveLength(2);
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const nameCalls = page.drawText.mock.calls.filter((c) => String(c[0]) === "Juan Pérez");
+        expect(nameCalls).toHaveLength(2);
+      });
     });
   });
 
@@ -318,15 +278,12 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("1");
-          expect(allText).toContain("enero");
-          expect(allText).toContain("febrero");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("1");
+        expect(allText).toContain("enero");
+        expect(allText).toContain("febrero");
+      });
     });
 
     it("should handle empty date gracefully", async () => {
@@ -342,12 +299,9 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(page.drawText).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(page.drawText).toHaveBeenCalled();
+      });
     });
   });
 
@@ -362,13 +316,10 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("123456789");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("123456789");
+      });
     });
 
     it("should handle non-CC document type by overwriting ciudadanía", async () => {
@@ -379,14 +330,11 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(page.drawRectangle).toHaveBeenCalled();
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Extranjería");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(page.drawRectangle).toHaveBeenCalled();
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Extranjería");
+      });
     });
 
     it("should handle empty contacto gracefully", async () => {
@@ -398,13 +346,10 @@ describe("F2 PDF Generation", () => {
 
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("sin especificar");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = page.drawText.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("sin especificar");
+      });
     });
   });
 });

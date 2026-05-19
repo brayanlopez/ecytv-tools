@@ -24,8 +24,6 @@ describe("F2 IO handlers", () => {
     vi.spyOn(document.body, "appendChild").mockImplementation(() => {});
     vi.spyOn(document.body, "removeChild").mockImplementation(() => {});
 
-    Element.prototype.scrollIntoView = vi.fn();
-
     document.body.innerHTML = `
       <form id="f2-form">
         <input type="text" id="nombre" value="Juan Pérez" />

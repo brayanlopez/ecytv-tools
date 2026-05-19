@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { createMockJsPDF } from "../../fixtures/mock-pdf.js";
 
 function buildF3ContentXml({ extraStyles = "" } = {}) {
   const styles = `
@@ -196,30 +197,11 @@ function buildF3ContentXml({ extraStyles = "" } = {}) {
 }
 
 describe("F3 PDF Generation", () => {
-  let localStorageMock;
   let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
     originalFetch = globalThis.fetch;
-
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { href: "", assign: vi.fn() },
-      writable: true,
-    });
 
     document.body.innerHTML = `
       <nav>
@@ -381,63 +363,17 @@ describe("F3 PDF Generation", () => {
     };
   }
 
-  function mockJspdfEnv() {
-    const doc = {
-      setFillColor: vi.fn(function () {
-        return doc;
-      }),
-      rect: vi.fn(function () {
-        return doc;
-      }),
-      setDrawColor: vi.fn(function () {
-        return doc;
-      }),
-      setLineWidth: vi.fn(function () {
-        return doc;
-      }),
-      setTextColor: vi.fn(function () {
-        return doc;
-      }),
-      setFontSize: vi.fn(function () {
-        return doc;
-      }),
-      setFont: vi.fn(function () {
-        return doc;
-      }),
-      text: vi.fn(function () {
-        return doc;
-      }),
-      line: vi.fn(function () {
-        return doc;
-      }),
-      addPage: vi.fn(function () {
-        return doc;
-      }),
-      getTextWidth: vi.fn(() => 0),
-      save: vi.fn(),
-    };
-    window.jspdf = {
-      jsPDF: vi.fn(function () {
-        return doc;
-      }),
-    };
-    return doc;
-  }
-
   describe("PDF Generation", () => {
     it("should generate PDF when all fields are filled", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(doc.save).toHaveBeenCalled();
-          expect(doc.save.mock.calls[0][0]).toMatch(/^f3_.*\.pdf$/);
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.save).toHaveBeenCalled();
+        expect(doc.save.mock.calls[0][0]).toMatch(/^f3_.*\.pdf$/);
+      });
     });
 
     it("should show alert when jsPDF is not loaded", () => {
@@ -452,43 +388,37 @@ describe("F3 PDF Generation", () => {
     });
 
     it("should include form data in the PDF", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Proyecto Test");
-          expect(allText).toContain("Direcci\u00f3n de Arte");
-          expect(allText).toContain("Autorizado Test");
-          expect(allText).toContain("TIUN123");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Proyecto Test");
+        expect(allText).toContain("Direcci\u00f3n de Arte");
+        expect(allText).toContain("Autorizado Test");
+        expect(allText).toContain("TIUN123");
+      });
     });
 
     it("should include dates in the PDF", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("2026-01-01");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("2026-01-01");
+      });
     });
   });
 
   describe("PDF branch coverage", () => {
     it("should handle missing dates gracefully", async () => {
       const { generateF3PDF } = await import("../../../js/forms/f3/f3-pdf.js");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
 
@@ -508,16 +438,13 @@ describe("F3 PDF Generation", () => {
         equipos: [],
       });
 
-      await vi.waitFor(
-        () => {
-          expect(doc.save).toHaveBeenCalledWith("f3_proyecto_test_autorizado_hoy.pdf");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.save).toHaveBeenCalledWith("f3_proyecto_test_autorizado_hoy.pdf");
+      });
     });
 
     it("should handle fetch error", async () => {
-      mockJspdfEnv();
+      createMockJsPDF();
       globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
       });
@@ -525,19 +452,16 @@ describe("F3 PDF Generation", () => {
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
-            "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
-            "error",
-          );
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+          "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
+          "error",
+        );
+      });
     });
 
     it("should handle text wrapping with long content", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       doc.getTextWidth = vi.fn(() => 200);
       mockOdsTemplate();
       fillAllRequired();
@@ -545,17 +469,14 @@ describe("F3 PDF Generation", () => {
         "Nombre muy largo del autorizado que debe dividirse en varias l\u00edneas por el ancho de la celda";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should generate PDF via direct generateF3PDF call", async () => {
       const { generateF3PDF } = await import("../../../js/forms/f3/f3-pdf.js");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
 
       generateF3PDF({
@@ -574,18 +495,15 @@ describe("F3 PDF Generation", () => {
         equipos: [],
       });
 
-      await vi.waitFor(
-        () => {
-          expect(doc.save).toHaveBeenCalledWith("f3_direct_test_authorized_person_2026-02-01.pdf");
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Direct Test");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.save).toHaveBeenCalledWith("f3_direct_test_authorized_person_2026-02-01.pdf");
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Direct Test");
+      });
     });
 
     it("should handle equipment rows in template", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.querySelector('input[name="equipo-item"]').value = "1";
@@ -595,16 +513,13 @@ describe("F3 PDF Generation", () => {
       document.querySelector('input[name="equipo-elemento"]').value = "Reflector";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should handle multiple equipment rows", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("add-equip-btn").click();
@@ -613,22 +528,93 @@ describe("F3 PDF Generation", () => {
       rows[0].querySelector('input[name="equipo-tipo"]').value = "Sonido";
       rows[0].querySelector('input[name="equipo-cantidad"]').value = "1";
       rows[0].querySelector('input[name="equipo-codigo"]').value = "COD-001";
-      rows[0].querySelector('input[name="equipo-elemento"]').value = "Micr\u00f3fono";
+      rows[0].querySelector('input[name="equipo-elemento"]').value = "Micrófono";
       rows[1].querySelector('input[name="equipo-item"]').value = "2";
       rows[1].querySelector('input[name="equipo-tipo"]').value = "Video";
       rows[1].querySelector('input[name="equipo-cantidad"]').value = "3";
       rows[1].querySelector('input[name="equipo-codigo"]').value = "COD-002";
-      rows[1].querySelector('input[name="equipo-elemento"]').value = "C\u00e1mara";
+      rows[1].querySelector('input[name="equipo-elemento"]').value = "Cámara";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Micr\u00f3fono");
-          expect(allText).toContain("C\u00e1mara");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Micrófono");
+        expect(allText).toContain("Cámara");
+      });
+    });
+
+    it("should trigger overflow page when more than 14 equipment items", async () => {
+      const doc = createMockJsPDF();
+      mockOdsTemplate();
+      const equipos = [];
+      for (let i = 0; i < 16; i++) {
+        equipos.push({
+          item: String(i + 1),
+          tipo: "Tipo",
+          cantidad: "1",
+          codigo: "COD-" + i,
+          elemento: "Elemento " + (i + 1),
+        });
+      }
+      fillAllRequired();
+
+      const { generateF3PDF } = await import("../../../js/forms/f3/f3-pdf.js");
+      await generateF3PDF({
+        proyecto: "Overflow Test",
+        asignatura: "Test",
+        docente: "Docente",
+        autorizado: "Autorizado",
+        "tipo-documento": "CC",
+        "numero-documento": "123",
+        tiun: "TIUN",
+        celular: "300",
+        lugar: "Lugar",
+        "fecha-retiro": "2026-01-01T10:00",
+        "fecha-entrega": "2026-01-01T12:00",
+        observaciones: "",
+        equipos,
+      });
+
+      await vi.waitFor(() => {
+        expect(doc.addPage).toHaveBeenCalled();
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("continuación");
+        expect(allText).toContain("Item");
+        expect(allText).toContain("Tipo");
+        expect(allText).toContain("Cant.");
+        expect(allText).toContain("Código");
+        expect(allText).toContain("Elemento");
+        expect(allText).toContain("Elemento 15");
+        expect(allText).toContain("Elemento 16");
+      });
+    });
+
+    it("should handle only fecha-retiro without fecha-entrega", async () => {
+      const doc = createMockJsPDF();
+      const { generateF3PDF } = await import("../../../js/forms/f3/f3-pdf.js");
+      mockOdsTemplate();
+
+      await generateF3PDF({
+        proyecto: "No Entrega",
+        asignatura: "Test",
+        docente: "Docente",
+        autorizado: "Autorizado",
+        "tipo-documento": "CC",
+        "numero-documento": "123",
+        tiun: "TIUN",
+        celular: "300",
+        lugar: "Lugar",
+        "fecha-retiro": "2026-01-01T10:00",
+        "fecha-entrega": "",
+        observaciones: "",
+        equipos: [],
+      });
+
+      await vi.waitFor(() => {
+        expect(doc.save).toHaveBeenCalled();
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("2026-01-01");
+      });
     });
   });
 });

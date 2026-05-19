@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { createMockJsPDF } from "../../fixtures/mock-pdf.js";
 
 function buildF4ContentXml({ extraStyles = "" } = {}) {
   const styles = `
@@ -257,30 +258,11 @@ function buildF4ContentXml({ extraStyles = "" } = {}) {
 }
 
 describe("F4 PDF Generation", () => {
-  let localStorageMock;
   let originalFetch;
 
   beforeEach(async () => {
     vi.resetModules();
     originalFetch = globalThis.fetch;
-
-    localStorageMock = {};
-    vi.spyOn(Storage.prototype, "getItem").mockImplementation(
-      (key) => localStorageMock[key] ?? null,
-    );
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation((key, value) => {
-      localStorageMock[key] = value;
-    });
-    vi.spyOn(Storage.prototype, "removeItem").mockImplementation((key) => {
-      delete localStorageMock[key];
-    });
-    window.EcytvUI = { showSnackbar: vi.fn(), showModal: vi.fn() };
-    Element.prototype.scrollIntoView = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { href: "", assign: vi.fn() },
-      writable: true,
-    });
 
     document.body.innerHTML = `
       <nav>
@@ -419,63 +401,17 @@ describe("F4 PDF Generation", () => {
     };
   }
 
-  function mockJspdfEnv() {
-    const doc = {
-      setFillColor: vi.fn(function () {
-        return doc;
-      }),
-      rect: vi.fn(function () {
-        return doc;
-      }),
-      setDrawColor: vi.fn(function () {
-        return doc;
-      }),
-      setLineWidth: vi.fn(function () {
-        return doc;
-      }),
-      setTextColor: vi.fn(function () {
-        return doc;
-      }),
-      setFontSize: vi.fn(function () {
-        return doc;
-      }),
-      setFont: vi.fn(function () {
-        return doc;
-      }),
-      text: vi.fn(function () {
-        return doc;
-      }),
-      line: vi.fn(function () {
-        return doc;
-      }),
-      addPage: vi.fn(function () {
-        return doc;
-      }),
-      getTextWidth: vi.fn(() => 0),
-      save: vi.fn(),
-    };
-    window.jspdf = {
-      jsPDF: vi.fn(function () {
-        return doc;
-      }),
-    };
-    return doc;
-  }
-
   describe("PDF Generation", () => {
     it("should generate PDF when all fields are filled", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
-          expect(doc.save).toHaveBeenCalledWith("f4_proyecto_test_responsable_test_2026-06-01.pdf");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalledOnce();
+        expect(doc.save).toHaveBeenCalledWith("f4_proyecto_test_responsable_test_2026-06-01.pdf");
+      });
     });
 
     it("should show alert when jsPDF is not loaded", () => {
@@ -491,7 +427,7 @@ describe("F4 PDF Generation", () => {
 
     it("should include form data in the PDF", async () => {
       const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
 
       await generateF4PDF({
@@ -516,24 +452,21 @@ describe("F4 PDF Generation", () => {
     });
 
     it("should include dates in the PDF", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("btn-pdf").click();
 
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("2026-06-01");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("2026-06-01");
+      });
     });
   });
 
   describe("PDF branch coverage", () => {
     it("should handle fetch error", async () => {
-      mockJspdfEnv();
+      createMockJsPDF();
       globalThis.fetch = vi.fn().mockResolvedValue({
         ok: false,
       });
@@ -541,19 +474,16 @@ describe("F4 PDF Generation", () => {
       fillAllRequired();
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
-            "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
-            "error",
-          );
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenLastCalledWith(
+          "Error al generar el archivo PDF: No se pudo cargar la plantilla ODS",
+          "error",
+        );
+      });
     });
 
     it("should handle text wrapping with long content", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       doc.getTextWidth = vi.fn(() => 200);
       mockOdsTemplate();
       fillAllRequired();
@@ -561,17 +491,14 @@ describe("F4 PDF Generation", () => {
         "Nombre muy largo del responsable que debe dividirse en varias l\u00edneas por el ancho de la celda";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+      });
     });
 
     it("should generate PDF via direct generateF4PDF call", async () => {
       const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
 
       generateF4PDF({
@@ -586,35 +513,29 @@ describe("F4 PDF Generation", () => {
         salas: [],
       });
 
-      await vi.waitFor(
-        () => {
-          expect(doc.save).toHaveBeenCalled();
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Direct Test");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.save).toHaveBeenCalled();
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Direct Test");
+      });
     });
 
     it("should handle sala rows in template", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.querySelector('input[name="sala-nombre"]').value = "Sala NL1";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          expect(window.jspdf.jsPDF).toHaveBeenCalled();
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Sala NL1");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(window.jspdf.jsPDF).toHaveBeenCalled();
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Sala NL1");
+      });
     });
 
     it("should handle multiple sala rows", async () => {
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
       fillAllRequired();
       document.getElementById("add-sala-btn").click();
@@ -626,19 +547,16 @@ describe("F4 PDF Generation", () => {
       rows[1].querySelector('input[name="sala-hora-fin"]').value = "16:00";
 
       document.getElementById("btn-pdf").click();
-      await vi.waitFor(
-        () => {
-          const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
-          expect(allText).toContain("Sala NL1");
-          expect(allText).toContain("Sala NL2");
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        const allText = doc.text.mock.calls.map((c) => String(c[0])).join(" ");
+        expect(allText).toContain("Sala NL1");
+        expect(allText).toContain("Sala NL2");
+      });
     });
 
     it("should handle sala overflow with continuation page", async () => {
       const { generateF4PDF } = await import("../../../js/forms/f4/f4-pdf.js");
-      const doc = mockJspdfEnv();
+      const doc = createMockJsPDF();
       mockOdsTemplate();
 
       const salas = [];
@@ -663,12 +581,9 @@ describe("F4 PDF Generation", () => {
         salas,
       });
 
-      await vi.waitFor(
-        () => {
-          expect(doc.addPage).toHaveBeenCalled();
-        },
-        { timeout: 5000 },
-      );
+      await vi.waitFor(() => {
+        expect(doc.addPage).toHaveBeenCalled();
+      });
     });
   });
 });

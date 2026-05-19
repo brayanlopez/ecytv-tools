@@ -101,8 +101,6 @@ describe("handleImport (F3)", () => {
 
     snackbarSpy = vi.fn();
     window.EcytvUI = { showSnackbar: snackbarSpy };
-    Element.prototype.scrollIntoView = vi.fn();
-
     document.body.innerHTML = `
       <form id="f3-form">
         <input type="text" id="proyecto" />
@@ -183,7 +181,6 @@ describe("restoreFormData (F3)", () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    Element.prototype.scrollIntoView = vi.fn();
     document.body.innerHTML = `
       <form id="f3-form">
         <input type="text" id="proyecto" />
