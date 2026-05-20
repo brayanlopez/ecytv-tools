@@ -31,11 +31,24 @@ const infoCards = [
       <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
       <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
     </svg>`,
-    title: "Base de datos Casting general de la Escuela",
+    title: "Base de datos Casting general de la Escuela (hasta 2025.2)",
     description:
-      "Consulta la base de datos de casting con perfiles de actores, actrices y talento audiovisual de la comunidad ECYTV",
+      "Consulta la base de datos de casting con perfiles de actores, actrices y talento audiovisual de la comunidad ECYTV hasta el periodo 2025.2",
     url: "https://drive.google.com/drive/folders/1GL9-QmHbkrPKDRC15qW9rXt7VQTcSjgM?usp=drive_link",
     label: "Acceder a la Base de Datos",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+      <path d="M12 12v7"/>
+    </svg>`,
+    title: "Base de datos Casting 2026.1",
+    description:
+      "Consulta la base de datos de casting actualizada al periodo 2026.1 con perfiles de actores, actrices y talento audiovisual de la comunidad ECYTV",
+    url: "https://drive.google.com/drive/folders/1E7sHAoBzkmoDFOVxvAJe69XN5hd5a0X4?usp=sharing",
+    label: "Acceder a la Base de Datos 2026.1",
   },
   {
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
