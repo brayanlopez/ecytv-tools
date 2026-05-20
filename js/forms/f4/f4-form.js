@@ -1,9 +1,12 @@
 import { restoreTheme } from "../../utils/theme.js";
 import { createFormFactory } from "../common/form-factory.js";
+import { renderFormActions } from "../common/form-actions.js";
 import { f4Config } from "./f4-config.js";
 import { generateF4PDF } from "./f4-pdf.js";
 
 restoreTheme();
+
+renderFormActions(document.getElementById("form-actions-root"));
 
 const api = createFormFactory({
   ...f4Config,

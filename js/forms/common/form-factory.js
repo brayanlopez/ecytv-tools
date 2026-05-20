@@ -241,6 +241,7 @@ export function createFormFactory(config) {
     initTable();
     initReset();
     initDropdown("btn-download", "download-menu");
+    initDropdown("btn-advanced", "advanced-menu");
     bindButtons();
   }
 
