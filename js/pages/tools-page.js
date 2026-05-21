@@ -4,10 +4,7 @@ import {
   getAllValues,
   getFilteredTools,
 } from "../services/tools-state.js";
-import {
-  buildToolCard,
-  updateFavoriteButton,
-} from "../components/tool-card.js";
+import { buildToolCard, updateFavoriteButton } from "../components/tool-card.js";
 import { renderToolFilterBar } from "../components/filter-bar.js";
 
 let filterContainer = null;

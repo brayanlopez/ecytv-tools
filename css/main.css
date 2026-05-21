@@ -94,7 +94,9 @@ body {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .info-card-header {
@@ -452,7 +454,9 @@ body {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .doc-card:hover {

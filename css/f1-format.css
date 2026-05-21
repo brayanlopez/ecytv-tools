@@ -54,6 +54,21 @@
   color: #ffd970;
 }
 
+.form-notice a {
+  color: #856404;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.form-notice a:hover {
+  color: #5c3a00;
+}
+[data-theme="dark"] .form-notice a {
+  color: #ffd970;
+}
+[data-theme="dark"] .form-notice a:hover {
+  color: #ffe69c;
+}
+
 .form-notice svg {
   width: 18px;
   height: 18px;
@@ -646,7 +661,8 @@
     width: 100%;
   }
 
-  .dropdown .btn-submit {
+  .dropdown .btn-submit,
+  .dropdown .btn-secondary {
     width: 100%;
     justify-content: center;
   }
