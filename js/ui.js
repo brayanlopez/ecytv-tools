@@ -61,11 +61,15 @@ function ensureModal() {
     });
 
     modalOverlay.addEventListener("click", (e) => {
-      if (e.target === modalOverlay) closeModal(null);
+      if (e.target === modalOverlay) {
+        closeModal(null);
+      }
     });
 
     document.addEventListener("keydown", (e) => {
-      if (!modalOverlay.classList.contains("show")) return;
+      if (!modalOverlay.classList.contains("show")) {
+        return;
+      }
       if (e.key === "Escape") {
         closeModal(null);
       } else if (e.key === "Tab") {
@@ -122,7 +126,9 @@ function showModal(options = {}) {
     cancelBtn.textContent = cancelText;
     cancelBtn.addEventListener("click", () => {
       closeModal(false);
-      if (onCancel) onCancel();
+      if (onCancel) {
+        onCancel();
+      }
     });
     footer.appendChild(cancelBtn);
   }
@@ -132,7 +138,9 @@ function showModal(options = {}) {
   confirmBtn.textContent = confirmText;
   confirmBtn.addEventListener("click", () => {
     closeModal(true);
-    if (onConfirm) onConfirm();
+    if (onConfirm) {
+      onConfirm();
+    }
   });
   footer.appendChild(confirmBtn);
 

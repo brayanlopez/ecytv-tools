@@ -11,7 +11,9 @@ export function createHistoryManager(storageKey, maxEntries = 20) {
       data,
     };
     history.unshift(entry);
-    if (history.length > maxEntries) history.length = maxEntries;
+    if (history.length > maxEntries) {
+      history.length = maxEntries;
+    }
     localStorage.setItem(storageKey, JSON.stringify(history));
     return history;
   }

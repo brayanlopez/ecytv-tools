@@ -18,7 +18,9 @@ describe("info-page", () => {
   it("should render all cards into the container", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "info-card-list") return container;
+      if (id === "info-card-list") {
+        return container;
+      }
       return null;
     });
 
@@ -33,7 +35,9 @@ describe("info-page", () => {
   it("should render info-card elements", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "info-card-list") return container;
+      if (id === "info-card-list") {
+        return container;
+      }
       return null;
     });
 

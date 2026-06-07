@@ -23,8 +23,12 @@ describe("initHamburger", () => {
     };
 
     vi.spyOn(document, "querySelector").mockImplementation((selector) => {
-      if (selector === ".hamburger") return hamburgerEl;
-      if (selector === ".nav-links") return navLinksEl;
+      if (selector === ".hamburger") {
+        return hamburgerEl;
+      }
+      if (selector === ".nav-links") {
+        return navLinksEl;
+      }
       return null;
     });
 
@@ -50,7 +54,9 @@ describe("initHamburger", () => {
   it("should toggle active classes on hamburger click", () => {
     let clickHandler;
     hamburgerEl.addEventListener = vi.fn((event, handler) => {
-      if (event === "click") clickHandler = handler;
+      if (event === "click") {
+        clickHandler = handler;
+      }
     });
     initHamburger();
     clickHandler();
@@ -69,7 +75,9 @@ describe("initHamburger", () => {
   it("should remove active classes when a nav link is clicked", () => {
     let linkClickHandler;
     linkEls[0].addEventListener = vi.fn((event, handler) => {
-      if (event === "click") linkClickHandler = handler;
+      if (event === "click") {
+        linkClickHandler = handler;
+      }
     });
     initHamburger();
     linkClickHandler();
@@ -81,7 +89,9 @@ describe("initHamburger", () => {
     const linkClickHandlers = [];
     linkEls.forEach((link) => {
       link.addEventListener = vi.fn((event, handler) => {
-        if (event === "click") linkClickHandlers.push(handler);
+        if (event === "click") {
+          linkClickHandlers.push(handler);
+        }
       });
     });
     initHamburger();

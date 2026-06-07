@@ -321,8 +321,6 @@ describe("F3 Form", () => {
     it("should close dropdown with Escape and focus button", () => {
       const btn = document.getElementById("btn-download");
       const menu = document.getElementById("download-menu");
-      const items = menu.querySelectorAll(".dropdown-item");
-
       btn.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
       expect(menu.classList.contains("show")).toBe(true);
 

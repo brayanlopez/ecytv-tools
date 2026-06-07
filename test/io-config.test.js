@@ -294,17 +294,16 @@ describe("importFromFile", () => {
     const mockInput = document.createElement("input");
     vi.spyOn(mockInput, "click").mockImplementation(() => {});
     vi.spyOn(mockInput, "addEventListener").mockImplementation((event, handler) => {
-      if (event === "change") handlerCallback(handler);
+      if (event === "change") {
+        handlerCallback(handler);
+      }
     });
     vi.spyOn(document, "createElement").mockReturnValue(mockInput);
     return mockInput;
   }
 
   it("should create file input and click it", () => {
-    let registeredHandler;
-    const mockInput = mockCreateElement((h) => {
-      registeredHandler = h;
-    });
+    const mockInput = mockCreateElement(() => {});
 
     importFromFile();
     expect(document.createElement).toHaveBeenCalledWith("input");
@@ -347,7 +346,7 @@ describe("importFromFile", () => {
       changeHandler = h;
     });
 
-    const promise = importFromFile();
+    importFromFile();
     changeHandler({ target: { files: [] } });
     await vi.waitFor(() => {});
   });

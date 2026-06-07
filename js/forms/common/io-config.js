@@ -24,7 +24,9 @@ export function downloadYAML(data, filename) {
 }
 
 export function validateImportData(data, requiredKeys, formLabel) {
-  if (!data) return false;
+  if (!data) {
+    return false;
+  }
   const hasKey = requiredKeys.some((key) => key in data);
   if (!hasKey) {
     throw new Error(`El archivo no contiene datos válidos de ${formLabel}.`);
@@ -39,7 +41,9 @@ export function importFromFile() {
     input.accept = ".json,.yaml,.yml";
     input.addEventListener("change", async (e) => {
       const file = e.target.files[0];
-      if (!file) return;
+      if (!file) {
+        return;
+      }
       try {
         const text = await file.text();
         const ext = file.name.split(".").pop().toLowerCase();
@@ -84,9 +88,15 @@ function serializeYAML(data) {
 }
 
 function yamlValue(value) {
-  if (typeof value === "boolean") return value ? "true" : "false";
-  if (typeof value === "number") return String(value);
-  if (value === null || value === undefined) return "null";
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  }
+  if (typeof value === "number") {
+    return String(value);
+  }
+  if (value === null || value === undefined) {
+    return "null";
+  }
   const str = String(value);
   if (
     /[:[\]{}|>*!&%@`\n"]/.test(str) ||
@@ -109,7 +119,9 @@ function parseYAML(text) {
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i];
     const trimmed = raw.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
+    if (!trimmed || trimmed.startsWith("#")) {
+      continue;
+    }
 
     const indent = raw.search(/\S|$/);
 
@@ -167,7 +179,9 @@ function parseYAML(text) {
     }
 
     const colonIdx = trimmed.indexOf(":");
-    if (colonIdx === -1) continue;
+    if (colonIdx === -1) {
+      continue;
+    }
 
     const key = trimmed.slice(0, colonIdx).trim();
     const rest = trimmed.slice(colonIdx + 1).trim();
@@ -200,11 +214,21 @@ function parseYAML(text) {
 }
 
 function parseYAMLValue(str) {
-  if (str === "true") return true;
-  if (str === "false") return false;
-  if (str === "null" || str === "~") return null;
-  if (/^\d+$/.test(str)) return parseInt(str, 10);
-  if (/^\d+\.\d+$/.test(str)) return parseFloat(str);
+  if (str === "true") {
+    return true;
+  }
+  if (str === "false") {
+    return false;
+  }
+  if (str === "null" || str === "~") {
+    return null;
+  }
+  if (/^\d+$/.test(str)) {
+    return parseInt(str, 10);
+  }
+  if (/^\d+\.\d+$/.test(str)) {
+    return parseFloat(str);
+  }
   if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
     return str.slice(1, -1).replace(/\\n/g, "\n").replace(/\\"/g, '"').replace(/\\\\/g, "\\");
   }

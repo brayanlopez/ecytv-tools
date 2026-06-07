@@ -4,7 +4,9 @@ export function getValue(id) {
 
 export function setValue(id, val) {
   const el = document.getElementById(id);
-  if (el) el.value = val ?? "";
+  if (el) {
+    el.value = val ?? "";
+  }
 }
 
 export function getChecked(id) {
@@ -13,11 +15,15 @@ export function getChecked(id) {
 
 export function setChecked(id, val) {
   const el = document.getElementById(id);
-  if (el) el.checked = !!val;
+  if (el) {
+    el.checked = !!val;
+  }
 }
 
 export function getTableData(tbody, columns) {
-  if (!tbody) return [];
+  if (!tbody) {
+    return [];
+  }
   const rowSelector = tbody.querySelector("tr")?.className
     ? `.${tbody.querySelector("tr").className}`
     : "tr";
