@@ -59,7 +59,7 @@ function injectData(rows, formData) {
   return { equipos, overflowStart: equipos.length > 14 ? 14 : -1 };
 }
 
-export async function generateF1PDF(formData) {
+export async function generateF1PDF(formData, opts = {}) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     window.EcytvUI.showSnackbar(
       "Error al cargar la librería PDF. Verifica tu conexión a internet.",
@@ -86,11 +86,14 @@ export async function generateF1PDF(formData) {
         const dims = await Promise.race([
           new Promise((resolve) => {
             const img = new Image();
-            img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
+            img.onload = () =>
+              resolve({ w: img.naturalWidth, h: img.naturalHeight });
             img.onerror = () => resolve({ w: 0, h: 0 });
             img.src = data;
           }),
-          new Promise((resolve) => setTimeout(() => resolve({ w: 0, h: 0 }), 50)),
+          new Promise((resolve) =>
+            setTimeout(() => resolve({ w: 0, h: 0 }), 500),
+          ),
         ]);
         imgW = dims.w;
         imgH = dims.h;
@@ -169,6 +172,9 @@ export async function generateF1PDF(formData) {
       }
     }
 
+    if (opts.returnBytes) {
+      return doc.output("arraybuffer");
+    }
     doc.save(
       buildFilename({
         formId: "f1",
@@ -178,6 +184,9 @@ export async function generateF1PDF(formData) {
       }) + ".pdf",
     );
   } catch (err) {
-    window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
+    window.EcytvUI.showSnackbar(
+      "Error al generar el archivo PDF: " + err.message,
+      "error",
+    );
   }
 }

@@ -10,7 +10,7 @@ function formatDateParts(dateStr) {
   };
 }
 
-export async function generateF2PDF(data) {
+export async function generateF2PDF(data, opts = {}) {
   if (!window.PDFLib) {
     window.EcytvUI.showSnackbar(
       "Error al cargar la librería PDF. Verifica tu conexión a internet.",
@@ -161,18 +161,28 @@ export async function generateF2PDF(data) {
     }
 
     const pdfBytes = await doc.save();
+    if (opts.returnBytes) {
+      return pdfBytes;
+    }
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download =
-      buildFilename({ formId: "f2", project: "acta", username: nombre, date: fechaConstancia }) +
-      ".pdf";
+      buildFilename({
+        formId: "f2",
+        project: "acta",
+        username: nombre,
+        date: fechaConstancia,
+      }) + ".pdf";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
   } catch (err) {
-    window.EcytvUI.showSnackbar("Error al generar el archivo PDF: " + err.message, "error");
+    window.EcytvUI.showSnackbar(
+      "Error al generar el archivo PDF: " + err.message,
+      "error",
+    );
   }
 }

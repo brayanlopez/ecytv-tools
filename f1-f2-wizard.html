@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asistente F1 + F2 — ECYTV Tools</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/f1-f2-wizard.css" />
+    <link rel="stylesheet" href="css/ui.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="page-header">
+        <a href="#formats" class="back-link" id="back-link">← Volver a Formatos</a>
+        <h1>Asistente Combinado F1 + F2</h1>
+      </header>
+
+      <div class="step-indicator">
+        <div class="step active" data-step="1"><span class="step-num">1</span> F1 — Datos</div>
+        <div class="step" data-step="2"><span class="step-num">2</span> F2 — Datos</div>
+        <div class="step" data-step="3"><span class="step-num">3</span> Carnet</div>
+        <div class="step" data-step="4"><span class="step-num">4</span> Resumen</div>
+      </div>
+
+      <div class="step-panel active" data-step="1" id="f1-panel">
+        <h2>Paso 1: Datos del F1 — Solicitud de Préstamo</h2>
+        <div class="f1-form">
+          <div class="form-row">
+            <label for="proyecto">Proyecto *</label>
+            <input type="text" id="proyecto" name="proyecto" required />
+          </div>
+          <div class="form-row">
+            <label for="asignatura">Asignatura *</label>
+            <input type="text" id="asignatura" name="asignatura" required />
+          </div>
+          <div class="form-row">
+            <label for="docente">Docente *</label>
+            <input type="text" id="docente" name="docente" required />
+          </div>
+          <div class="form-row">
+            <label for="responsable">Responsable (estudiante) *</label>
+            <input type="text" id="responsable" name="responsable" required />
+          </div>
+          <div class="form-row">
+            <label for="celular">Celular *</label>
+            <input type="text" id="celular" name="celular" required />
+          </div>
+          <div class="form-row">
+            <label for="tiun">TIUN *</label>
+            <input type="text" id="tiun" name="tiun" required />
+          </div>
+          <div class="form-row">
+            <label for="lugar">Lugar *</label>
+            <input type="text" id="lugar" name="lugar" required />
+          </div>
+          <div class="form-row">
+            <label for="tipo-prestamo">Tipo de Préstamo *</label>
+            <select id="tipo-prestamo" name="tipo-prestamo" required>
+              <option value="">— Seleccionar —</option>
+              <option value="Sala de cómputo">Sala de cómputo</option>
+              <option value="Equipos portátiles">Equipos portátiles</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="fecha-retiro">Fecha de Retiro *</label>
+            <input type="date" id="fecha-retiro" name="fecha-retiro" required />
+          </div>
+          <div class="form-row">
+            <label for="fecha-entrega">Fecha de Entrega</label>
+            <input type="date" id="fecha-entrega" name="fecha-entrega" />
+          </div>
+          <div class="form-row form-row--checkbox">
+            <label>
+              <input type="checkbox" id="mismo-dia" name="mismo-dia" />
+              Mismo día
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+          </div>
+
+          <h3>Equipos</h3>
+          <table class="equip-table" id="equip-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Nombre del equipo</th>
+                <th>Consecutivo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="equip-tbody"></tbody>
+          </table>
+          <button type="button" id="add-equip-btn" class="btn btn-secondary">
+            + Añadir equipo
+          </button>
+        </div>
+      </div>
+
+      <div class="step-panel" data-step="2" id="f2-panel">
+        <h2>Paso 2: Datos del F2 — Acta de Compromiso</h2>
+        <div class="f2-form">
+          <div class="form-row">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" name="nombre" required />
+          </div>
+          <div class="form-row">
+            <label for="tipo-documento">Tipo de Documento *</label>
+            <select id="tipo-documento" name="tipo-documento" required>
+              <option value="">— Seleccionar —</option>
+              <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+              <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+              <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+              <option value="Pasaporte">Pasaporte</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="numero-documento">Número de Documento *</label>
+            <input type="text" id="numero-documento" name="numero-documento" required />
+          </div>
+          <div class="form-row">
+            <label for="contacto">Contacto *</label>
+            <input type="text" id="contacto" name="contacto" required />
+          </div>
+          <div class="form-row">
+            <label for="periodo-inicial">Periodo Inicial *</label>
+            <input type="date" id="periodo-inicial" name="periodo-inicial" required />
+          </div>
+          <div class="form-row">
+            <label for="periodo-final">Periodo Final *</label>
+            <input type="date" id="periodo-final" name="periodo-final" required />
+          </div>
+          <div class="form-row">
+            <label for="fecha-constancia">Fecha de Constancia *</label>
+            <input type="date" id="fecha-constancia" name="fecha-constancia" required />
+          </div>
+          <div class="form-row form-row--checkbox">
+            <label>
+              <input type="checkbox" id="firma-nombre" name="firma-nombre" />
+              Incluir firma
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-panel" data-step="3" id="carnet-panel">
+        <h2>Paso 3: Carnet Estudiantil (opcional)</h2>
+        <p class="step-desc">
+          Adjunta una foto o escaneo de tu carnet estudiantil. Formatos permitidos: JPG, PNG, PDF.
+        </p>
+
+        <div id="carnet-drop-zone" class="carnet-drop-zone">
+          <p>Arrastra el archivo aquí o haz clic para seleccionar</p>
+          <input
+            type="file"
+            id="carnet-input"
+            accept="image/jpeg,image/png,application/pdf"
+            style="display: none"
+          />
+        </div>
+        <div id="carnet-preview" class="carnet-preview"></div>
+        <p id="carnet-status" class="carnet-status"></p>
+      </div>
+
+      <div class="step-panel" data-step="4" id="summary-panel">
+        <h2>Paso 4: Resumen y Descarga</h2>
+        <p class="step-desc">Revisa los datos ingresados antes de descargar el PDF combinado.</p>
+        <div id="summary-content"></div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" id="prev-step" class="btn btn-secondary" style="display: none">
+          Anterior
+        </button>
+        <button type="button" id="next-step" class="btn btn-primary">Siguiente</button>
+        <button type="button" id="download-combined" class="btn btn-primary" style="display: none">
+          Descargar PDF Combinado
+        </button>
+      </div>
+    </div>
+
+    <script src="js/ui.js"></script>
+    <script type="module" src="js/forms/f1-f2-wizard/f1-f2-wizard-form.js"></script>
+  </body>
+</html>

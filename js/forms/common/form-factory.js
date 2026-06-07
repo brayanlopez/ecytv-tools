@@ -1,4 +1,11 @@
-import { getValue, setValue, getChecked, setFieldValues } from "./dom.js";
+import {
+  getValue,
+  setValue,
+  getChecked,
+  setFieldValues,
+  createTableRow,
+  initTable,
+} from "./dom.js";
 import { initDropdown } from "./dropdown.js";
 import { validateForm } from "./validation.js";
 import { downloadJSON, downloadYAML, importFromFile } from "./io-config.js";
@@ -48,22 +55,6 @@ export function createFormFactory(config) {
     return data;
   }
 
-  function createTableRow(data = {}) {
-    if (!table) return null;
-    const row = document.createElement("tr");
-    row.className = table.rowClass;
-    const cols = table.columns
-      .map((col) => {
-        const val = escHtml(data[col.key || col.name] ?? "");
-        return `<td data-label="${escHtml(col.label)}"><input type="${col.type || "text"}" name="${col.name}" placeholder="${escHtml(col.placeholder || col.label)}" aria-label="${escHtml(col.label)}"${col.required ? " required" : ""} value="${val}"></td>`;
-      })
-      .join("");
-    row.innerHTML =
-      cols +
-      `<td data-label=""><button type="button" class="btn-remove-equip" title="Eliminar ${table.itemName || "elemento"}">✕</button></td>`;
-    return row;
-  }
-
   function restoreTableData(tbody, items) {
     if (!table || !tbody) return;
     const rows = tbody.querySelectorAll(`.${table.rowClass}`);
@@ -81,7 +72,7 @@ export function createFormFactory(config) {
           if (input) input.value = item[col.key || col.name] ?? "";
         }
       } else {
-        const row = createTableRow(item);
+        const row = createTableRow(table, item);
         const removeBtn = row.querySelector(".btn-remove-equip");
         if (removeBtn) {
           removeBtn.addEventListener("click", () => {
@@ -167,41 +158,6 @@ export function createFormFactory(config) {
     });
   }
 
-  function initTable() {
-    if (!table) return;
-    const tbody = document.getElementById(table.tbodyId);
-    const addBtn = document.getElementById(table.addBtnId);
-    if (!tbody || !addBtn) return;
-
-    addBtn.addEventListener("click", () => {
-      const row = createTableRow();
-      if (!row) return;
-      const removeBtn = row.querySelector(".btn-remove-equip");
-      if (removeBtn) {
-        removeBtn.addEventListener("click", () => {
-          if (tbody.children.length > 1) {
-            row.remove();
-            addBtn.focus();
-          }
-        });
-      }
-      tbody.appendChild(row);
-      const firstInput = row.querySelector("input");
-      if (firstInput) firstInput.focus();
-    });
-
-    tbody.addEventListener("click", (e) => {
-      const btn = e.target.closest(".btn-remove-equip");
-      if (btn) {
-        const row = btn.closest(`.${table.rowClass}`);
-        if (tbody.children.length > 1) {
-          row.remove();
-          addBtn.focus();
-        }
-      }
-    });
-  }
-
   function initReset() {
     const form = getFormEl();
     if (!form) return;
@@ -238,7 +194,7 @@ export function createFormFactory(config) {
     initBackLink();
     initDatalists();
     initSameDayCheckbox();
-    initTable();
+    initTable(table);
     initReset();
     initDropdown("btn-download", "download-menu");
     bindButtons();

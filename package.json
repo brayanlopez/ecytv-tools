@@ -19,7 +19,11 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint js/ data/ test/",
-    "format": "prettier --write '**/*.{js,json,css,html}'"
+    "lint:fix": "eslint js/ data/ test/ --fix",
+    "format": "prettier --check '**/*.{js,json,css,html}'",
+    "format:fix": "prettier --write '**/*.{js,json,css,html}'",
+    "check": "npm run lint && npm run format && npm run test:coverage",
+    "check:fix": "npm run lint:fix && npm run format:fix"
   },
   "devDependencies": {
     "@eslint/css": "1.2.0",

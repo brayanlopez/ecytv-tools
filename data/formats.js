@@ -54,6 +54,20 @@ const formats = [
     </svg>`,
   },
   {
+    id: "f1-f2-wizard",
+    name: "Asistente F1 + F2 (Combinado)",
+    description:
+      "Asistente paso a paso para llenar los formatos F1 y F2 juntos, adjuntar carnet y descargar un PDF combinado",
+    url: "f1-f2-wizard.html",
+    label: "Abrir Asistente",
+    available: true,
+    type: "form",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      <circle cx="12" cy="12" r="10"/>
+    </svg>`,
+  },
+  {
     id: "pdf-merge",
     name: "Fusionar PDFs",
     description:

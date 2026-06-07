@@ -1,0 +1,410 @@
+/* Wizard step indicator */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 2rem 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.step-indicator .step {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-right: none;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: default;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  user-select: none;
+}
+
+.step-indicator .step:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.step-indicator .step:last-child {
+  border-right: 1px solid var(--border);
+  border-radius: 0 8px 8px 0;
+}
+
+.step-indicator .step.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.step-indicator .step.active + .step {
+  border-left-color: var(--accent);
+}
+
+.step-indicator .step.done {
+  background: #d4edda;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.step-num {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-right: 6px;
+}
+
+.step.active .step-num {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* Step panels */
+.step-panel {
+  display: none;
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.step-panel.active {
+  display: block;
+}
+
+.step-panel h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.step-desc {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Step navigation */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  gap: 1rem;
+}
+
+.step-nav .btn {
+  min-width: 140px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--accent);
+}
+
+/* Carnet upload zone */
+.carnet-drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  color: var(--text-secondary);
+}
+
+.carnet-drop-zone:hover,
+.carnet-drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(1, 149, 135, 0.05);
+}
+
+.carnet-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.carnet-img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.carnet-pdf-icon {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.carnet-status {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Summary */
+.summary-section {
+  margin-bottom: 1.5rem;
+}
+
+.summary-section h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.summary-table td {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.summary-table td:first-child {
+  font-weight: 600;
+  width: 40%;
+  background: var(--bg-secondary);
+}
+
+/* F1/F2 form rows within wizard */
+.f1-form,
+.f2-form {
+  max-width: 100%;
+}
+
+.f1-form .form-row,
+.f2-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.f1-form .form-row label,
+.f2-form .form-row label {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.f1-form .form-row input,
+.f1-form .form-row select,
+.f1-form .form-row textarea,
+.f2-form .form-row input,
+.f2-form .form-row select,
+.f2-form .form-row textarea {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.f1-form .form-row input:focus,
+.f1-form .form-row select:focus,
+.f1-form .form-row textarea:focus,
+.f2-form .form-row input:focus,
+.f2-form .form-row select:focus,
+.f2-form .form-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(1, 149, 135, 0.2);
+}
+
+.f1-form .form-row--checkbox,
+.f2-form .form-row--checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.f1-form .form-row--checkbox label,
+.f2-form .form-row--checkbox label {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.f1-form .form-row--checkbox input[type="checkbox"],
+.f2-form .form-row--checkbox input[type="checkbox"] {
+  width: auto;
+  padding: 0;
+  cursor: pointer;
+}
+
+#f2-panel .form-row input[readonly] {
+  background: var(--bg-secondary);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Equipment table (reuses same structure as f1-format.css) */
+.equip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+}
+
+.equip-table th {
+  background: var(--bg-secondary);
+  padding: 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.equip-table td {
+  padding: 0.3rem;
+  border: 1px solid var(--border);
+}
+
+.equip-table input {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.equip-table input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(1, 149, 135, 0.2);
+}
+
+.btn-remove-equip {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c0392b;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.btn-remove-equip:hover {
+  background: rgba(192, 57, 43, 0.1);
+}
+
+.btn-add-equip {
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all var(--transition);
+}
+
+.btn-add-equip:hover {
+  background: var(--bg-secondary);
+}
+
+/* Button styles (standalone, not relying on tools.css / f1-format.css) */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: inherit;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-secondary);
+}
+
+/* Page header */
+.page-header {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  padding-top: 1rem;
+}
+
+.page-header h1 {
+  font-size: 1.4rem;
+}
