@@ -3,7 +3,9 @@ import { buildFilename } from "../common/filename.js";
 export async function generateF1XLSX(data) {
   try {
     const resp = await fetch("data/f1-template.xlsx");
-    if (!resp.ok) throw new Error("No se pudo cargar la plantilla XLSX");
+    if (!resp.ok) {
+      throw new Error("No se pudo cargar la plantilla XLSX");
+    }
     const buf = await resp.arrayBuffer();
 
     const wb = XLSX.read(buf, { type: "array", cellStyles: true });
@@ -51,10 +53,18 @@ export async function generateF1XLSX(data) {
 
     const retiro = fechaRetiro.split("T");
     const entrega = fechaEntrega.split("T");
-    if (retiro[0]) setCell("C12", retiro[0]);
-    if (retiro[1]) setCell("C13", retiro[1]);
-    if (entrega[0]) setCell("G12", entrega[0]);
-    if (entrega[1]) setCell("G13", entrega[1]);
+    if (retiro[0]) {
+      setCell("C12", retiro[0]);
+    }
+    if (retiro[1]) {
+      setCell("C13", retiro[1]);
+    }
+    if (entrega[0]) {
+      setCell("G12", entrega[0]);
+    }
+    if (entrega[1]) {
+      setCell("G13", entrega[1]);
+    }
 
     for (let i = 0; i < Math.min(14, equipData.length); i++) {
       const r = 17 + i;

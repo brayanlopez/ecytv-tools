@@ -6,7 +6,9 @@ export function validateForm(form, errorMessage) {
     if (!el.value.trim()) {
       el.style.borderColor = "#e63946";
       el.setAttribute("aria-invalid", "true");
-      if (!firstInvalid) firstInvalid = el;
+      if (!firstInvalid) {
+        firstInvalid = el;
+      }
       valid = false;
     } else {
       el.style.borderColor = "";
@@ -15,7 +17,9 @@ export function validateForm(form, errorMessage) {
   });
   if (!valid) {
     window.EcytvUI.showSnackbar(errorMessage, "warning");
-    if (firstInvalid) firstInvalid.focus();
+    if (firstInvalid) {
+      firstInvalid.focus();
+    }
   }
   return valid;
 }

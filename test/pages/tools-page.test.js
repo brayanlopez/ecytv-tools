@@ -31,7 +31,7 @@ const mockTools = [
 
 vi.mock("../../js/services/tools-state.js", () => ({
   getFavorites: vi.fn(() => []),
-  toggleFavorite: vi.fn((id) => ({ isFavorited: true })),
+  toggleFavorite: vi.fn((_id) => ({ isFavorited: true })),
   getAllValues: vi.fn(() => ({
     categories: ["all", "Edición", "Audio"],
     levels: ["all", "beginner", "pro"],
@@ -39,8 +39,12 @@ vi.mock("../../js/services/tools-state.js", () => ({
     pricings: ["all", "free", "paid"],
   })),
   getFilteredTools: vi.fn((filters, query) => {
-    if (filters.category === "non-existent" || query === "__no_results__") return [];
-    if (filters.category !== "all") return mockTools.filter((t) => t.category === filters.category);
+    if (filters.category === "non-existent" || query === "__no_results__") {
+      return [];
+    }
+    if (filters.category !== "all") {
+      return mockTools.filter((t) => t.category === filters.category);
+    }
     return mockTools;
   }),
 }));

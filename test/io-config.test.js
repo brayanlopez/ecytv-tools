@@ -70,6 +70,56 @@ describe("serializeYAML", () => {
     const result = serializeYAML({});
     expect(result).toBe("\n");
   });
+
+  it("should serialize array of primitive values", () => {
+    const data = { tags: ["a", "b", "c"] };
+    const result = serializeYAML(data);
+    expect(result).toContain("tags:");
+    expect(result).toContain("  - a");
+    expect(result).toContain("  - b");
+    expect(result).toContain("  - c");
+  });
+
+  it("should serialize nested objects", () => {
+    const data = { meta: { author: "Juan", version: 2 } };
+    const result = serializeYAML(data);
+    expect(result).toContain("meta:");
+    expect(result).toContain("  author: Juan");
+    expect(result).toContain("  version: 2");
+  });
+
+  it("should serialize null and undefined values", () => {
+    const data = { a: null, b: undefined };
+    const result = serializeYAML(data);
+    expect(result).toContain("a: null");
+    expect(result).toContain("b: null");
+  });
+
+  it("should serialize numeric zero", () => {
+    const result = serializeYAML({ count: 0 });
+    expect(result).toContain("count: 0");
+  });
+
+  it("should quote strings starting with numbers", () => {
+    const result = serializeYAML({ code: "123abc" });
+    expect(result).toContain('code: "123abc"');
+  });
+
+  it("should not quote simple alphanumeric strings", () => {
+    const result = serializeYAML({ name: "simple" });
+    expect(result).toContain("name: simple");
+  });
+
+  it("should quote strings equal to true/false/null", () => {
+    const result = serializeYAML({ flag: "true", nothing: "null" });
+    expect(result).toContain('flag: "true"');
+    expect(result).toContain('nothing: "null"');
+  });
+
+  it("should escape quotes and backslashes in quoted strings", () => {
+    const result = serializeYAML({ desc: 'say "hello"' });
+    expect(result).toContain('"');
+  });
 });
 
 describe("parseYAML", () => {
@@ -141,6 +191,56 @@ describe("parseYAML", () => {
     const yaml = "# Esto es un comentario\nclave: valor\n";
     const result = parseYAML(yaml);
     expect(result).toEqual({ clave: "valor" });
+  });
+
+  it("should parse null and tilde as null", () => {
+    expect(parseYAML("val: null\n")).toEqual({ val: null });
+    expect(parseYAML("val: ~\n")).toEqual({ val: null });
+  });
+
+  it("should parse float values", () => {
+    const result = parseYAML("precio: 99.99\n");
+    expect(result).toEqual({ precio: 99.99 });
+  });
+
+  it("should parse empty string value", () => {
+    const result = parseYAML("clave:\n");
+    expect(result).toEqual({ clave: "" });
+  });
+
+  it("should parse single-quoted strings", () => {
+    const result = parseYAML("titulo: 'contenido: especial'\n");
+    expect(result).toEqual({ titulo: "contenido: especial" });
+  });
+
+  it("should parse nested objects with indentation", () => {
+    const yaml = "nivel1:\n  nivel2:\n    clave: valor\n";
+    const result = parseYAML(yaml);
+    expect(result).toEqual({ nivel1: { nivel2: { clave: "valor" } } });
+  });
+
+  it("should parse dash-prefixed list items with colon", () => {
+    const yaml = "items:\n  - nombre: Juan\n    edad: 30\n";
+    const result = parseYAML(yaml);
+    expect(result.items).toBeInstanceOf(Array);
+    expect(result.items[0].nombre).toBe("Juan");
+    expect(result.items[0].edad).toBe(30);
+  });
+
+  it("should handle empty lines in YAML", () => {
+    const yaml = "clave: valor\n\notra: cosa\n";
+    const result = parseYAML(yaml);
+    expect(result).toEqual({ clave: "valor", otra: "cosa" });
+  });
+
+  it("should handle lines without colon separator", () => {
+    const result = parseYAML("just a line without colon\nclave: valor\n");
+    expect(result).toEqual({ clave: "valor" });
+  });
+
+  it("should parse value after colon with pipe", () => {
+    const result = parseYAML("desc: |\n  multi\n  line\n");
+    expect(result).toHaveProperty("desc");
   });
 });
 
@@ -294,17 +394,16 @@ describe("importFromFile", () => {
     const mockInput = document.createElement("input");
     vi.spyOn(mockInput, "click").mockImplementation(() => {});
     vi.spyOn(mockInput, "addEventListener").mockImplementation((event, handler) => {
-      if (event === "change") handlerCallback(handler);
+      if (event === "change") {
+        handlerCallback(handler);
+      }
     });
     vi.spyOn(document, "createElement").mockReturnValue(mockInput);
     return mockInput;
   }
 
   it("should create file input and click it", () => {
-    let registeredHandler;
-    const mockInput = mockCreateElement((h) => {
-      registeredHandler = h;
-    });
+    const mockInput = mockCreateElement(() => {});
 
     importFromFile();
     expect(document.createElement).toHaveBeenCalledWith("input");
@@ -347,7 +446,7 @@ describe("importFromFile", () => {
       changeHandler = h;
     });
 
-    const promise = importFromFile();
+    importFromFile();
     changeHandler({ target: { files: [] } });
     await vi.waitFor(() => {});
   });

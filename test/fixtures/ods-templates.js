@@ -99,7 +99,9 @@ export function buildF3ContentXml({ extraStyles = "" } = {}) {
   </table:table-row>`;
 
   const equipRows = [];
-  for (let i = 0; i < 14; i++) equipRows.push(equipRow());
+  for (let i = 0; i < 14; i++) {
+    equipRows.push(equipRow());
+  }
 
   const footer = `
     <table:table-row table:style-name="ro2">
@@ -315,7 +317,9 @@ export function buildF4ContentXml({ extraStyles = "" } = {}) {
   }
 
   const salaRows = [];
-  for (let i = 0; i < 4; i++) salaRows.push(salaRow());
+  for (let i = 0; i < 4; i++) {
+    salaRows.push(salaRow());
+  }
 
   const footer = `
     <table:table-row table:style-name="ro7">
@@ -550,7 +554,9 @@ export function buildF1ContentXml({ extraStyles = "" } = {}) {
     </table:table-row>`,
   ];
 
-  for (let i = 0; i < 14; i++) rows.push(equipRow());
+  for (let i = 0; i < 14; i++) {
+    rows.push(equipRow());
+  }
 
   const tableRows = rows.join("\n");
 

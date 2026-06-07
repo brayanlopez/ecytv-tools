@@ -6,7 +6,9 @@ export function getValue(id) {
 
 export function setValue(id, val) {
   const el = document.getElementById(id);
-  if (el) el.value = val ?? "";
+  if (el) {
+    el.value = val ?? "";
+  }
 }
 
 export function getChecked(id) {
@@ -15,11 +17,15 @@ export function getChecked(id) {
 
 export function setChecked(id, val) {
   const el = document.getElementById(id);
-  if (el) el.checked = !!val;
+  if (el) {
+    el.checked = !!val;
+  }
 }
 
 export function getTableData(tbody, columns) {
-  if (!tbody) return [];
+  if (!tbody) {
+    return [];
+  }
   const rowSelector = tbody.querySelector("tr")?.className
     ? `.${tbody.querySelector("tr").className}`
     : "tr";
@@ -43,7 +49,9 @@ export function setFieldValues(fields, data) {
 }
 
 export function createTableRow(table, data = {}) {
-  if (!table) return null;
+  if (!table) {
+    return null;
+  }
   const row = document.createElement("tr");
   row.className = table.rowClass;
   const cols = table.columns
@@ -59,14 +67,20 @@ export function createTableRow(table, data = {}) {
 }
 
 export function initTable(table) {
-  if (!table) return;
+  if (!table) {
+    return;
+  }
   const tbody = document.getElementById(table.tbodyId);
   const addBtn = document.getElementById(table.addBtnId);
-  if (!tbody || !addBtn) return;
+  if (!tbody || !addBtn) {
+    return;
+  }
 
   addBtn.addEventListener("click", () => {
     const row = createTableRow(table);
-    if (!row) return;
+    if (!row) {
+      return;
+    }
     const removeBtn = row.querySelector(".btn-remove-equip");
     if (removeBtn) {
       removeBtn.addEventListener("click", () => {
@@ -78,7 +92,9 @@ export function initTable(table) {
     }
     tbody.appendChild(row);
     const firstInput = row.querySelector("input");
-    if (firstInput) firstInput.focus();
+    if (firstInput) {
+      firstInput.focus();
+    }
   });
 
   tbody.addEventListener("click", (e) => {

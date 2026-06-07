@@ -19,7 +19,9 @@ class Router {
 
   handleRoute() {
     const hash = window.location.hash.slice(1) || "info";
-    if (hash === this.currentHash) return;
+    if (hash === this.currentHash) {
+      return;
+    }
     this.currentHash = hash;
 
     if (this.currentPage && this.currentPage.destroy) {
@@ -56,7 +58,9 @@ class Router {
     this.register("docs", "docs-section");
     this.register("qa", "qa-section");
     const active = document.querySelector(".section.active");
-    if (active) this.currentSection = active;
+    if (active) {
+      this.currentSection = active;
+    }
     this.handleRoute();
   }
 }

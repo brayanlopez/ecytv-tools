@@ -1,6 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import docs from "../../data/docs.js";
-
 describe("docs-page", () => {
   let docsPage;
 
@@ -13,10 +11,18 @@ describe("docs-page", () => {
     const mockSelect = { value: "all", addEventListener: vi.fn() };
 
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "docs-grid") return mockContainer;
-      if (id === "docs-filter-bar") return mockFilterContainer;
-      if (id === "docs-count") return mockCountElement;
-      if (id === "docs-filter-category") return mockSelect;
+      if (id === "docs-grid") {
+        return mockContainer;
+      }
+      if (id === "docs-filter-bar") {
+        return mockFilterContainer;
+      }
+      if (id === "docs-count") {
+        return mockCountElement;
+      }
+      if (id === "docs-filter-category") {
+        return mockSelect;
+      }
       return null;
     });
   });
@@ -34,18 +40,20 @@ describe("docs-page", () => {
   });
 
   it("should filter docs when filter changes", async () => {
-    let onCategoryChange = null;
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "docs-grid") return { innerHTML: "" };
-      if (id === "docs-filter-bar")
+      if (id === "docs-grid") {
+        return { innerHTML: "" };
+      }
+      if (id === "docs-filter-bar") {
         return { innerHTML: "", querySelectorAll: vi.fn().mockReturnValue({ forEach: vi.fn() }) };
-      if (id === "docs-count") return { textContent: "" };
+      }
+      if (id === "docs-count") {
+        return { textContent: "" };
+      }
       if (id === "docs-filter-category") {
         return {
           value: "all",
-          addEventListener: vi.fn((event, handler) => {
-            if (event === "change") onCategoryChange = handler;
-          }),
+          addEventListener: vi.fn(),
         };
       }
       return null;

@@ -1,4 +1,5 @@
 import tools from "../../data/tools.js";
+import { EXTERNAL_LINK_ICON } from "./icons.js";
 
 export function buildToolCard(tool, isFavorited) {
   const alternativesHtml =
@@ -39,7 +40,9 @@ export function buildToolCard(tool, isFavorited) {
       </div>
       ${alternativesHtml}
       <div class="tool-footer">
-        <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir<span class="visually-hidden">(se abre en una nueva ventana)</span></a>
+        <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary tool-open-btn">
+          Abrir${EXTERNAL_LINK_ICON}<span class="visually-hidden">(se abre en una nueva ventana)</span>
+        </a>
         <button class="btn btn-favorite ${isFavorited ? "active" : ""}" data-id="${tool.id}" aria-label="${isFavorited ? "Quitar de favoritos" : "Añadir a favoritos"}" aria-pressed="${isFavorited}">
           ${isFavorited ? "★" : "☆"}
         </button>

@@ -33,10 +33,7 @@ function validateStep(step) {
     ];
     for (const id of required) {
       if (!getValue(id).trim()) {
-        window.EcytvUI.showSnackbar(
-          "Completa todos los campos obligatorios del F1.",
-          "warning",
-        );
+        window.EcytvUI.showSnackbar("Completa todos los campos obligatorios del F1.", "warning");
         return false;
       }
     }
@@ -45,13 +42,11 @@ function validateStep(step) {
       const rows = tbody.querySelectorAll(".equip-row");
       let valid = true;
       rows.forEach((row) => {
-        const nombre = row
-          .querySelector('[name="equipo-nombre"]')
-          ?.value?.trim();
-        const consecutivo = row
-          .querySelector('[name="equipo-consecutivo"]')
-          ?.value?.trim();
-        if (!nombre || !consecutivo) valid = false;
+        const nombre = row.querySelector('[name="equipo-nombre"]')?.value?.trim();
+        const consecutivo = row.querySelector('[name="equipo-consecutivo"]')?.value?.trim();
+        if (!nombre || !consecutivo) {
+          valid = false;
+        }
       });
       if (!valid) {
         window.EcytvUI.showSnackbar(
@@ -74,10 +69,7 @@ function validateStep(step) {
     ];
     for (const id of required) {
       if (!getValue(id).trim()) {
-        window.EcytvUI.showSnackbar(
-          "Completa todos los campos obligatorios del F2.",
-          "warning",
-        );
+        window.EcytvUI.showSnackbar("Completa todos los campos obligatorios del F2.", "warning");
         return false;
       }
     }
@@ -92,35 +84,57 @@ function preFillStep2() {
   setValue("observaciones", getValue("observaciones"));
   ["nombre", "contacto", "observaciones"].forEach((id) => {
     const el = document.getElementById(id);
-    if (el) el.readOnly = true;
+    if (el) {
+      el.readOnly = true;
+    }
   });
 }
 
 function goToStep(n) {
-  if (n > currentStep && !validateStep(currentStep)) return;
+  if (n > currentStep && !validateStep(currentStep)) {
+    return;
+  }
 
   const prevEl = getStepEl(currentStep);
   const prevInd = getIndicatorEl(currentStep);
-  if (prevEl) prevEl.classList.remove("active");
-  if (prevInd) prevInd.classList.remove("active");
+  if (prevEl) {
+    prevEl.classList.remove("active");
+  }
+  if (prevInd) {
+    prevInd.classList.remove("active");
+  }
 
   currentStep = n;
 
   const nextEl = getStepEl(currentStep);
   const nextInd = getIndicatorEl(currentStep);
-  if (nextEl) nextEl.classList.add("active");
-  if (nextInd) nextInd.classList.add("active");
+  if (nextEl) {
+    nextEl.classList.add("active");
+  }
+  if (nextInd) {
+    nextInd.classList.add("active");
+  }
 
   const prevBtn = document.getElementById("prev-step");
   const nextBtn = document.getElementById("next-step");
   const downloadBtn = document.getElementById("download-combined");
 
-  if (prevBtn) prevBtn.style.display = currentStep === 1 ? "none" : "";
-  if (nextBtn) nextBtn.style.display = currentStep === 4 ? "none" : "";
-  if (downloadBtn) downloadBtn.style.display = currentStep === 4 ? "" : "none";
+  if (prevBtn) {
+    prevBtn.style.display = currentStep === 1 ? "none" : "";
+  }
+  if (nextBtn) {
+    nextBtn.style.display = currentStep === 4 ? "none" : "";
+  }
+  if (downloadBtn) {
+    downloadBtn.style.display = currentStep === 4 ? "" : "none";
+  }
 
-  if (currentStep === 2) preFillStep2();
-  if (currentStep === 4) renderSummary();
+  if (currentStep === 2) {
+    preFillStep2();
+  }
+  if (currentStep === 4) {
+    renderSummary();
+  }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -140,8 +154,7 @@ function collectStep1Data() {
     data.equipos = Array.from(rows).map((row) => {
       const rowData = {};
       for (const col of f1Config.table.columns) {
-        rowData[col.key || col.name] =
-          row.querySelector(`[name="${col.name}"]`)?.value ?? "";
+        rowData[col.key || col.name] = row.querySelector(`[name="${col.name}"]`)?.value ?? "";
       }
       return rowData;
     });
@@ -168,7 +181,9 @@ function getAllData() {
 function renderSummary() {
   const allData = getAllData();
   const container = document.getElementById("summary-content");
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   container.innerHTML = `
     <div class="summary-section">
@@ -230,15 +245,9 @@ async function handleDownload() {
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 10_000);
 
-    window.EcytvUI.showSnackbar(
-      "PDF combinado descargado correctamente.",
-      "success",
-    );
+    window.EcytvUI.showSnackbar("PDF combinado descargado correctamente.", "success");
   } catch (err) {
-    window.EcytvUI.showSnackbar(
-      "Error al generar el PDF combinado: " + err.message,
-      "error",
-    );
+    window.EcytvUI.showSnackbar("Error al generar el PDF combinado: " + err.message, "error");
   } finally {
     if (btn) {
       btn.disabled = false;
@@ -251,7 +260,9 @@ function initSameDayCheckbox() {
   const flagCheckbox = document.getElementById("mismo-dia");
   const sourceInput = document.getElementById("fecha-retiro");
   const targetInput = document.getElementById("fecha-entrega");
-  if (!flagCheckbox || !sourceInput || !targetInput) return;
+  if (!flagCheckbox || !sourceInput || !targetInput) {
+    return;
+  }
 
   flagCheckbox.addEventListener("change", () => {
     if (flagCheckbox.checked && sourceInput.value) {
@@ -272,7 +283,9 @@ function initSameDayCheckbox() {
 function initCarnetUpload() {
   const dropZone = document.getElementById("carnet-drop-zone");
   const fileInput = document.getElementById("carnet-input");
-  if (!dropZone || !fileInput) return;
+  if (!dropZone || !fileInput) {
+    return;
+  }
 
   dropZone.addEventListener("click", () => fileInput.click());
 
@@ -288,28 +301,30 @@ function initCarnetUpload() {
   dropZone.addEventListener("drop", (e) => {
     e.preventDefault();
     dropZone.classList.remove("drag-over");
-    if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files.length > 0) {
+      handleFile(e.dataTransfer.files[0]);
+    }
   });
 
   fileInput.addEventListener("change", () => {
-    if (fileInput.files.length > 0) handleFile(fileInput.files[0]);
+    if (fileInput.files.length > 0) {
+      handleFile(fileInput.files[0]);
+    }
   });
 }
 
 function handleFile(file) {
   const validTypes = ["image/jpeg", "image/png", "application/pdf"];
   if (!validTypes.includes(file.type)) {
-    window.EcytvUI.showSnackbar(
-      "Formato no válido. Sube una imagen (JPG/PNG) o PDF.",
-      "warning",
-    );
+    window.EcytvUI.showSnackbar("Formato no válido. Sube una imagen (JPG/PNG) o PDF.", "warning");
     return;
   }
 
   carnetFile = file;
   const status = document.getElementById("carnet-status");
-  if (status)
+  if (status) {
     status.textContent = `Archivo: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+  }
 
   const previewEl = document.getElementById("carnet-preview");
   if (previewEl) {
@@ -357,7 +372,9 @@ if (downloadBtn) {
 document.querySelectorAll(".step-indicator .step").forEach((el) => {
   el.addEventListener("click", () => {
     const target = parseInt(el.dataset.step, 10);
-    if (target < currentStep) goToStep(target);
+    if (target < currentStep) {
+      goToStep(target);
+    }
   });
 });
 

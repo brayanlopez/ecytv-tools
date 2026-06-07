@@ -78,6 +78,13 @@ describe("generateCombinedPDF", () => {
     const jspdfDoc = createMockJsPDF();
     jspdfDoc.output = vi.fn(() => new Uint8Array([10, 20, 30]));
     createMockPDFLib();
+    globalThis.html2canvas = vi.fn(() =>
+      Promise.resolve({
+        width: 1000,
+        height: 1400,
+        toDataURL: () => "data:image/png;base64,fake",
+      }),
+    );
     window.Image = function () {
       this.onload = null;
       this.width = 800;
@@ -96,6 +103,7 @@ describe("generateCombinedPDF", () => {
     delete window.PDFLib;
     delete window.FileReader;
     delete window.Image;
+    delete globalThis.html2canvas;
   });
 
   it("should return a Uint8Array with no carnet", async () => {

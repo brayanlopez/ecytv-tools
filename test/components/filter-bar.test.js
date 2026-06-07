@@ -11,7 +11,6 @@ describe("filter-bar", () => {
     });
 
     it("should render filter selects with correct options", () => {
-      const container = document.createElement("div");
       const state = {
         filterValues: {
           categories: ["all", "Edición"],
@@ -44,7 +43,6 @@ describe("filter-bar", () => {
     });
 
     it("should set search input value from state", () => {
-      const container = document.createElement("div");
       const state = {
         filterValues: {
           categories: ["all"],
@@ -67,7 +65,6 @@ describe("filter-bar", () => {
     });
 
     it("should call onSearch on input event", () => {
-      const container = document.createElement("div");
       const onSearch = vi.fn();
       document.body.innerHTML = '<div id="filter-bar"></div>';
 
@@ -150,7 +147,6 @@ describe("filter-bar", () => {
     });
 
     it("should render docs filter with categories", () => {
-      const container = document.createElement("div");
       const onCategoryChange = vi.fn();
       document.body.innerHTML = '<div id="docs-filter-bar"></div>';
 

@@ -178,4 +178,84 @@ describe("Router", () => {
 
     expect(router.currentSection).toBe(mockActiveSection);
   });
+
+  it("should register page modules with registerPage", () => {
+    const pageModule = { init: vi.fn() };
+    router.registerPage("tools", "tools-section", pageModule);
+    expect(router.routes["tools"]).toBe("tools-section");
+    expect(router.pageModules["tools"]).toBe(pageModule);
+  });
+
+  it("should call page module init when navigating to registered page", () => {
+    const pageModule = { init: vi.fn() };
+    router.registerPage("tools", "tools-section", pageModule);
+
+    Object.defineProperty(window, "location", {
+      value: { hash: "#tools" },
+      writable: true,
+    });
+
+    router.handleRoute();
+    expect(pageModule.init).toHaveBeenCalledOnce();
+    expect(router.currentPage).toBe(pageModule);
+  });
+
+  it("should destroy previous page before navigating", () => {
+    const destroyFn = vi.fn();
+    const pageModule1 = { init: vi.fn(), destroy: destroyFn };
+    const pageModule2 = { init: vi.fn() };
+
+    router.registerPage("tools", "tools-section", pageModule1);
+    router.registerPage("formats", "formats-section", pageModule2);
+
+    Object.defineProperty(window, "location", {
+      value: { hash: "#tools" },
+      writable: true,
+    });
+    router.handleRoute();
+    expect(destroyFn).not.toHaveBeenCalled();
+
+    Object.defineProperty(window, "location", {
+      value: { hash: "#formats" },
+      writable: true,
+    });
+    router.handleRoute();
+    expect(destroyFn).toHaveBeenCalledOnce();
+    expect(pageModule2.init).toHaveBeenCalledOnce();
+  });
+
+  it("should set currentPage to null when page module lacks init", () => {
+    router.registerPage("tools", "tools-section", {});
+
+    Object.defineProperty(window, "location", {
+      value: { hash: "#tools" },
+      writable: true,
+    });
+
+    router.handleRoute();
+    expect(router.currentPage).toBeNull();
+  });
+
+  it("should not re-handle same hash twice", () => {
+    router.register("info", "info-section");
+    router.register("tools", "tools-section");
+
+    const hash = "#info";
+    Object.defineProperty(window, "location", {
+      value: { hash },
+      writable: true,
+    });
+
+    router.handleRoute();
+
+    vi.mocked(document.getElementById).mockClear();
+    router.handleRoute();
+    expect(document.getElementById).not.toHaveBeenCalled();
+  });
+
+  it("should not throw when hashchange listener fires", () => {
+    expect(() => {
+      window.dispatchEvent(new Event("hashchange"));
+    }).not.toThrow();
+  });
 });

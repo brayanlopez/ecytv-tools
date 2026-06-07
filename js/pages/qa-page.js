@@ -10,7 +10,9 @@ function getCategories() {
 
 export function init() {
   container = document.getElementById("qa-list");
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   const categories = getCategories();
 

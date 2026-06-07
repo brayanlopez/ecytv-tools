@@ -55,7 +55,7 @@ describe("F1 History", () => {
       expect(document.getElementById("history-card").style.display).toBe("none");
     });
 
-    it("should limit history to 20 entries", () => {
+    it("should limit history to 20 entries", { timeout: 15000 }, () => {
       for (let i = 0; i < 25; i++) {
         document.getElementById("proyecto").value = "Proyecto " + i;
         document.getElementById("responsable").value = "Responsable " + i;

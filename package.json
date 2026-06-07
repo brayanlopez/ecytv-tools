@@ -15,15 +15,16 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "python -m http.server",
+    "dev": "python3 -m http.server",
     "test": "vitest",
+    "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint js/ data/ test/",
     "lint:fix": "eslint js/ data/ test/ --fix",
     "format": "prettier --check '**/*.{js,json,css,html}'",
     "format:fix": "prettier --write '**/*.{js,json,css,html}'",
-    "check": "npm run lint && npm run format && npm run test:coverage",
-    "check:fix": "npm run lint:fix && npm run format:fix"
+    "check": "npm run test:coverage && npm run lint && npm run format",
+    "check:fix": " npm run lint:fix && npm run format:fix"
   },
   "devDependencies": {
     "@eslint/css": "1.2.0",

@@ -1,6 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import qaList from "../../data/qa.js";
-
 describe("qa-page", () => {
   let qaPage;
 
@@ -23,7 +21,9 @@ describe("qa-page", () => {
       })),
       setAttribute: vi.fn(),
       addEventListener: vi.fn((event, handler) => {
-        if (event === "click") handler();
+        if (event === "click") {
+          handler();
+        }
       }),
     };
     const mockContainer = {
@@ -32,7 +32,9 @@ describe("qa-page", () => {
     };
 
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "qa-list") return mockContainer;
+      if (id === "qa-list") {
+        return mockContainer;
+      }
       return null;
     });
 

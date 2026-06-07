@@ -1,5 +1,6 @@
-import { generateF1PDF } from "../f1/f1-pdf.js";
-import { generateF2PDF } from "../f2/f2-pdf.js";
+import { buildF1Template } from "../f1/f1-template.js";
+import { buildF2Template } from "../f2/f2-template.js";
+import { htmlToPdf } from "../common/html-to-pdf.js";
 
 function collectF1Data(allData) {
   return {
@@ -70,9 +71,14 @@ async function imageToPdfBytes(imageFile) {
   return doc.output("arraybuffer");
 }
 
+async function generatePDFBytes(buildTemplate, data) {
+  const doc = await htmlToPdf(buildTemplate(data));
+  return doc.output("arraybuffer");
+}
+
 export async function generateCombinedPDF(allData, carnetFile) {
-  const f1Bytes = await generateF1PDF(collectF1Data(allData), { returnBytes: true });
-  const f2Bytes = await generateF2PDF(collectF2Data(allData), { returnBytes: true });
+  const f1Bytes = await generatePDFBytes(buildF1Template, collectF1Data(allData));
+  const f2Bytes = await generatePDFBytes(buildF2Template, collectF2Data(allData));
 
   const { PDFDocument } = window.PDFLib;
   const mergedDoc = await PDFDocument.create();

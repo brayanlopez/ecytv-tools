@@ -1,11 +1,4 @@
-import {
-  getValue,
-  setValue,
-  getChecked,
-  setFieldValues,
-  createTableRow,
-  initTable,
-} from "./dom.js";
+import { getValue, setValue, getChecked, setFieldValues } from "./dom.js";
 import { initDropdown } from "./dropdown.js";
 import { validateForm } from "./validation.js";
 import { downloadJSON, downloadYAML, importFromFile } from "./io-config.js";
@@ -27,7 +20,9 @@ export function createFormFactory(config) {
   }
 
   function collectTableData(tbody) {
-    if (!table || !tbody) return [];
+    if (!table || !tbody) {
+      return [];
+    }
     const rows = tbody.querySelectorAll(`.${table.rowClass}`);
     return Array.from(rows).map((row) => {
       const data = {};
@@ -55,10 +50,32 @@ export function createFormFactory(config) {
     return data;
   }
 
+  function createTableRow(data = {}) {
+    if (!table) {
+      return null;
+    }
+    const row = document.createElement("tr");
+    row.className = table.rowClass;
+    const cols = table.columns
+      .map((col) => {
+        const val = escHtml(data[col.key || col.name] ?? "");
+        return `<td data-label="${escHtml(col.label)}"><input type="${col.type || "text"}" name="${col.name}" placeholder="${escHtml(col.placeholder || col.label)}" aria-label="${escHtml(col.label)}"${col.required ? " required" : ""} value="${val}"></td>`;
+      })
+      .join("");
+    row.innerHTML =
+      cols +
+      `<td data-label=""><button type="button" class="btn-remove-equip" title="Eliminar ${table.itemName || "elemento"}">✕</button></td>`;
+    return row;
+  }
+
   function restoreTableData(tbody, items) {
-    if (!table || !tbody) return;
+    if (!table || !tbody) {
+      return;
+    }
     const rows = tbody.querySelectorAll(`.${table.rowClass}`);
-    for (let i = rows.length - 1; i > 0; i--) rows[i].remove();
+    for (let i = rows.length - 1; i > 0; i--) {
+      rows[i].remove();
+    }
     const firstRow = tbody.querySelector(`.${table.rowClass}`);
     if (firstRow) {
       firstRow.querySelectorAll("input").forEach((inp) => {
@@ -69,14 +86,18 @@ export function createFormFactory(config) {
       if (idx === 0 && firstRow) {
         for (const col of table.columns) {
           const input = firstRow.querySelector(`[name="${col.name}"]`);
-          if (input) input.value = item[col.key || col.name] ?? "";
+          if (input) {
+            input.value = item[col.key || col.name] ?? "";
+          }
         }
       } else {
-        const row = createTableRow(table, item);
+        const row = createTableRow(item);
         const removeBtn = row.querySelector(".btn-remove-equip");
         if (removeBtn) {
           removeBtn.addEventListener("click", () => {
-            if (tbody.children.length > 1) row.remove();
+            if (tbody.children.length > 1) {
+              row.remove();
+            }
           });
         }
         tbody.appendChild(row);
@@ -85,7 +106,9 @@ export function createFormFactory(config) {
   }
 
   function restoreFormData(data, tbody, form) {
-    if (!data) return;
+    if (!data) {
+      return;
+    }
 
     setFieldValues(fields, data);
 
@@ -95,10 +118,14 @@ export function createFormFactory(config) {
       if (data["mismo-dia"] && sourceVal) {
         setValue(sameDayField.id, sourceVal);
         const el = document.getElementById(sameDayField.id);
-        if (el) el.disabled = true;
+        if (el) {
+          el.disabled = true;
+        }
       } else {
         const el = document.getElementById(sameDayField.id);
-        if (el) el.disabled = false;
+        if (el) {
+          el.disabled = false;
+        }
       }
     }
 
@@ -108,7 +135,9 @@ export function createFormFactory(config) {
       restoreTableData(tb, data[dataKey]);
     }
 
-    if (form) form.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function initBackLink() {
@@ -122,10 +151,14 @@ export function createFormFactory(config) {
   }
 
   function initDatalists() {
-    if (!datalists) return;
+    if (!datalists) {
+      return;
+    }
     for (const dl of datalists) {
       const el = document.getElementById(dl.elementId);
-      if (!el) continue;
+      if (!el) {
+        continue;
+      }
       for (const val of dl.source) {
         const opt = document.createElement("option");
         opt.value = val;
@@ -136,11 +169,15 @@ export function createFormFactory(config) {
 
   function initSameDayCheckbox() {
     const sameDayField = fields.find((f) => f.sameDayAs);
-    if (!sameDayField) return;
+    if (!sameDayField) {
+      return;
+    }
     const flagCheckbox = document.getElementById("mismo-dia");
     const sourceInput = document.getElementById(sameDayField.sameDayAs);
     const targetInput = document.getElementById(sameDayField.id);
-    if (!flagCheckbox || !sourceInput || !targetInput) return;
+    if (!flagCheckbox || !sourceInput || !targetInput) {
+      return;
+    }
 
     flagCheckbox.addEventListener("change", () => {
       if (flagCheckbox.checked && sourceInput.value) {
@@ -158,16 +195,63 @@ export function createFormFactory(config) {
     });
   }
 
+  function initTable() {
+    if (!table) {
+      return;
+    }
+    const tbody = document.getElementById(table.tbodyId);
+    const addBtn = document.getElementById(table.addBtnId);
+    if (!tbody || !addBtn) {
+      return;
+    }
+
+    addBtn.addEventListener("click", () => {
+      const row = createTableRow();
+      if (!row) {
+        return;
+      }
+      const removeBtn = row.querySelector(".btn-remove-equip");
+      if (removeBtn) {
+        removeBtn.addEventListener("click", () => {
+          if (tbody.children.length > 1) {
+            row.remove();
+            addBtn.focus();
+          }
+        });
+      }
+      tbody.appendChild(row);
+      const firstInput = row.querySelector("input");
+      if (firstInput) {
+        firstInput.focus();
+      }
+    });
+
+    tbody.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-remove-equip");
+      if (btn) {
+        const row = btn.closest(`.${table.rowClass}`);
+        if (tbody.children.length > 1) {
+          row.remove();
+          addBtn.focus();
+        }
+      }
+    });
+  }
+
   function initReset() {
     const form = getFormEl();
-    if (!form) return;
+    if (!form) {
+      return;
+    }
     form.addEventListener("reset", () => {
       setTimeout(() => {
         if (table) {
           const tbody = document.getElementById(table.tbodyId);
           if (tbody) {
             const rows = tbody.querySelectorAll(`.${table.rowClass}`);
-            for (let i = rows.length - 1; i > 0; i--) rows[i].remove();
+            for (let i = rows.length - 1; i > 0; i--) {
+              rows[i].remove();
+            }
             const firstRow = tbody.querySelector(`.${table.rowClass}`);
             if (firstRow) {
               firstRow.querySelectorAll("input").forEach((inp) => {
@@ -178,13 +262,17 @@ export function createFormFactory(config) {
         } else {
           form.querySelectorAll("input, select, textarea").forEach((el) => {
             el.value = "";
-            if (el.type === "checkbox") el.checked = false;
+            if (el.type === "checkbox") {
+              el.checked = false;
+            }
           });
         }
         const sameDayField = fields.find((f) => f.sameDayAs);
         if (sameDayField) {
           const el = document.getElementById(sameDayField.id);
-          if (el) el.disabled = false;
+          if (el) {
+            el.disabled = false;
+          }
         }
       }, 0);
     });
@@ -197,6 +285,7 @@ export function createFormFactory(config) {
     initTable(table);
     initReset();
     initDropdown("btn-download", "download-menu");
+    initDropdown("btn-advanced", "advanced-menu");
     bindButtons();
   }
 
@@ -265,7 +354,9 @@ export function createFormFactory(config) {
 
   function restoreFromHistory(id, tbody, form) {
     const entry = historyManager.getEntry(id);
-    if (!entry) return;
+    if (!entry) {
+      return;
+    }
     restoreFormData(entry.data, tbody, form);
   }
 
@@ -276,7 +367,9 @@ export function createFormFactory(config) {
 
   function validateAndRun(handler, tbody) {
     const form = getFormEl();
-    if (!validateForm(form, "Por favor completa todos los campos obligatorios.")) return;
+    if (!validateForm(form, "Por favor completa todos los campos obligatorios.")) {
+      return;
+    }
     const tb = tbody ?? getTbody();
     const formData = collectFormData(tb);
     saveFormToHistory(() => formData, tb);
@@ -287,10 +380,14 @@ export function createFormFactory(config) {
     validateAndRun(generators?.pdf);
   }
   function handleGenerateODS() {
-    if (generators?.ods) validateAndRun(generators.ods);
+    if (generators?.ods) {
+      validateAndRun(generators.ods);
+    }
   }
   function handleGenerateXLSX() {
-    if (generators?.xlsx) validateAndRun(generators.xlsx);
+    if (generators?.xlsx) {
+      validateAndRun(generators.xlsx);
+    }
   }
 
   function handleSave(tbody) {
@@ -327,7 +424,9 @@ export function createFormFactory(config) {
   function bindButtons() {
     const bind = (id, fn) => {
       const el = document.getElementById(id);
-      if (el) el.addEventListener("click", () => fn());
+      if (el) {
+        el.addEventListener("click", () => fn());
+      }
     };
     bind("btn-pdf", handleGeneratePDF);
     bind("btn-ods", handleGenerateODS);

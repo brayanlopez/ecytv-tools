@@ -1,4 +1,10 @@
+import { EXTERNAL_LINK_ICON } from "./icons.js";
+
 export function buildDocCard(doc) {
+  const isExternal = doc.url !== "#";
+  const actionLabel = doc.type === "manual" ? "Ver Manual" : "Ver Guía";
+  const typeLabel = doc.type === "manual" ? "Manual" : "Guía";
+
   return `
     <div class="doc-card" data-id="${doc.id}">
       <div class="doc-card-header">
@@ -11,14 +17,16 @@ export function buildDocCard(doc) {
         </div>
         <div class="doc-card-info">
           <div class="doc-card-name">${doc.name}</div>
-          <div class="doc-card-category">${doc.category}</div>
+          <div class="doc-card-meta">
+            <span class="doc-card-type ${doc.type}">${typeLabel}</span>
+            ${doc.manufacturer ? `<span class="doc-card-manufacturer">${doc.manufacturer}</span>` : ""}
+          </div>
         </div>
       </div>
       <p class="doc-card-description">${doc.description}</p>
-      ${doc.manufacturer ? `<div class="doc-card-manufacturer">${doc.manufacturer}</div>` : ""}
-      <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-        ${doc.type === "manual" ? "Ver Manual" : "Ver Guía"}
-        <span class="visually-hidden">(se abre en una nueva ventana)</span>
+      <a href="${doc.url}" ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""} class="btn btn-primary doc-card-btn">
+        ${actionLabel}${isExternal ? EXTERNAL_LINK_ICON : ""}
+        ${isExternal ? '<span class="visually-hidden">(se abre en una nueva ventana)</span>' : ""}
       </a>
     </div>
   `;

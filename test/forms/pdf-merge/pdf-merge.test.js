@@ -409,5 +409,137 @@ describe("PDF Merge", () => {
       });
       expect(dropZone.classList.contains("drag-over")).toBe(false);
     });
+
+    it("should show warning for non-PDF files added via drop", async () => {
+      createMockPDFLib();
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const dropZone = document.getElementById("drop-zone");
+      const file = new File(["dummy"], "image.png", { type: "image/png" });
+
+      const dropEvent = new Event("drop");
+      dropEvent.dataTransfer = { files: [file] };
+      dropEvent.preventDefault = vi.fn();
+      dropZone.dispatchEvent(dropEvent);
+
+      await vi.waitFor(() => {
+        expect(window.EcytvUI.showSnackbar).toHaveBeenCalledWith(
+          expect.stringContaining("no es un archivo PDF"),
+          "warning",
+        );
+      });
+      expect(document.querySelectorAll(".merge-file-item").length).toBe(0);
+    });
+
+    it("should accept PDF via .pdf extension when type is generic", async () => {
+      createMockPDFLib();
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const fileInput = document.getElementById("file-input");
+      const file = new File(["dummy"], "doc.pdf", { type: "application/octet-stream" });
+      Object.defineProperty(fileInput, "files", {
+        value: [file],
+        writable: true,
+      });
+      fileInput.dispatchEvent(new Event("change"));
+
+      await vi.waitFor(() => {
+        expect(document.querySelectorAll(".merge-file-item").length).toBe(1);
+      });
+    });
+
+    it("should handle same-index drag and drop (no reorder)", async () => {
+      createMockPDFLib();
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const fileInput = document.getElementById("file-input");
+      const fileA = new File(["a"], "a.pdf", { type: "application/pdf" });
+      const fileB = new File(["b"], "b.pdf", { type: "application/pdf" });
+      Object.defineProperty(fileInput, "files", {
+        value: [fileA, fileB],
+        writable: true,
+      });
+      fileInput.dispatchEvent(new Event("change"));
+
+      await vi.waitFor(() => {
+        expect(document.querySelectorAll(".merge-file-item").length).toBe(2);
+      });
+
+      const items = document.querySelectorAll(".merge-file-item");
+
+      const dragEvent = new Event("dragstart");
+      dragEvent.dataTransfer = { setData: vi.fn(), effectAllowed: "" };
+      items[0].dispatchEvent(dragEvent);
+
+      const dropEvent = new Event("drop");
+      dropEvent.dataTransfer = { getData: vi.fn(() => "0"), effectAllowed: "" };
+      dropEvent.preventDefault = vi.fn();
+      items[0].dispatchEvent(dropEvent);
+
+      const reorderItems = document.querySelectorAll(".merge-file-item");
+      expect(reorderItems.length).toBe(2);
+    });
+
+    it("should indicate page count when available", async () => {
+      const pdfLib = createMockPDFLib();
+      pdfLib.srcDoc.getPageCount.mockReturnValue(5);
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const fileInput = document.getElementById("file-input");
+      const file = new File(["a"], "a.pdf", { type: "application/pdf" });
+      Object.defineProperty(fileInput, "files", {
+        value: [file],
+        writable: true,
+      });
+      fileInput.dispatchEvent(new Event("change"));
+
+      await vi.waitFor(() => {
+        const items = document.querySelectorAll(".merge-file-item");
+        expect(items[0].textContent).toContain("5 pág.");
+      });
+    });
+
+    it("should handle getPageCount failure gracefully", async () => {
+      const pdfLib = createMockPDFLib();
+      pdfLib.srcDoc.getPageCount.mockImplementation(() => {
+        throw new Error("bad");
+      });
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const fileInput = document.getElementById("file-input");
+      const file = new File(["a"], "a.pdf", { type: "application/pdf" });
+      Object.defineProperty(fileInput, "files", {
+        value: [file],
+        writable: true,
+      });
+      fileInput.dispatchEvent(new Event("change"));
+
+      await vi.waitFor(() => {
+        const items = document.querySelectorAll(".merge-file-item");
+        expect(items.length).toBe(1);
+      });
+    });
+
+    it("should return early from handleMerge when files less than 2", async () => {
+      createMockPDFLib();
+
+      await import("../../../js/forms/pdf-merge/pdf-merge.js");
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      const mergeBtn = document.getElementById("btn-merge");
+      mergeBtn.click();
+
+      expect(window.PDFLib.PDFDocument.create).not.toHaveBeenCalled();
+    });
   });
 });

@@ -15,7 +15,12 @@ let searchQuery = "";
 export function init() {
   container = document.getElementById("tools-grid");
   filterContainer = document.getElementById("filter-bar");
-  activeFilters = { category: "all", level: "all", platform: "all", pricing: "all" };
+  activeFilters = {
+    category: "all",
+    level: "all",
+    platform: "all",
+    pricing: "all",
+  };
   searchQuery = "";
 
   renderFilters();
@@ -36,16 +41,33 @@ function renderFilters() {
       render();
     },
     onClearFilters: () => {
-      activeFilters = { category: "all", level: "all", platform: "all", pricing: "all" };
+      activeFilters = {
+        category: "all",
+        level: "all",
+        platform: "all",
+        pricing: "all",
+      };
       searchQuery = "";
       const searchInput = document.getElementById("search-input");
-      if (searchInput) searchInput.value = "";
+      if (searchInput) {
+        searchInput.value = "";
+      }
       filterContainer.querySelectorAll(".filter-select").forEach((select) => {
         select.value = "all";
       });
       render();
     },
   });
+}
+
+function isDefaultFilters() {
+  return (
+    searchQuery === "" &&
+    activeFilters.category === "all" &&
+    activeFilters.level === "all" &&
+    activeFilters.platform === "all" &&
+    activeFilters.pricing === "all"
+  );
 }
 
 function render() {
@@ -58,13 +80,37 @@ function render() {
   }
 
   if (filtered.length === 0) {
+    container.className = "tools-grid";
     container.innerHTML = `<div class="no-results" role="status">No se encontraron herramientas con los filtros seleccionados</div>`;
     return;
   }
 
-  container.innerHTML = filtered
-    .map((tool) => buildToolCard(tool, favorites.includes(tool.id)))
-    .join("");
+  if (isDefaultFilters()) {
+    const groups = new Map();
+    for (const tool of filtered) {
+      if (!groups.has(tool.category)) {
+        groups.set(tool.category, []);
+      }
+      groups.get(tool.category).push(tool);
+    }
+    container.className = "tools-columns";
+    container.innerHTML = [...groups.entries()]
+      .map(
+        ([category, items]) => `
+        <div class="tools-group">
+          <h3 class="tools-group-heading">${category}</h3>
+          <div class="tools-group-grid">
+            ${items.map((tool) => buildToolCard(tool, favorites.includes(tool.id))).join("")}
+          </div>
+        </div>`,
+      )
+      .join("");
+  } else {
+    container.className = "tools-grid";
+    container.innerHTML = filtered
+      .map((tool) => buildToolCard(tool, favorites.includes(tool.id)))
+      .join("");
+  }
 
   container.querySelectorAll(".btn-favorite").forEach((btn) => {
     btn.addEventListener("click", (e) => {

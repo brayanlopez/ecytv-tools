@@ -1,5 +1,7 @@
 function sanitize(str, fallback) {
-  if (!str || !str.trim()) return fallback;
+  if (!str || !str.trim()) {
+    return fallback;
+  }
   return str
     .trim()
     .toLowerCase()
@@ -10,7 +12,9 @@ function sanitize(str, fallback) {
 }
 
 function toDateStr(dateVal) {
-  if (!dateVal) return "hoy";
+  if (!dateVal) {
+    return "hoy";
+  }
   return dateVal.includes("T") ? dateVal.split("T")[0] : dateVal;
 }
 
