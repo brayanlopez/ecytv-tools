@@ -32,18 +32,30 @@ export function getAllValues() {
 
 export function applyFilters(tool, activeFilters) {
   const { category, level, platform, pricing } = activeFilters;
-  if (category !== "all" && tool.category !== category) return false;
-  if (level !== "all" && tool.level !== level) return false;
-  if (platform !== "all" && !tool.platform.includes(platform)) return false;
-  if (pricing !== "all" && tool.pricing !== pricing) return false;
+  if (category !== "all" && tool.category !== category) {
+    return false;
+  }
+  if (level !== "all" && tool.level !== level) {
+    return false;
+  }
+  if (platform !== "all" && !tool.platform.includes(platform)) {
+    return false;
+  }
+  if (pricing !== "all" && tool.pricing !== pricing) {
+    return false;
+  }
   return true;
 }
 
 export function getFilteredTools(filters, searchQuery) {
   const query = (searchQuery || "").toLowerCase();
   return tools.filter((tool) => {
-    if (!applyFilters(tool, filters)) return false;
-    if (!query) return true;
+    if (!applyFilters(tool, filters)) {
+      return false;
+    }
+    if (!query) {
+      return true;
+    }
     return (
       tool.name.toLowerCase().includes(query) ||
       tool.description.toLowerCase().includes(query) ||

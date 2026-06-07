@@ -38,7 +38,9 @@ function render() {
   if (activeCategory === "all") {
     const groups = new Map();
     for (const doc of filtered) {
-      if (!groups.has(doc.category)) groups.set(doc.category, []);
+      if (!groups.has(doc.category)) {
+        groups.set(doc.category, []);
+      }
       groups.get(doc.category).push(doc);
     }
     container.className = "docs-columns";

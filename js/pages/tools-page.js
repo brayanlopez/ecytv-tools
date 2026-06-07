@@ -49,7 +49,9 @@ function renderFilters() {
       };
       searchQuery = "";
       const searchInput = document.getElementById("search-input");
-      if (searchInput) searchInput.value = "";
+      if (searchInput) {
+        searchInput.value = "";
+      }
       filterContainer.querySelectorAll(".filter-select").forEach((select) => {
         select.value = "all";
       });
@@ -86,7 +88,9 @@ function render() {
   if (isDefaultFilters()) {
     const groups = new Map();
     for (const tool of filtered) {
-      if (!groups.has(tool.category)) groups.set(tool.category, []);
+      if (!groups.has(tool.category)) {
+        groups.set(tool.category, []);
+      }
       groups.get(tool.category).push(tool);
     }
     container.className = "tools-columns";

@@ -5,6 +5,8 @@ export function getDocCategories() {
 }
 
 export function getFilteredDocs(category) {
-  if (category === "all") return docs;
+  if (category === "all") {
+    return docs;
+  }
   return docs.filter((d) => d.category === category);
 }

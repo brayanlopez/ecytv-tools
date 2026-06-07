@@ -11,8 +11,12 @@ const emptyMsg = document.getElementById("file-list-empty");
 const files = [];
 
 function formatSize(bytes) {
-  if (bytes < 1024) return bytes + " B";
-  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
+  if (bytes < 1024) {
+    return bytes + " B";
+  }
+  if (bytes < 1048576) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
   return (bytes / 1048576).toFixed(1) + " MB";
 }
 
@@ -77,7 +81,9 @@ function renderFileList() {
       e.preventDefault();
       e.dataTransfer.dropEffect = "move";
       const target = e.currentTarget;
-      if (target !== item) return;
+      if (target !== item) {
+        return;
+      }
       target.classList.toggle("drag-over", true);
     });
 
@@ -90,7 +96,9 @@ function renderFileList() {
       item.classList.remove("drag-over");
       const fromIndex = parseInt(e.dataTransfer.getData("text/plain"), 10);
       const toIndex = index;
-      if (fromIndex === toIndex) return;
+      if (fromIndex === toIndex) {
+        return;
+      }
       const [moved] = files.splice(fromIndex, 1);
       files.splice(toIndex, 0, moved);
       renderFileList();
@@ -154,7 +162,9 @@ function initDropZone() {
 }
 
 async function handleMerge() {
-  if (files.length < 2) return;
+  if (files.length < 2) {
+    return;
+  }
 
   mergeBtn.disabled = true;
   mergeBtn.textContent = "Fusionando…";
@@ -193,8 +203,9 @@ async function handleMerge() {
 }
 
 function init() {
-  if (!dropZone || !fileInput || !fileListEl || !mergeBtn || !downloadSection || !downloadBtn)
+  if (!dropZone || !fileInput || !fileListEl || !mergeBtn || !downloadSection || !downloadBtn) {
     return;
+  }
 
   const backLink = document.getElementById("back-link");
   if (backLink) {

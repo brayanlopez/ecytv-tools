@@ -222,9 +222,7 @@ describe("UI Components", () => {
       );
       const focusSpy = vi.spyOn(focusable[0], "focus");
 
-      const restoreActiveElement = vi
-        .spyOn(document, "activeElement", "get")
-        .mockReturnValue(focusable[focusable.length - 1]);
+      vi.spyOn(document, "activeElement", "get").mockReturnValue(focusable[focusable.length - 1]);
 
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }));
       expect(focusSpy).toHaveBeenCalled();

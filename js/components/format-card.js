@@ -20,7 +20,9 @@ export function buildFormatCard(f) {
 }
 
 export function buildFormatSection(title, items) {
-  if (items.length === 0) return "";
+  if (items.length === 0) {
+    return "";
+  }
   return `
     <div class="format-group">
       <h3 class="formats-subheading">${title}</h3>

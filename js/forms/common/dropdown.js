@@ -2,7 +2,9 @@ export function initDropdown(btnId, menuId) {
   const btn = document.getElementById(btnId);
   const menu = document.getElementById(menuId);
 
-  if (!btn || !menu) return { close: () => {} };
+  if (!btn || !menu) {
+    return { close: () => {} };
+  }
 
   function close() {
     menu.classList.remove("show");
@@ -27,7 +29,9 @@ export function initDropdown(btnId, menuId) {
         btn.setAttribute("aria-expanded", "true");
       }
       const items = menu.querySelectorAll(".dropdown-item");
-      if (items.length > 0) items[0].focus();
+      if (items.length > 0) {
+        items[0].focus();
+      }
     }
   });
 

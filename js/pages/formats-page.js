@@ -3,7 +3,9 @@ import formats from "../../data/formats.js";
 
 export function init() {
   const container = document.getElementById("formats-grid");
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   const forms = formats.filter((f) => f.type === "form");
   const tools = formats.filter((f) => f.type === "tool");

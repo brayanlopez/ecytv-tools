@@ -18,7 +18,9 @@ describe("formats-page", () => {
   it("should render all formats into the container", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
+      if (id === "formats-grid") {
+        return container;
+      }
       return null;
     });
 
@@ -33,7 +35,9 @@ describe("formats-page", () => {
   it("should render format cards with correct structure", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
+      if (id === "formats-grid") {
+        return container;
+      }
       return null;
     });
 
@@ -46,7 +50,9 @@ describe("formats-page", () => {
   it("should render a subheading for forms and tools", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
+      if (id === "formats-grid") {
+        return container;
+      }
       return null;
     });
 
@@ -59,7 +65,9 @@ describe("formats-page", () => {
   it("should place form items under Generar Formatos section", () => {
     const container = { innerHTML: "" };
     vi.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "formats-grid") return container;
+      if (id === "formats-grid") {
+        return container;
+      }
       return null;
     });
 

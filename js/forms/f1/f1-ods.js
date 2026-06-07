@@ -3,7 +3,9 @@ import { buildFilename } from "../common/filename.js";
 export async function generateF1ODS(data) {
   try {
     const resp = await fetch("data/f1-template.ods");
-    if (!resp.ok) throw new Error("No se pudo cargar la plantilla ODS");
+    if (!resp.ok) {
+      throw new Error("No se pudo cargar la plantilla ODS");
+    }
     const buf = await resp.arrayBuffer();
 
     const zip = await JSZip.loadAsync(buf);
@@ -16,7 +18,9 @@ export async function generateF1ODS(data) {
     const TEXT_NS = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
 
     const tables = xmlDoc.getElementsByTagNameNS(TABLE_NS, "table");
-    if (!tables.length) throw new Error("No se encontró la tabla en la plantilla");
+    if (!tables.length) {
+      throw new Error("No se encontró la tabla en la plantilla");
+    }
     const table = tables[0];
     const rows = table.getElementsByTagNameNS(TABLE_NS, "table-row");
 
@@ -50,15 +54,21 @@ export async function generateF1ODS(data) {
     };
 
     const equipRows = [];
-    for (let i = 0; i < 14; i++) equipRows.push(rows[16 + i]);
+    for (let i = 0; i < 14; i++) {
+      equipRows.push(rows[16 + i]);
+    }
 
     function setCellOnRow(rowRef, cellIdx, value) {
-      if (!rowRef) return;
+      if (!rowRef) {
+        return;
+      }
 
       const cells = rowRef.getElementsByTagNameNS(TABLE_NS, "table-cell");
       const cell = cells[cellIdx];
 
-      if (!cell) return;
+      if (!cell) {
+        return;
+      }
 
       // Remove existing paragraphs
       const existingPs = cell.getElementsByTagNameNS(TEXT_NS, "p");
@@ -119,13 +129,19 @@ export async function generateF1ODS(data) {
 
     for (let i = 0; i < 14; i++) {
       const row = equipRows[i];
-      if (!row) continue;
+      if (!row) {
+        continue;
+      }
       const cells = row.getElementsByTagNameNS(TABLE_NS, "table-cell");
       const clearCell = (ci) => {
         const c = cells[ci];
-        if (!c) return;
+        if (!c) {
+          return;
+        }
         const p = c.getElementsByTagNameNS(TEXT_NS, "p")[0];
-        if (p) p.textContent = "";
+        if (p) {
+          p.textContent = "";
+        }
       };
 
       if (i < equipData.length) {
@@ -156,11 +172,15 @@ export async function generateF1ODS(data) {
         const newCells = newRow.getElementsByTagNameNS(TABLE_NS, "table-cell");
         for (let ci = 0; ci < newCells.length; ci++) {
           const ps = newCells[ci].getElementsByTagNameNS(TEXT_NS, "p");
-          for (let pi = 0; pi < ps.length; pi++) ps[pi].textContent = "";
+          for (let pi = 0; pi < ps.length; pi++) {
+            ps[pi].textContent = "";
+          }
         }
         const setNewCell = (ci, val) => {
           const c = newCells[ci];
-          if (!c) return;
+          if (!c) {
+            return;
+          }
           let p = c.getElementsByTagNameNS(TEXT_NS, "p")[0];
           if (!p) {
             p = xmlDoc.createElementNS(TEXT_NS, "p");

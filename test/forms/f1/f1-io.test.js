@@ -83,7 +83,9 @@ describe("F1 IO handlers", () => {
       const mockInput = document.createElement("input");
       let changeHandler = null;
       vi.spyOn(mockInput, "addEventListener").mockImplementation((event, handler) => {
-        if (event === "change") changeHandler = handler;
+        if (event === "change") {
+          changeHandler = handler;
+        }
       });
       vi.spyOn(document, "createElement").mockReturnValue(mockInput);
 
@@ -92,7 +94,7 @@ describe("F1 IO handlers", () => {
 
       const tbody = document.getElementById("equip-tbody");
       const form = document.getElementById("f1-form");
-      const promise = handleImport(tbody, form);
+      handleImport(tbody, form);
 
       if (changeHandler) {
         const mockEvent = {
