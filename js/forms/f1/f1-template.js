@@ -24,6 +24,8 @@ export function buildF1Template(data) {
     responsable = "",
     celular = "",
     tiun = "",
+    "tipo-documento": tipoDoc = "",
+    "numero-documento": numDoc = "",
     lugar = "",
     "tipo-prestamo": tipoPrestamo = "",
     "fecha-retiro": fechaRetiro = "",
@@ -31,6 +33,22 @@ export function buildF1Template(data) {
     observaciones = "",
     equipos = [],
   } = data;
+
+  const docTypeMap = {
+    CC: "C.C.",
+    CCD: "C.C.D.",
+    TI: "T.I.",
+    RC: "R.C.",
+    CE: "C.E.",
+    PP: "P.P.",
+    LC: "L.C.",
+    CM: "C.M.",
+    RUT: "RUT",
+    NIT: "NIT",
+    PEP: "PEP",
+    PPT: "PPT",
+  };
+  const docTypeLabel = docTypeMap[tipoDoc] || tipoDoc || "";
 
   const isInterno = tipoPrestamo === "Interno";
   const retiroDate = formatDate(fechaRetiro);
@@ -309,8 +327,8 @@ export function buildF1Template(data) {
       </tr>
       <tr class="footer-mini">
         <td>
-          <span class="bold">C.C.:</span>
-          &nbsp;&nbsp;&nbsp; ${escHtml(tiun)}
+          <span class="bold">DOCUMENTO:</span>
+          &nbsp;&nbsp;&nbsp; ${escHtml(docTypeLabel)} ${escHtml(numDoc)}
         </td>
       </tr>
     </table>

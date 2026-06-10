@@ -14,6 +14,8 @@ describe("buildF1Template", () => {
     responsable: "Estudiante de Prueba",
     celular: "3000000000",
     tiun: "1234567890",
+    "tipo-documento": "CC",
+    "numero-documento": "987654321",
     lugar: "Estudio de grabación",
     "tipo-prestamo": "Interno",
     "fecha-retiro": "2025-06-01T08:00",
@@ -118,10 +120,12 @@ describe("buildF1Template", () => {
     expect(result).toContain("assets/unal_logo.png");
   });
 
-  it("includes signature area with responsible name and TIUN", () => {
+  it("includes signature area with responsible name and document", () => {
     const result = buildF1Template(baseData);
     expect(result).toContain("Estudiante de Prueba");
     expect(result).toContain("1234567890");
+    expect(result).toContain("C.C.");
+    expect(result).toContain("987654321");
     expect(result).toContain("FIRMA COORDINADOR");
     expect(result).toContain("Vo. Bo.");
   });

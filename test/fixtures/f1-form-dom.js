@@ -31,6 +31,28 @@ export const F1_FORM_HTML = `
                 <input type="tel" id="celular" required placeholder="Número de celular" />
               </div>
             </div>
+            <div class="form-row">
+              <div class="form-group">
+                <select id="tipo-documento" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="CC">C.C. – Cédula de Ciudadanía</option>
+                  <option value="CCD">C.C.D. – Cédula de Ciudadanía Digital</option>
+                  <option value="TI">T.I. – Tarjeta de Identidad</option>
+                  <option value="RC">R.C. – Registro Civil de Nacimiento</option>
+                  <option value="CE">C.E. – Cédula de Extranjería</option>
+                  <option value="PP">P.P. – Pasaporte</option>
+                  <option value="LC">L.C. – Licencia de Conducción</option>
+                  <option value="CM">C.M. – Cartilla Militar</option>
+                  <option value="RUT">RUT – Registro Único Tributario</option>
+                  <option value="NIT">NIT – Número de Identificación Tributaria</option>
+                  <option value="PEP">PEP – Permiso Especial de Permanencia</option>
+                  <option value="PPT">PPT – Permiso por Protección Temporal</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" id="numero-documento" required placeholder="Número de documento" />
+              </div>
+            </div>
             <div class="form-row full">
               <div class="form-group">
                 <input type="text" id="tiun" required placeholder="TIUN" />

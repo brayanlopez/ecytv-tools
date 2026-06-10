@@ -18,6 +18,8 @@ export const f1Config = {
     { id: "responsable" },
     { id: "celular" },
     { id: "tiun" },
+    { id: "tipo-documento" },
+    { id: "numero-documento" },
     { id: "lugar" },
     { id: "tipo-prestamo" },
     { id: "fecha-retiro" },
