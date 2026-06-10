@@ -251,8 +251,8 @@ export function buildF4Template(data) {
           &nbsp;&nbsp;&nbsp; ${escHtml(directoResponsable)}
         </td>
         <td class="center">
-          V\u00edctor Hugo \u00c1vila Amaya<br>
-          C.C.: 19.431.803
+          ______________________________<br>
+          C.C.: __________________
         </td>
       </tr>
       <tr class="footer-mini">
